@@ -1,0 +1,133 @@
+@(title: String)(bannerTitle: String)(bannerContent: Html)(content: Html)(implicit req: RequestHeader)
+
+@**************************
+* Industrious by TEMPLATED
+* templated.co @templatedco
+* Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+**************************@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-69466139-2"></script>
+        <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-69466139-2');
+    </script>
+
+
+    <title>@title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" href='@routes.Assets.versioned("assets/css/main.css")' />
+
+    <!-- Load JQuery before anything else -->
+    <script src='@routes.Assets.versioned("assets/js/jquery.min.js")'></script>
+    <script src='@routes.Assets.versioned("javascripts/rest.js")'></script>
+
+    <!-- syntax highlighting -->
+    <style>
+        pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+        .string { color: green; }
+        .number { color: #710577; }
+        .boolean { color: blue; }
+        .null { color: magenta; }
+        .key { color: #8e0505; }
+    </style>
+
+    <!-- Embedded Javascript router -->
+    @helper.javascriptRouter("jsRoutes")(
+        routes.javascript.AvroController.avroFromJsonDocument,
+        routes.javascript.AvroController.idlFromAvro
+    )
+
+    <!-- Code box -->
+    <style type="text/css" media="screen">
+        .right-editor {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+        }
+        .left-editor {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+        }
+    </style>
+
+</head>
+<body class="is-preload">
+
+<!-- Header -->
+<header id="header">
+    <a class="logo" href="/">Data tools</a>
+    <nav>
+        <a href="#menu">Menu</a>
+    </nav>
+</header>
+
+<!-- Nav -->
+<nav id="menu">
+    <ul class="links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/ws">Web Service</a></li>
+        <li><a href="/avro">Avro schema</a></li>
+    </ul>
+</nav>
+
+<!-- Banner -->
+<section id="banner">
+    <div class="inner">
+        <h1>@bannerTitle</h1>
+        @bannerContent
+    </div>
+</section>
+
+<!-- Content -->
+<section id="main">
+    <div class="inner">
+        @content
+    </div>
+</section>
+
+<!-- Footer -->
+<footer id="footer">
+    <div class="inner">
+        <div class="content">
+            <section>
+                <h3>Iraj Hedayati</h3>
+                <p>A data engineer, a student and a teacher.</p>
+            </section>
+            <section>
+                <h4>Contents</h4>
+                <ul class="alt">
+                    <li><a href="/ws">Web services</a></li>
+                    <li><a href="/avro">Avro schema</a></li>
+                </ul>
+            </section>
+            <section>
+                <h4>Where to find me</h4>
+                <ul class="plain">
+                    <li><a href="https://www.linkedin.com/in/irajhedayati/"><i class="icon fa-linkedin">&nbsp;</i>LinkedIn</a></li>
+                </ul>
+            </section>
+        </div>
+        <div class="copyright">
+            &copy; Iraj Hedayati
+        </div>
+    </div>
+</footer>
+<!-- Scripts -->
+<script src='@routes.Assets.versioned("assets/js/browser.min.js")'></script>
+<script src='@routes.Assets.versioned("assets/js/breakpoints.min.js")'></script>
+<script src='@routes.Assets.versioned("assets/js/util.js")'></script>
+<script src='@routes.Assets.versioned("assets/js/main.js")'></script>
+</body>
+</html>

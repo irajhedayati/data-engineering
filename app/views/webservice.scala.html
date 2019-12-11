@@ -1,0 +1,219 @@
+@()(implicit req: RequestHeader)
+
+@main("Web Service")("RESTful Web Service"){
+<p>A fully deployed and free to use REST API</p>
+}{
+<!-- Highlights -->
+<section class="wrapper">
+    <div class="inner">
+        <header class="special">
+            <h2>Fully featured RESTful API</h2>
+            <p>Either for learning, educating or just testing your new REST client</p>
+        </header>
+        <div class="highlights">
+            <section>
+                <div class="content">
+                    <header>
+                        <a href="#" class="icon fa-amazon"><span class="label">Icon</span></a>
+                        <h3>Fully deployed</h3>
+                    </header>
+                    <p>Hosted on AWS instances, it is a real API accessible 24/7</p>
+                </div>
+            </section>
+            <section>
+                <div class="content">
+                    <header>
+                        <a href="#" class="icon fa-reply"><span class="label">Icon</span></a>
+                        <h3>Real Response</h3>
+                    </header>
+                    <p>Fully compatible with REST protocol supporting all the actions and corresponding responses.<br>
+                        Data returned in JSON format.</p>
+                </div>
+            </section>
+            <section>
+                <div class="content">
+                    <header>
+                        <a href="#" class="icon fa-floppy-o"><span class="label">Icon</span></a>
+                        <h3>Persisting</h3>
+                    </header>
+                    <p>Ability of persisting created records per session to test a series of actions.<br>
+                        It requires to create a session. <a href="#create-session">more</a></p>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <table class="table table-borderless table-hover">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Description</th>
+                    </tr>
+                    </thead>
+                    <tr>
+                        <td>
+                            <code id="get_page_1" class="button primary small">GET</code>
+                        </td>
+                        <td>Get the list of movies (page 1)</td>
+                            <script>
+                            $( "#get_page_1" ).click(function() {
+                                $("#request-header").html(
+                                    "<span class=\"key\">Method</span>: <span class=\"string\">GET</span>\n" +
+                                    "<span class=\"key\">Path</span>: <span class=\"string\">/api/v1/movies</span>"
+                                );
+                                $("#request").html('');
+                                restCall("/api/v1/movies", "GET");
+                            });
+                            </script>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code id="get_page_2" class="button primary small">GET</code>
+                        </td>
+                        <td>Get the list of movies (page 2)</td>
+                            <script>
+                            $( "#get_page_2" ).click(function() {
+                                $("#request-header").html(
+                                    "<span class=\"key\">Method</span>: <span class=\"string\">GET</span>\n" +
+                                    "<span class=\"key\">Path</span>: <span class=\"string\">/api/v1/movies</span>\n" +
+                                    "<span class=\"key\">Parameter</span>: <span class=\"string\">page = 2</span>"
+                                );
+                                $("#request").html('');
+                                restCall("/api/v1/movies?page=2", "GET");
+                            });
+                            </script>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code id="get_single" class="button primary small">GET</code>
+                        </td>
+                        <td>Get a movie</td>
+                            <script>
+                            $( "#get_single" ).click(function() {
+                                $("#request-header").html(
+                                    "<span class=\"key\">Method</span>: <span class=\"string\">GET</span>\n" +
+                                    "<span class=\"key\">Path</span>: <span class=\"string\">/api/v1/movies/103</span>"
+                                );
+                                $("#request").html('');
+                                restCall("/api/v1/movies/103", "GET");
+                            });
+                            </script>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code id="post" class="button primary small">POST</code>
+                        </td>
+                        <td>Create a movie</td>
+                            <script>
+                            $( "#post" ).click(function() {
+                                $("#request-header").html(
+                                    "<span class=\"key\">Method</span>: <span class=\"string\">POST</span>\n" +
+                                    "<span class=\"key\">Path</span>: <span class=\"string\">/api/v1/movies/103</span>\n" +
+                                    "<span class=\"key\">Content-Type</span>: <span class=\"string\">application/json</span>"
+                                );
+                                var data = '{"title": "Titanic", "year": 1997, "director": "James Cameron"}'
+                                var str = JSON.stringify(data, undefined, 2);
+                                $("#request").html(syntaxHighlight(data));
+                                restCallWithData("/api/v1/movies", "POST", data);
+                            });
+                            </script>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code id="put" class="button primary small">PUT</code>
+                        </td>
+                        <td>Update movie ID 103</td>
+                            <script>
+                            $( "#put" ).click(function() {
+                                $("#request-header").html(
+                                    "<span class=\"key\">Method</span>: <span class=\"string\">PUT</span>\n" +
+                                    "<span class=\"key\">Path</span>: <span class=\"string\">/api/v1/movies</span>\n" +
+                                    "<span class=\"key\">Content-Type</span>: <span class=\"string\">application/json</span>"
+                                );
+                                var data = '{"mid": 103, "title": "Titanic", "year": 1997, "director": "James Cameron"}'
+                                var str = JSON.stringify(data, undefined, 2);
+                                $("#request").html(syntaxHighlight(data));
+                                restCallWithData("/api/v1/movies", "PUT", data);
+                            });
+                            </script>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code id="delete" class="button primary small">DELETE</code>
+                        </td>
+                        <td>Delete movie ID 103</td>
+                            <script>
+                            $( "#delete" ).click(function() {
+                                $("#request-header").html(
+                                    "<span class=\"key\">Method</span>: <span class=\"string\">DELETE</span>\n" +
+                                    "<span class=\"key\">Path</span>: <span class=\"string\">/api/v1/movies/103</span>"
+                                );
+                                $("#request").html('');
+                                restCall("/api/v1/movies/103", "DELETE");
+                            });
+                            </script>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <code id="head_req" class="button primary small">HEAD</code>
+                        </td>
+                        <td>Get a movie</td>
+                            <script>
+                            $( "#head_req" ).click(function() {
+                                $("#request-header").html(
+                                    "<span class=\"key\">Method</span>: <span class=\"string\">HEAD</span>\n" +
+                                    "<span class=\"key\">Path</span>: <span class=\"string\">/api/v1/movies/103</span>"
+                                );
+                                $("#request").html('');
+                                restCall("/api/v1/movies/103", "HEAD");
+                            });
+                            </script>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Request</h5>
+                        <span class="card-text">Header</span>
+                        <pre><code id="request-header"></code></pre>
+                        <span class="card-text">Body</span>
+                        <pre><code id="request"></code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Response</h5>
+                        <span class="card-text">Header</span>
+                        <pre><code id="response-header"></code></pre>
+                        <span class="card-text">Data</span>
+                        <pre><code id="response"></code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h3><a name="create-session">Create a session</a></h3>
+        <h5>Work In Progress</h5>
+
+    </div>
+    <div class="container">
+        <h3>What is a URL?</h3>
+        <p>To learn about the URL, visit <a href="https://sitechecker.pro/what-is-url/">SiteChecker</a>.</p>
+        <p>Here is a demonstration of different parts of a URL:</p>
+        <img src="assets/images/url-structure.jpg" class="img-fluid" alt="URL structure" style="width: 100%;">
+    </div>
+</section>
+
+}

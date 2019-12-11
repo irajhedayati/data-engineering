@@ -1,0 +1,14 @@
+@(links: List[String] = List())
+@defining(play.core.PlayVersion.current) { version =>
+<h3>Table of Contents</h3>
+<ul>
+  <li><a href="@routes.HomeController.index">Welcome</a>
+  <li><a href="@routes.WebServiceController.index">Web Services</a>
+</ul>
+<h3>Related Resources</h3>
+<ul>
+  @for(link <- links) {
+  <li><a href="@{link.split('|')(0)}">@{link.split('|')(1)}</a></li>
+  }
+</ul>
+}

@@ -1,0 +1,78 @@
+@namespace("com.paytmlabs")
+protocol Signal {
+
+  record PaymentNotify {
+    union { null, string } version;
+    union { null, string } createdTime;
+    union { null, string } merchantId;
+    union { null, string } acquirementId;
+    union { null, string } merchantTransId;
+    union { null, string } orderExtendInfo;
+    union { null, PaymentView } paymentView;
+    union { null, OrderAmount } orderAmount;
+    union { null, PayResult } payResult;
+    union { null, int } requeCount;
+    union { null, string } extendInfo;
+    union { null, string } productCode;
+    union { null, SellerInfo } sellerInfo;
+    union { null, BuyerInfo } buyerInfo;
+  }
+
+  record BuyerInfo {
+    union { null, string } userId;
+    union { null, string } externalUserId;
+    union { null, string } externalUserType;
+    union { null, string } nickname;
+  }
+
+  record SellerInfo {
+    union { null, string } nickname;
+  }
+
+  record PayResult {
+    union { null, string } resultStatus;
+    union { null, string } resultCodeId;
+    union { null, string } resultCode;
+    union { null, string } resultMsg;
+  }
+
+  record OrderAmount {
+    union { null, string } value;
+    union { null, string } currency;
+  }
+
+  record PaymentView {
+    union { null, string } cashierRequestId;
+    union { null, string } paidTime;
+    union { null, boolean } revoked;
+    union { null, string } payRequestExtendInfo;
+    union { null, string } extendInfo;
+    union { null, array<union { null, PayOptionInfo }> } payOptionInfos;
+  }
+
+  record PayOptionInfo {
+    union { null, string } payMethod;
+    union { null, string } payOptionBillExtendInfo;
+    union { null, PayAmount } payAmount;
+    union { null, TransAmount } transAmount;
+    union { null, ChargeAmount } chargeAmount;
+    union { null, boolean } revoked;
+    union { null, string } extendInfo;
+  }
+
+  record ChargeAmount {
+    union { null, string } value;
+    union { null, string } currency;
+  }
+
+  record TransAmount {
+    union { null, string } value;
+    union { null, string } currency;
+  }
+
+  record PayAmount {
+    union { null, string } value;
+    union { null, string } currency;
+  }
+
+}

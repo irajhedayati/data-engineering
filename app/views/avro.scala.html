@@ -1,0 +1,60 @@
+@()(implicit req: RequestHeader)
+
+@main("Avro schema")("Avro schema"){
+<p>A set of tools to practice Avro schema</p>
+} {
+<section class="wrapper">
+    <div class="inner">
+        <header class="special">
+            <h2>Avro schema tools</h2>
+            <p>Tools to generate, test and learn Avro schema</p>
+        </header>
+        <div class="container">
+            <div class="row">
+                <div class="col" id="description">
+                    <h4>Infer Avro schema from JSON documents</h4>
+                    <p>First type in a JSON document in the left panel and then click on "Generate". The corresponding
+                        inferred Avro schema will show up in the left panel.<br>
+                        You could also use a JSON array as the input. In that case, the inferred schema is designed to
+                        accept all the items of the Array.<br>
+                        <strong>Note that only JSON record or JSON array of records is acceptable.</strong>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2" id="input-title">JSON document</div>
+                <div class="col-4">
+                    <select name="tool" id="tool">
+                        <option value="json_to_avro">Infer Avro from JSON</option>
+                        <option value="avro_to_idl">Convert Avro schema to IDL</option>
+                    </select>
+                </div>
+                <div class="col-3"><div id="generate" class="button primary fit">Generate</div></div>
+                <div class="col-3" id="output-title">Avro schema</div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="wrapper">
+    <div class="inner">
+        <div class="container">
+            <div class="row" style="height: 500px;">
+                <div class="col-6 left-editor" id="code-input"></div>
+                <div class="col-6 right-editor" id="code-output"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Ace JSON editor -->
+<script src='@routes.Assets.versioned("javascripts/ace/ace.js")' type="text/javascript" charset="utf-8"></script>
+
+<!-- JSON Beautifier -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.2/beautify.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.2/beautify-css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.10.2/beautify-html.min.js"></script>
+
+<!-- Page JS -->
+<script src='@routes.Assets.versioned("javascripts/avro.js")' type="text/javascript" charset="utf-8"></script>
+
+}

@@ -1,0 +1,21 @@
+@(message: String)(implicit req: RequestHeader)
+
+@main("Welcome")("Data Engineering Tools"){
+<p>A site to share contents, tutorials and online tools that I use in my day-to-day tasks as a data engineer.</p>
+}{
+@defining(play.core.PlayVersion.current) { version =>
+@message
+<section id="content">
+  <div class="wrapper doc">
+    <article>
+      <h2>Welcome to my tutorial pages!</h2>
+      <p>In this website, you will find contents, tutorials and online tools that I use in my day-to-day tasks
+        as a data engineer.</p>
+      <p>The primary reason of this site is to publish tools that helps me to understand, practice, or even
+        develop proof of concepts for my projects. There would be small tutorials and links to sources if you'd like
+        to learn more.</p>
+      </article>
+  </div>
+</section>
+}
+}
