@@ -8,12 +8,14 @@ import scala.jdk.CollectionConverters._
 class AvroSchemaToIdl(schema: Schema, protocol: String) {
 
   import AvroSchema._
-  val records: mutable.Stack[Schema] = mutable.Stack[Schema]()
+  private val recordsToProcessStack: mutable.Stack[Schema] = mutable.Stack[Schema]()
+  /** A set of records already processed. It is in form of `namespace.name` */
+  private val records: mutable.Set[String] = mutable.Set()
 
   def convert(): String = {
-    records.push(schema)
+    recordsToProcessStack.push(schema)
     var recordsInString = ""
-    while(records.nonEmpty) recordsInString = recordsInString + "\n" + recordToIdl()
+    while(recordsToProcessStack.nonEmpty) recordsInString = recordsInString + "\n" + recordToIdl()
     return s"""@namespace("${schema.getNamespace}")
               |protocol $protocol {
               |$recordsInString
@@ -23,16 +25,20 @@ class AvroSchemaToIdl(schema: Schema, protocol: String) {
   }
 
   def recordToIdl(): String = {
-    val schema: Schema = records.pop()
-    val fields = schema.getFields.asScala
-      .map(field => fieldToIdl(field))
-      .mkString("\n")
+    val schema: Schema = recordsToProcessStack.pop()
+    val recordName = "${schema.getNamespace}.${schema.getName}"
+    if (records.contains(recordName)) ""
+    else {
+      val fields = schema.getFields.asScala
+        .map(field => fieldToIdl(field))
+        .mkString("\n")
+      records.add(recordName)
+      s"""
+         |  record ${schema.getName} {
+         |$fields
 
-    s"""
-       |  record ${schema.getName} {
-       |$fields
-       |  }
-       |""".stripMargin
+         |""".stripMargin
+    }
   }
 
   def fieldToIdl(field: Schema.Field): String = s"    ${schemaTypeInIdl(field.schema())} ${field.name()};"
@@ -41,7 +47,7 @@ class AvroSchemaToIdl(schema: Schema, protocol: String) {
     case _ if field.isUnion && field.isNullable =>
       s"union { ${field.getTypes.asScala.map(schemaTypeInIdl).mkString(", ")} }"
     case _ if field.isRecord =>
-      records.push(field)
+      recordsToProcessStack.push(field)
       field.getName
     case _ if field.isArray => s"array<${schemaTypeInIdl(field.getElementType)}>"
     case _ => field.getType.toString.toLowerCase

@@ -61,7 +61,7 @@ object AvroSchema {
   }
 
   def createRecord(json: JsObject, name: String, nameSpace: Option[String] = None): Schema = {
-    val builder = SchemaBuilder.record(name.head.toUpper + name.tail).namespace(nameSpace.getOrElse("")).fields()
+    val builder = SchemaBuilder.record(s"${name.head.toUpper}${name.tail}").namespace(nameSpace.getOrElse("")).fields()
     json.fields.foreach { case (fieldName, fieldValue) =>
       builder.name(fieldName).`type`(createSchema(fieldValue, fieldName, nameSpace)).withDefault(null)
     }
