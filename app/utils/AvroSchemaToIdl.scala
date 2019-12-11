@@ -15,10 +15,10 @@ class AvroSchemaToIdl(schema: Schema, protocol: String) {
   def convert(): String = {
     recordsToProcessStack.push(schema)
     var recordsInString = ""
-    while(recordsToProcessStack.nonEmpty) recordsInString = recordsInString + "\n" + recordToIdl()
+    while(recordsToProcessStack.nonEmpty)
+      recordsInString = recordsInString + "\n" + recordToIdl()
     return s"""@namespace("${schema.getNamespace}")
-              |protocol $protocol {
-              |$recordsInString
+              |protocol $protocol {$recordsInString
               |}
               |""".stripMargin
     ""
@@ -26,7 +26,7 @@ class AvroSchemaToIdl(schema: Schema, protocol: String) {
 
   def recordToIdl(): String = {
     val schema: Schema = recordsToProcessStack.pop()
-    val recordName = "${schema.getNamespace}.${schema.getName}"
+    val recordName = s"${schema.getNamespace}.${schema.getName}"
     if (records.contains(recordName)) ""
     else {
       val fields = schema.getFields.asScala
