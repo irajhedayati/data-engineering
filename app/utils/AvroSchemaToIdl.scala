@@ -36,7 +36,7 @@ class AvroSchemaToIdl(schema: Schema, protocol: String) {
       s"""
          |  record ${schema.getName} {
          |$fields
-
+         |  }
          |""".stripMargin
     }
   }
