@@ -136,9 +136,13 @@ object AvroSchema {
   }
 
   def unionOfUnionAndNonUnion(union: Schema, nonUnion: Schema): Schema = {
-    val types = union.getTypes
-    types.add(nonUnion)
-    Schema.createUnion(types)
+    val types = union.getTypes.asScala :+ nonUnion
+    Schema.createUnion(types.asJava)
+  }
+
+  def unionOfNonUnionAndUnion(nonUnion: Schema, union: Schema): Schema = {
+    val types = Seq(nonUnion) ++ union.getTypes.asScala
+    Schema.createUnion(types.asJava)
   }
 
   def haveSameSchema(left: Schema.Field, right: Schema.Field): Boolean =
@@ -168,7 +172,7 @@ object AvroSchema {
 
     def makeNullable: Schema =
       if (schema.isNullable) schema
-      else if (schema.isUnion) unionOfUnionAndNonUnion(schema, SchemaBuilder.builder().nullType())
+      else if (schema.isUnion) unionOfNonUnionAndUnion(SchemaBuilder.builder().nullType(), schema)
       else SchemaBuilder.builder().unionOf().nullType().and().`type`(schema).endUnion()
 
     def isRecord: Boolean = schema.getType.equals(RECORD)
