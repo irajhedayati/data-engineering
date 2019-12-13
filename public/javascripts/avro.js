@@ -7,11 +7,13 @@ outputEditor.session.setMode("ace/mode/json");
 // Tool selection
 var inputTitles = {
     json_to_avro:"JSON document",
-    avro_to_idl:"Avro schema"
+    avro_to_idl:"Avro schema",
+    idl_to_avro:"Avro IDL"
 }
 var outputTitles = {
     json_to_avro:"Avro schema",
-    avro_to_idl:"Avro IDL"
+    avro_to_idl:"Avro IDL",
+    idl_to_avro:"Avro schema"
 }
 var descriptions = {
     json_to_avro: `<h4>Infer Avro schema from JSON documents</h4>
@@ -25,21 +27,27 @@ var descriptions = {
                 <p>Type in the Avro schema in the left panel and click "Generate". The equivalent Avro IDL will be
                 generate on the right side.<br>
                 <strong>The name space and protocol is given a default value and namespace is set to "null"</strong>
-                </p>`
+                </p>`,
+    idl_to_avro: `<h4>Convert Avro IDL to Avro schema</h4>
+                <p>Type in the Avro IDL in the left panel and click "Generate". The equivalent Avro schema protocol w
+                ill be generate on the right side.<br></p>`
 }
-var endpoints = {
-    json_to_avro: jsRoutes.controllers.AvroController.avroFromJsonDocument(),
-    avro_to_idl: jsRoutes.controllers.AvroController.idlFromAvro()
+var inputCodeFormats = {
+    json_to_avro: "ace/mode/json",
+    avro_to_idl: "ace/mode/json",
+    idl_to_avro: "ace/mode/c_cpp"
 }
 var outputCodeFormats = {
     json_to_avro: "ace/mode/json",
-    avro_to_idl: "ace/mode/c_cpp"
+    avro_to_idl: "ace/mode/c_cpp",
+    idl_to_avro: "ace/mode/json"
 }
 $('#tool').change(function () {
     $('#input-title').html(inputTitles[$('#tool').val()]);
     $('#output-title').html(outputTitles[$('#tool').val()]);
     $('#description').html(descriptions[$('#tool').val()]);
     outputEditor.session.setMode(outputCodeFormats[$('#tool').val()]);
+    inputEditor.session.setMode(inputCodeFormats[$('#tool').val()]);
 });
 
 // Generate functionality
@@ -62,8 +70,43 @@ var restCall = function(restRoute, beautify) {
 
 $( "#generate" ).click(function() {
     if ($('#tool').val() == 'json_to_avro') {
-        restCall(jsRoutes.controllers.AvroController.avroFromJsonDocument(), true)
+        jsRoutes.controllers.AvroController.avroFromJsonDocument().ajax({
+            data: inputEditor.getValue(),
+            success: function(data, textStatus, request) {
+                outputEditor.setValue(js_beautify(data));
+            },
+            error: function(error) {
+                alert('Error in converting values. Check the input.');
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
     } else if ($('#tool').val() == 'avro_to_idl') {
-        restCall(jsRoutes.controllers.AvroController.idlFromAvro(), false)
+        jsRoutes.controllers.AvroController.idlFromAvro().ajax({
+            data: inputEditor.getValue(),
+            success: function(data, textStatus, request) {
+                outputEditor.setValue(data);
+            },
+            error: function(error) {
+                alert('Error in converting values. Check the input.');
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    } else if ($('#tool').val() == 'idl_to_avro') {
+        jsRoutes.controllers.AvroController.avroFromIdl().ajax({
+            data: inputEditor.getValue(),
+            success: function(data, textStatus, request) {
+                outputEditor.setValue(js_beautify(data));
+            },
+            error: function(error) {
+                alert('Error in converting values. Check the input.');
+            },
+            headers: {
+                'Content-Type': 'text/plain'
+            }
+        });
     }
 } );

@@ -43,7 +43,8 @@
     <!-- Embedded Javascript router -->
     @helper.javascriptRouter("jsRoutes")(
         routes.javascript.AvroController.avroFromJsonDocument,
-        routes.javascript.AvroController.idlFromAvro
+        routes.javascript.AvroController.idlFromAvro,
+        routes.javascript.AvroController.avroFromIdl
     )
 
     <!-- Code box -->

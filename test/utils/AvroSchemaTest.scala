@@ -132,4 +132,24 @@ class AvroSchemaTest extends PlaySpec {
       result.isNullable mustBe true
     }
   }
+
+  "Avro IDL" must {
+    "generate proper schema" in {
+      val idl =
+        """
+          |@namespace("null")
+          |protocol AvroSchemaTool {
+          |
+          |  record TestObject {
+          |    TestObject2 name;
+          |  }
+          |  record TestObject2 {
+          |    int age;
+          |  }
+          |
+          |}
+          |""".stripMargin
+      println(AvroSchema.idlToSchema(idl))
+    }
+  }
 }

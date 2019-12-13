@@ -24,4 +24,9 @@ class AvroController @Inject()(cc: ControllerComponents) extends AbstractControl
     import AvroSchema._
     Ok(parser.parse(jsonDocument).toIdl("AvroSchemaTool"))
   }
+
+  def avroFromIdl(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    val idl: String = request.body.asText.get
+    Ok(AvroSchema.idlToSchema(idl))
+  }
 }

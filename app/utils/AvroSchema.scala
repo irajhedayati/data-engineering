@@ -1,6 +1,9 @@
 package utils
 
+import java.io.ByteArrayInputStream
+
 import org.apache.avro.Schema.Type._
+import org.apache.avro.compiler.idl.Idl
 import org.apache.avro.{Schema, SchemaBuilder}
 import play.api.libs.json._
 
@@ -63,7 +66,12 @@ object AvroSchema {
   def createRecord(json: JsObject, name: String, nameSpace: Option[String] = None): Schema = {
     val builder = SchemaBuilder.record(s"${name.head.toUpper}${name.tail}").namespace(nameSpace.getOrElse("")).fields()
     json.fields.foreach { case (fieldName, fieldValue) =>
-      builder.name(fieldName).`type`(createSchema(fieldValue, fieldName, nameSpace)).withDefault(null)
+      val (validFieldName, doc) =
+        if (fieldName.contains("."))
+          (fieldName.replace(".", "_"),
+            s"The original field name was $fieldName but '.' is not accepted in the field name of Avro record")
+        else (fieldName, "")
+      builder.name(validFieldName).doc(doc).`type`(createSchema(fieldValue, validFieldName, nameSpace)).withDefault(null)
     }
     builder.endRecord()
   }
@@ -185,4 +193,7 @@ object AvroSchema {
 
   }
 
+  def idlToSchema(in: String): String = {
+    new Idl(new ByteArrayInputStream(in.getBytes)).CompilationUnit().toString(true)
+  }
 }
