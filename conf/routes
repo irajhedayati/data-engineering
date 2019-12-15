@@ -7,6 +7,7 @@
 GET     /                                   controllers.HomeController.index
 GET     /ws                                 controllers.WebServiceController.index
 GET     /avro                               controllers.AvroController.index
+GET     /json                               controllers.JsonController.index
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file                       controllers.Assets.versioned(path="/public", file: Asset)
