@@ -35,7 +35,7 @@ object AvroSchema {
         .foldLeft(createDummyRecordSchema(name)) { (schema, aRecord) =>
           mergeRecordSchema(schema, createRecord(aRecord.as[JsObject], name))
         }
-    case _ => throw new IllegalArgumentException("The input message should be a JSON object")
+    case _ => throw new IllegalArgumentException("The input message should be a JSON object or a JSON array")
   }
 
   def apply(json: JsValue, name: String, nameSpace: String): Schema = json match {
@@ -45,7 +45,7 @@ object AvroSchema {
         .foldLeft(createDummyRecordSchema(name, Some(nameSpace))) { (schema, aRecord) =>
           mergeRecordSchema(schema, createRecord(aRecord.as[JsObject], name, Some(nameSpace)))
         }
-    case _ => throw new IllegalArgumentException("The input message should be a JSON object")
+    case _ => throw new IllegalArgumentException("The input message should be a JSON object or a JSON array")
   }
 
   def createSchema(json: JsValue, name: String, namespace: Option[String], isArrayItem: Boolean = false): Schema = {
@@ -103,7 +103,8 @@ object AvroSchema {
           b.name(fieldName).`type`(field.schema()).withDefault(null)
         case (b, (fieldName, existingField :: newField :: Nil)) if haveSameSchema(newField, existingField) =>
           b.name(fieldName).`type`(existingField.schema()).withDefault(null)
-        case (b, (fieldName, existingField :: newField :: Nil)) if existingField.schema().getTypesWithoutNull.isRecord =>
+        case (b, (fieldName, existingField :: newField :: Nil))
+          if existingField.schema().getTypesWithoutNull.isRecord && newField.schema().getTypesWithoutNull.isRecord=>
           b
             .name(fieldName)
             .`type`(
@@ -131,6 +132,7 @@ object AvroSchema {
   }
 
   def unionOfTwoFields(left: Schema, right: Schema): Schema = {
+    if (right.getType.equals(Schema.Type.NULL)) return unionOfTwoFields(right, left)
     if (!left.isUnion && !right.isUnion) {
       SchemaBuilder.unionOf().`type`(left).and().`type`(right).endUnion()
     } else if (left.isUnion && !right.isUnion) {
@@ -145,7 +147,7 @@ object AvroSchema {
 
   def unionOfUnionAndNonUnion(union: Schema, nonUnion: Schema): Schema = {
     val types = union.getTypes.asScala :+ nonUnion
-    Schema.createUnion(types.asJava)
+    Schema.createUnion(types.distinct.asJava)
   }
 
   def unionOfNonUnionAndUnion(nonUnion: Schema, union: Schema): Schema = {
