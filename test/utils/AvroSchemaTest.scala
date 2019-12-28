@@ -1,7 +1,9 @@
 package utils
 
-import org.apache.avro.SchemaBuilder
+import org.apache.avro.{Schema, SchemaBuilder}
 import org.scalatestplus.play.PlaySpec
+import play.api.libs.json.{JsObject, Json}
+import scala.jdk.CollectionConverters._
 
 class AvroSchemaTest extends PlaySpec {
 
@@ -44,8 +46,8 @@ class AvroSchemaTest extends PlaySpec {
         .endRecord()
 
       val merged = SchemaBuilder.record("ConfigData").fields()
-        .name("monthly_count").`type`(SchemaBuilder.builder().stringType().makeNullable).withDefault(null)
         .name("daily_count").`type`(SchemaBuilder.builder().stringType().makeNullable).withDefault(null)
+        .name("monthly_count").`type`(SchemaBuilder.builder().stringType().makeNullable).withDefault(null)
         .endRecord()
 
       a mergeWith b mustBe merged
@@ -76,12 +78,73 @@ class AvroSchemaTest extends PlaySpec {
       b mergeWith a mustBe b
     }
 
+    "A record with a union where union has a record of same type" in {
+      val recordA = SchemaBuilder.record("Product").fields()
+        .name("Category_ID_Tree").`type`(SchemaBuilder.builder().stringType().makeNullable).noDefault()
+        .endRecord()
+      val unionWithRecordA = SchemaBuilder.unionOf()
+        .record("Product").fields()
+        .name("AB_Experiment__Product_").`type`(SchemaBuilder.builder().stringType().makeNullable).noDefault()
+        .endRecord()
+        .and()
+        .array().items().nullType()
+        .endUnion()
+
+      val expected = SchemaBuilder.unionOf()
+        .record("Product").fields()
+        .name("AB_Experiment__Product_").`type`(SchemaBuilder.builder().stringType().makeNullable).withDefault(null)
+        .name("Category_ID_Tree").`type`(SchemaBuilder.builder().stringType().makeNullable).withDefault(null)
+        .endRecord()
+        .and()
+        .array().items().nullType()
+        .endUnion()
+
+      recordA mergeWith unionWithRecordA mustBe expected
+      unionWithRecordA mergeWith recordA mustBe expected
+    }
+
     "Array of null and array of nullable" in {
       val a = SchemaBuilder.array().items(SchemaBuilder.builder().nullType())
       val b = SchemaBuilder.array().items(SchemaBuilder.builder().stringType().makeNullable)
 
       a mergeWith b mustBe b
       b mergeWith a mustBe b
+    }
+
+    "Array with nonArray and not nullable and not union" in {
+      val a = SchemaBuilder.array().items(SchemaBuilder.builder().stringType().makeNullable)
+      val b = SchemaBuilder.builder().stringType()
+
+      a mergeWith b mustBe SchemaBuilder.unionOf().`type`(a).and().`type`(b).endUnion()
+      b mergeWith a mustBe SchemaBuilder.unionOf().`type`(b).and().`type`(a).endUnion()
+    }
+
+    "Array with nonArray and     nullable and not union" in {
+      val a = SchemaBuilder.array().items(SchemaBuilder.builder().stringType().makeNullable)
+      val b = SchemaBuilder.builder().nullType()
+
+      a mergeWith b mustBe a.makeNullable
+      b mergeWith a mustBe a.makeNullable
+    }
+
+    "Array with nonArray and     nullable and     union" in {
+      val a = SchemaBuilder.array().items(SchemaBuilder.builder().stringType().makeNullable)
+      val b = SchemaBuilder.unionOf().stringType().and().intType().endUnion().makeNullable
+      val expected = Schema.createUnion((Seq(a) ++ b.getTypesWithoutNull.getTypes.asScala).asJava).makeNullable
+      val expectedReverted = Schema.createUnion((b.getTypesWithoutNull.getTypes.asScala ++ Seq(a)).asJava).makeNullable
+
+      a mergeWith b mustBe expected
+      b mergeWith a mustBe expectedReverted
+    }
+
+    "Array with nonArray and not nullable and     union" in {
+      val a = SchemaBuilder.array().items(SchemaBuilder.builder().stringType().makeNullable)
+      val b = SchemaBuilder.unionOf().stringType().and().intType().endUnion()
+      val expected = Schema.createUnion((Seq(a) ++ b.getTypes.asScala).asJava)
+      val expectedReverted = Schema.createUnion((b.getTypes.asScala ++ Seq(a)).asJava)
+
+      a mergeWith b mustBe expected
+      b mergeWith a mustBe expectedReverted
     }
 
     "Nested types" in {
@@ -112,7 +175,6 @@ class AvroSchemaTest extends PlaySpec {
         .makeNullable
     }
   }
-
 
   "Avro schema extract types not null" must {
     "return the main schema of a nullable type" in {
@@ -150,6 +212,43 @@ class AvroSchemaTest extends PlaySpec {
           |}
           |""".stripMargin
       println(AvroSchema.idlToSchema(idl))
+    }
+
+    "Union of union and non-Union" must {
+      "If non-Union is a record and a record of same type is in the list, should merge them" in {
+        val unionType = SchemaBuilder.unionOf()
+          .stringType().and()
+          .intType().and()
+          .record("Event_label").fields().endRecord()
+          .endUnion()
+        val nonUnionType = SchemaBuilder.record("Event_label").fields()
+          .name("filters").`type`(Schema.create(Schema.Type.STRING).makeNullable).withDefault(null)
+          .name("type").`type`(Schema.create(Schema.Type.STRING).makeNullable).withDefault(null)
+          .endRecord()
+        AvroSchema.unionOfUnionAndNonUnion(unionType, nonUnionType) mustBe SchemaBuilder.unionOf()
+          .stringType().and()
+          .intType().and()
+          .`type`(nonUnionType)
+          .endUnion()
+      }
+    }
+
+    "Create record" must {
+      "If thre is an empty key, ignore it" in {
+        val json = Json.parse(
+          """
+            |{
+            |  "": "",
+            |  "event": "savings_account_tab_clicked",
+            |  "screenName": "/bank/savings-account"
+            |}
+            |""".stripMargin)
+        AvroSchema.createRecord(json.as[JsObject], "Payload") mustBe SchemaBuilder.record("Payload")
+          .fields()
+          .name("event").`type`(Schema.create(Schema.Type.STRING).makeNullable).withDefault(null)
+          .name("screenName").`type`(Schema.create(Schema.Type.STRING).makeNullable).withDefault(null)
+          .endRecord()
+      }
     }
   }
 }

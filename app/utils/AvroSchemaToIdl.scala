@@ -1,6 +1,6 @@
 package utils
 
-import org.apache.avro.Schema
+import org.apache.avro.{JsonProperties, Schema}
 
 import scala.collection.mutable
 import scala.jdk.CollectionConverters._
@@ -17,11 +17,10 @@ class AvroSchemaToIdl(schema: Schema, protocol: String) {
     var recordsInString = ""
     while(recordsToProcessStack.nonEmpty)
       recordsInString = recordsInString + "\n" + recordToIdl()
-    return s"""@namespace("${schema.getNamespace}")
+    s"""@namespace("${schema.getNamespace}")
               |protocol $protocol {$recordsInString
               |}
               |""".stripMargin
-    ""
   }
 
   def recordToIdl(): String = {
@@ -29,19 +28,26 @@ class AvroSchemaToIdl(schema: Schema, protocol: String) {
     val recordName = s"${schema.getNamespace}.${schema.getName}"
     if (records.contains(recordName)) ""
     else {
-      val fields = schema.getFields.asScala
-        .map(field => fieldToIdl(field))
-        .mkString("\n")
+      val fields = schema.getFields.asScala.sortBy(_.name().toLowerCase()).map(field => fieldToIdl(field)).mkString("\n")
       records.add(recordName)
-      s"""
-         |  record ${schema.getName} {
+      s"""  record ${schema.getName} {
          |$fields
          |  }
          |""".stripMargin
     }
   }
 
-  def fieldToIdl(field: Schema.Field): String = s"    ${schemaTypeInIdl(field.schema())} ${field.name()};"
+  val keywords: Seq[String] = Schema.Type.values().map(_.getName.toLowerCase())
+
+  def fieldToIdl(field: Schema.Field): String = {
+    val doc = if (field.doc() != null && field.doc().nonEmpty) s" // ${field.doc()}" else ""
+    val defaultValue = if (field.hasDefaultValue) " = " + extractDefaultValue(field.defaultVal()) else ""
+    val fieldName = if (keywords.contains(field.name().toLowerCase())) s"`${field.name()}`" else field.name()
+    s"    ${schemaTypeInIdl(field.schema())} $fieldName$defaultValue;$doc"
+  }
+
+  def extractDefaultValue(field: AnyRef): String =
+    if (field.isInstanceOf[JsonProperties.Null]) "null" else ""
 
   def schemaTypeInIdl(field: Schema): String = field match {
     case _ if field.isUnion && field.isNullable =>

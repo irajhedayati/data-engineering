@@ -8,13 +8,14 @@ import org.apache.avro.{Schema, SchemaBuilder}
 import play.api.libs.json._
 
 import scala.jdk.CollectionConverters._
+import scala.util.matching.Regex
 
 /**
  * Future features, add categorization (ENUM) for values less than 10
  */
 object AvroSchema {
 
-  private val floatingPointPattern = "[-+]?[0-9]*\\.[0-9]+".r
+  val floatingPointPattern: Regex = "[-+]?[0-9]*\\.[0-9]+".r
 
   /**
    * Create an Avro schema from a JSON object. It only accepts an object or an array of objects.
@@ -56,7 +57,7 @@ object AvroSchema {
       case fieldValue: JsNumber if fieldValue.value.isValidInt => SchemaBuilder.builder().intType().makeNullable
       case _: JsNumber => SchemaBuilder.builder().longType().makeNullable
       case _: JsBoolean => SchemaBuilder.builder().booleanType().makeNullable
-      case _: JsObject if isArrayItem && name.endsWith("s") =>createRecord(json.as[JsObject], name.init, namespace).makeNullable
+      case _: JsObject if isArrayItem && name.endsWith("s") => createRecord(json.as[JsObject], name.init, namespace).makeNullable
       case _: JsObject => createRecord(json.as[JsObject], name, namespace).makeNullable
       case _: JsArray => createArray(json.as[JsArray], name, namespace).makeNullable
       case _ => SchemaBuilder.builder().nullType()
@@ -65,15 +66,25 @@ object AvroSchema {
 
   def createRecord(json: JsObject, name: String, nameSpace: Option[String] = None): Schema = {
     val builder = SchemaBuilder.record(s"${name.head.toUpper}${name.tail}").namespace(nameSpace.getOrElse("")).fields()
-    json.fields.foreach { case (fieldName, fieldValue) =>
-      val (validFieldName, doc) =
-        if (fieldName.contains("."))
-          (fieldName.replace(".", "_"),
-            s"The original field name was $fieldName but '.' is not accepted in the field name of Avro record")
-        else (fieldName, "")
-      builder.name(validFieldName).doc(doc).`type`(createSchema(fieldValue, validFieldName, nameSpace)).withDefault(null)
-    }
+    json.fields
+      .filter(_._1.nonEmpty)
+      .map { case (fieldName, fieldValue) =>
+        val (validFieldName, doc) = sanitizeFieldName(fieldName)
+        (validFieldName, fieldValue, doc)
+      }
+      .sortBy(_._1)
+      .foreach { case (fieldName, fieldValue, doc) =>
+        val fieldSchema = createSchema(fieldValue, fieldName, nameSpace)
+        builder.name(fieldName).doc(doc).`type`(fieldSchema).withDefault(null)
+      }
     builder.endRecord()
+  }
+
+  def sanitizeFieldName(fieldName: String): (String, String) = {
+    val sanitizedFieldName = fieldName.replaceAll("[^A-Za-z0-9_]", "_")
+    if (sanitizedFieldName.equals(fieldName)) (fieldName, "")
+    else (sanitizedFieldName, s"The original field name was '$fieldName' but some characters is not accepted in " +
+      s"the field name of Avro record")
   }
 
   def createArray(json: JsArray, name: String, namespace: Option[String]): Schema = json.value.toList match {
@@ -88,23 +99,25 @@ object AvroSchema {
    * Merges the fields of the right side into the fields of the left side.
    * - If the field does not exist in the left, just add it
    *
-   * @param left   the base record
-   * @param right  the new record to be merged with the base record
+   * @param left  the base record
+   * @param right the new record to be merged with the base record
    * @return
    */
   private def mergeRecordSchema(left: Schema, right: Schema): Schema = {
-    val leftKeyed = left.getFields.asScala.map(f => f.name() -> f).toSeq
+    val leftKeyed: Seq[(String, Schema.Field)] = left.getFields.asScala.map(f => f.name() -> f).toSeq
     val rightKeyed: Seq[(String, Schema.Field)] = right.getFields.asScala.map(f => f.name() -> f).toSeq
     val builder = SchemaBuilder.record(left.getName).namespace(left.getNamespace).fields()
-    (leftKeyed ++ rightKeyed).groupBy(_._1)
-      .view.mapValues(_.map(_._2))
+    val x: Map[String, Seq[(String, Schema.Field)]] = (leftKeyed ++ rightKeyed).groupBy(_._1)
+    val y: Seq[(String, Seq[Schema.Field])] = x.map(a => (a._1, a._2.map(_._2))).toSeq.sortBy(_._1)
+    y
       .foldLeft(builder) {
+        /* Field is in the left not in the right */
         case (b, (fieldName, field :: Nil)) =>
           b.name(fieldName).`type`(field.schema()).withDefault(null)
         case (b, (fieldName, existingField :: newField :: Nil)) if haveSameSchema(newField, existingField) =>
           b.name(fieldName).`type`(existingField.schema()).withDefault(null)
         case (b, (fieldName, existingField :: newField :: Nil))
-          if existingField.schema().getTypesWithoutNull.isRecord && newField.schema().getTypesWithoutNull.isRecord=>
+          if existingField.schema().getTypesWithoutNull.isRecord && newField.schema().getTypesWithoutNull.isRecord =>
           b
             .name(fieldName)
             .`type`(
@@ -146,17 +159,27 @@ object AvroSchema {
   }
 
   def unionOfUnionAndNonUnion(union: Schema, nonUnion: Schema): Schema = {
-    val types = union.getTypes.asScala :+ nonUnion
+    val nonUnionAfterMerge = union.getTypes.asScala.filter(_.isRecord).filter(_.getFullName.equals(nonUnion.getFullName)).toList match {
+      case Nil => nonUnion
+      case matched :: Nil => mergeRecordSchema(matched, nonUnion)
+    }
+    val types = union.getTypes.asScala.filterNot(t => t.isRecord && t.getFullName.equals(nonUnion.getFullName)) :+ nonUnionAfterMerge
     Schema.createUnion(types.distinct.asJava)
   }
 
   def unionOfNonUnionAndUnion(nonUnion: Schema, union: Schema): Schema = {
-    val types = Seq(nonUnion) ++ union.getTypes.asScala
+    val nonUnionAfterMerge = union.getTypes.asScala.filter(_.isRecord).filter(_.getFullName.equals(nonUnion.getFullName)).toList match {
+      case Nil => nonUnion
+      case matched :: Nil => mergeRecordSchema(matched, nonUnion)
+    }
+    val types = Seq(nonUnionAfterMerge) ++ union.getTypes.asScala.filterNot(t => t.isRecord && t.getFullName.equals(nonUnion.getFullName))
     Schema.createUnion(types.asJava)
   }
 
   def haveSameSchema(left: Schema.Field, right: Schema.Field): Boolean =
     left.schema().getTypesWithoutNull.equals(right.schema().getTypesWithoutNull)
+
+  def recordMatcher(schema: Schema)(fullName: String): Boolean = schema.isRecord && schema.getFullName.equals(fullName)
 
   /*  Schema implicits */
   implicit class SchemaImprovement(schema: Schema) {
@@ -170,12 +193,50 @@ object AvroSchema {
     }
 
     def mergeWith(otherSchema: Schema): Schema = (schema, otherSchema) match {
+      // Same
       case (_, _) if schema.equals(otherSchema) => schema
+      // Record with Record
       case (_, _) if schema.isRecord && otherSchema.isRecord => mergeRecordSchema(schema, otherSchema)
+      // Record with a union of having same record
+      case (_, _) if schema.isRecord && otherSchema.isUnion &&
+        otherSchema.getTypes.asScala.exists(recordMatcher(_)(schema.getFullName)) =>
+        val matchingRecord = otherSchema.getTypes.asScala.find(recordMatcher(_)(schema.getFullName)).get
+        val unionWithOutMatchingRecord = Schema.createUnion(otherSchema.getTypes.asScala.filter(!recordMatcher(_)(schema.getFullName)).asJava)
+        unionOfNonUnionAndUnion(schema.mergeWith(matchingRecord), unionWithOutMatchingRecord)
+      // Record with a union of having same record
+      case (_, _) if otherSchema.isRecord && schema.isUnion &&
+        schema.getTypes.asScala.exists(recordMatcher(_)(otherSchema.getFullName)) =>
+        val matchingRecord = schema.getTypes.asScala.find(recordMatcher(_)(otherSchema.getFullName)).get
+        val unionWithOutMatchingRecord = Schema.createUnion(schema.getTypes.asScala.filter(!recordMatcher(_)(otherSchema.getFullName)).asJava)
+        unionOfNonUnionAndUnion(otherSchema.mergeWith(matchingRecord), unionWithOutMatchingRecord)
+      // nullable with nullable
       case (_, _) if schema.isUnion && schema.isNullable && otherSchema.isUnion && otherSchema.isNullable =>
         schema.getTypesWithoutNull.mergeWith(otherSchema.getTypesWithoutNull).makeNullable
+      // null with nullable
       case (_, _) if !schema.isUnion && schema.isNullable && otherSchema.isUnion && otherSchema.isNullable => otherSchema
+      // nullable with null
       case (_, _) if schema.isUnion && schema.isNullable && !otherSchema.isUnion && otherSchema.isNullable => schema
+      // Array with nonArray and not nullable and not union
+      case (_, _) if schema.isArray && !otherSchema.isArray && !otherSchema.isUnion && !otherSchema.isNullable =>
+        SchemaBuilder.unionOf().`type`(schema).and().`type`(otherSchema).endUnion()
+      case (_, _) if otherSchema.isArray && !schema.isArray && !schema.isUnion && !schema.isNullable =>
+        SchemaBuilder.unionOf().`type`(schema).and().`type`(otherSchema).endUnion()
+      // Array with nonArray and     nullable and not union
+      case (_, _) if schema.isArray && !otherSchema.isArray && !otherSchema.isUnion && otherSchema.isNullable =>
+        schema.makeNullable
+      case (_, _) if otherSchema.isArray && !schema.isArray && !schema.isUnion && schema.isNullable =>
+        otherSchema.makeNullable
+      // Array with nonArray and     nullable and     union
+      case (_, _) if schema.isArray && !otherSchema.isArray && otherSchema.isUnion && otherSchema.isNullable =>
+        schema.mergeWith(otherSchema.getTypesWithoutNull).makeNullable
+      case (_, _) if otherSchema.isArray && !schema.isArray && schema.isUnion && schema.isNullable =>
+        schema.getTypesWithoutNull.mergeWith(otherSchema).makeNullable
+      // Array with nonArray and not nullable and     union
+      case (_, _) if schema.isArray && !otherSchema.isArray && otherSchema.isUnion && !otherSchema.isNullable =>
+        unionOfNonUnionAndUnion(schema, otherSchema)
+      case (_, _) if otherSchema.isArray && !schema.isArray && schema.isUnion && !schema.isNullable =>
+        unionOfUnionAndNonUnion(schema, otherSchema)
+      // Array with Array
       case (_, _) if schema.isArray && otherSchema.isArray =>
         SchemaBuilder.array().items(schema.getElementType.mergeWith(otherSchema.getElementType).makeNullable)
     }
