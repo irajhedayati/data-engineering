@@ -42,6 +42,17 @@ var outputCodeFormats = {
     avro_to_idl: "ace/mode/c_cpp",
     idl_to_avro: "ace/mode/json"
 }
+var outputFileName = {
+    json_to_avro: "avro.avsc",
+    avro_to_idl: "avro.avdl",
+    idl_to_avro: "avro.avsc"
+}
+function getFileName() {
+    return outputFileName[$('#tool').val()];
+}
+function getOutputContent() {
+    return outputEditor.getValue()
+}
 $('#tool').change(function () {
     $('#input-title').html(inputTitles[$('#tool').val()]);
     $('#output-title').html(outputTitles[$('#tool').val()]);
