@@ -13,14 +13,18 @@ class AvroSchemaToIdl(schema: Schema, protocol: String) {
   private val records: mutable.Set[String] = mutable.Set()
 
   def convert(): String = {
+    s"""@namespace("${schema.getNamespace}")
+              |protocol $protocol {${convertJustRecord()}
+              |}
+              |""".stripMargin
+  }
+
+  def convertJustRecord(): String = {
     recordsToProcessStack.push(schema)
     var recordsInString = ""
     while(recordsToProcessStack.nonEmpty)
       recordsInString = recordsInString + "\n" + recordToIdl()
-    s"""@namespace("${schema.getNamespace}")
-              |protocol $protocol {$recordsInString
-              |}
-              |""".stripMargin
+    recordsInString
   }
 
   def recordToIdl(): String = {

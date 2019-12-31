@@ -1,10 +1,10 @@
 package controllers
 
 import javax.inject.{Inject, Singleton}
-import org.apache.avro.Schema
-import play.api.libs.json.Json
-import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents, Request}
-import utils.AvroSchema
+import org.apache.avro.{Protocol, Schema}
+import play.api.libs.json.{JsObject, JsValue, Json}
+import play.api.mvc._
+import utils.{AvroProtocolToIdl, AvroSchema}
 
 @Singleton
 class AvroController @Inject()(cc: ControllerComponents) extends AbstractController(cc)  {
@@ -19,10 +19,14 @@ class AvroController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def idlFromAvro(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    val jsonDocument: String = request.body.asJson.get.toString()
+    val jsonDocument: JsValue = request.body.asJson.get
+    val jsonDocumentAsString: String = jsonDocument.toString()
     val parser = new Schema.Parser()
     import AvroSchema._
-    Ok(parser.parse(jsonDocument).toIdl("AvroSchemaTool"))
+    if (jsonDocument.as[JsObject].keys.contains("protocol"))
+      Ok(new AvroProtocolToIdl(Protocol.parse(jsonDocumentAsString)).convert())
+    else
+      Ok(parser.parse(jsonDocumentAsString).toIdl("AvroSchemaTool"))
   }
 
   def avroFromIdl(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
