@@ -1,37 +1,18 @@
-# Play Hello World Web Tutorial for Scala
+This repository is dedicated to a set of tools that I implemented
+to support my courses I am teaching for Big Data Developer program.
 
-To follow the steps in this tutorial, you will need the correct version of Java and sbt. The template requires:
+It also includes some useful libraries that I may extract them in
+future in different projects.
 
-* Java Software Developer's Kit (SE) 1.8 or higher
-* sbt 0.13.15 or higher (we recommend 1.2.3) Note: if you downloaded this project as a zip file from https://developer.lightbend.com, the file includes an sbt distribution for your convenience.
+The content is published for public use on http://www.dataedu.ca
 
-To check your Java version, enter the following in a command window:
+Note that I am not an experienced web developer and there would be
+anti-patterns. Any help would be appreciated in that area.
 
-```bash
-java -version
-```
+Also, the site is for education and sharing purpose and funded
+personally which I can't guarantee any SLA. However, I'd update
+and improve it constantly.
 
-To check your sbt version, enter the following in a command window:
-
-```bash
-sbt sbt-version
-```
-
-If you do not have the required versions, follow these links to obtain them:
-
-* [Java SE](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-* [sbt](http://www.scala-sbt.org/download.html)
-
-## Build and run the project
-
-This example Play project was created from a seed template. It includes all Play components and an Akka HTTP server. The project is also configured with filters for Cross-Site Request Forgery (CSRF) protection and security headers.
-
-To build and run the project:
-
-1. Use a command window to change into the example project directory, for example: `cd play-scala-hello-world-web`
-
-2. Build the project. Enter: `sbt run`. The project builds and starts the embedded HTTP server. Since this downloads libraries and dependencies, the amount of time required depends partly on your connection's speed.
-
-3. After the message `Server started, ...` displays, enter the following URL in a browser: <http://localhost:9000>
-
-The Play application responds: `Welcome to the Hello World Tutorial!`
+If you have any suggestion, found any problem or feature request
+that is useful to have, feel free to open an issue or get in touch
+with me by email or through LinkedIn. It is not hard to find me.
