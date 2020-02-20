@@ -199,7 +199,7 @@ class AvroSchemaTest extends PlaySpec {
     "generate proper schema" in {
       val idl =
         """
-          |@namespace("null")
+          |@namespace("ca.dataedu")
           |protocol AvroSchemaTool {
           |
           |  record TestObject {
@@ -211,7 +211,27 @@ class AvroSchemaTest extends PlaySpec {
           |
           |}
           |""".stripMargin
-      println(AvroSchema.idlToSchema(idl))
+      AvroSchema.idlToSchema(idl) mustBe
+        """{
+          |  "protocol" : "AvroSchemaTool",
+          |  "namespace" : "ca.dataedu",
+          |  "types" : [ {
+          |    "type" : "record",
+          |    "name" : "TestObject",
+          |    "fields" : [ {
+          |      "name" : "name",
+          |      "type" : {
+          |        "type" : "record",
+          |        "name" : "TestObject2",
+          |        "fields" : [ {
+          |          "name" : "age",
+          |          "type" : "int"
+          |        } ]
+          |      }
+          |    } ]
+          |  } ],
+          |  "messages" : { }
+          |}""".stripMargin
     }
 
     "Union of union and non-Union" must {

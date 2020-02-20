@@ -24,6 +24,6 @@ lazy val root = (project in file("."))
 
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
-libraryDependencies += "org.apache.avro"        % "avro"                % "1.9.0"
-libraryDependencies += "org.apache.avro"        % "avro-tools"          % "1.9.0"
-libraryDependencies += "org.apache.avro"        % "avro-compiler"       % "1.9.0"
+libraryDependencies += "org.apache.avro"        % "avro"                % "1.9.0" exclude("com.fasterxml.jackson.core", "jackson-core")
+libraryDependencies += "org.apache.avro"        % "avro-tools"          % "1.9.0" exclude("com.fasterxml.jackson.core", "jackson-core")
+libraryDependencies += "org.apache.avro"        % "avro-compiler"       % "1.9.0" exclude("com.fasterxml.jackson.core", "jackson-core")
