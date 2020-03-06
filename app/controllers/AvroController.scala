@@ -1,7 +1,7 @@
 package controllers
 
 import javax.inject.{Inject, Singleton}
-import org.apache.avro.{Protocol, Schema}
+import org.apache.avro.{AvroTypeException, Protocol, Schema}
 import play.api.libs.json.{JsObject, JsValue, Json}
 import play.api.mvc._
 import utils.{AvroProtocolToIdl, AvroSchema}
@@ -25,8 +25,14 @@ class AvroController @Inject()(cc: ControllerComponents) extends AbstractControl
     import AvroSchema._
     if (jsonDocument.as[JsObject].keys.contains("protocol"))
       Ok(new AvroProtocolToIdl(Protocol.parse(jsonDocumentAsString)).convert())
-    else
-      Ok(parser.parse(jsonDocumentAsString).toIdl("AvroSchemaTool"))
+    else {
+      var text = ""
+      try {
+        Ok(parser.parse(jsonDocumentAsString).toIdl("AvroSchemaTool"))
+      } catch {
+        case e: AvroTypeException => BadRequest(e.getMessage)
+      }
+    }
   }
 
   def avroFromIdl(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>

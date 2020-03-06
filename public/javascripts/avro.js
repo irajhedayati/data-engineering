@@ -70,8 +70,8 @@ var restCall = function(restRoute, beautify) {
             if (beautify) outputEditor.setValue(js_beautify(data));
             else outputEditor.setValue(data);
         },
-        error: function(error) {
-            alert('Error in converting values. Check the input.');
+        error: function(xhr, status, error) {
+            alert('Error in converting values. Check the input:\n' + xhr.responseText);
         },
         headers: {
             'Content-Type': 'application/json'
@@ -86,8 +86,8 @@ $( "#generate" ).click(function() {
             success: function(data, textStatus, request) {
                 outputEditor.setValue(js_beautify(data));
             },
-            error: function(error) {
-                alert('Error in converting values. Check the input.');
+            error: function(xhr, status, error) {
+                alert('Error in converting values. Check the input:\n' + xhr.responseText);
             },
             headers: {
                 'Content-Type': 'application/json'
@@ -99,8 +99,8 @@ $( "#generate" ).click(function() {
             success: function(data, textStatus, request) {
                 outputEditor.setValue(data);
             },
-            error: function(error) {
-                alert('Error in converting values. Check the input.');
+            error: function(xhr, status, error) {
+                alert('Error in converting values. Check the input:\n' + xhr.responseText);
             },
             headers: {
                 'Content-Type': 'application/json'
@@ -112,8 +112,8 @@ $( "#generate" ).click(function() {
             success: function(data, textStatus, request) {
                 outputEditor.setValue(js_beautify(data));
             },
-            error: function(error) {
-                alert('Error in converting values. Check the input.');
+            error: function(xhr, status, error) {
+                alert('Error in converting values. Check the input.:\n' + xhr.responseText);
             },
             headers: {
                 'Content-Type': 'text/plain'
