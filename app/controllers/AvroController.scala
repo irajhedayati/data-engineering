@@ -2,7 +2,7 @@ package controllers
 
 import javax.inject.{Inject, Singleton}
 import org.apache.avro.{AvroTypeException, Protocol, Schema}
-import play.api.libs.json.{JsObject, JsValue, Json}
+import play.api.libs.json.{JsArray, JsObject, JsValue, Json}
 import play.api.mvc._
 import utils.{AvroProtocolToIdl, AvroSchema}
 
@@ -15,7 +15,10 @@ class AvroController @Inject()(cc: ControllerComponents) extends AbstractControl
 
   def avroFromJsonDocument(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     val jsonDocument = request.body.asJson.get
-    Ok(AvroSchema(Json.toJson(jsonDocument), "TestObject").toString())
+    if (jsonDocument.isInstanceOf[JsArray] && jsonDocument.as[JsArray].value.size > 1000)
+      BadRequest("The array size shouldn't exceed a 1000 records")
+    val output: String = AvroSchema(Json.toJson(jsonDocument), "TestObject").toString()
+    Ok(Json.parse(output))
   }
 
   def idlFromAvro(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
@@ -26,7 +29,6 @@ class AvroController @Inject()(cc: ControllerComponents) extends AbstractControl
     if (jsonDocument.as[JsObject].keys.contains("protocol"))
       Ok(new AvroProtocolToIdl(Protocol.parse(jsonDocumentAsString)).convert())
     else {
-      var text = ""
       try {
         Ok(parser.parse(jsonDocumentAsString).toIdl("AvroSchemaTool"))
       } catch {
