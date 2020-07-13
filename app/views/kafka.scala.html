@@ -1,0 +1,121 @@
+@()(implicit req: RequestHeader)
+
+@main("Kafka and Schema Registry")("Kafka and Schema Registry"){
+<p>A distributed streaming platform to build reliable and scalable data streaming applications.</p>
+}{
+@defining(play.core.PlayVersion.current) { version =>
+<section id="content">
+    <div class="wrapper doc">
+        <article>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+                        Kafka 1
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+                        Kafka 2
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
+                        Schema Registry
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="container"><div class="row"><div class="col-sm">
+                        <iframe
+                                src="https://docs.google.com/presentation/d/e/2PACX-1vS3TVL_BGr8IbNtjvWQ5bz8g6Qg6irmeyL4pyCiSYlW2o_3amjnwZesDG_CkT0ENMCsZ1o6kXFBCdgu/embed?start=false&loop=false&delayms=3000"
+                                frameborder="0" width="960" height="569" allowfullscreen="true"
+                                mozallowfullscreen="true" webkitallowfullscreen="true" title="Kafka - session 1">
+                        </iframe>
+                    </div></div></div>
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="container">
+                        <div class="row"><div class="col-sm">
+                            <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vS3TVL_BGr8IbNtjvWQ5bz8g6Qg6irmeyL4pyCiSYlW2o_3amjnwZesDG_CkT0ENMCsZ1o6kXFBCdgu/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="960" height="569" allowfullscreen="true"
+                                    mozallowfullscreen="true" webkitallowfullscreen="true" title="Kafka - session 1">
+                            </iframe>
+                        </div></div>
+                        <div class="row"><div class="col-sm">
+                            <h3>Tutorial</h3>
+                        </div></div>
+                        <div class="row"><div class="col-sm">
+                            <h4>Get Kafka up and running</h4>
+                            <p>You can start a single Kafka broker using either of the following distributions</p>
+                            <ul>
+                                <li>Apache Kafka</li>
+                                <li>
+                                    Confluent Kafka (refer to
+                                    <a href="https://docs.confluent.io/3.1.1/installation.html">Confluent web site</a>).
+                                    You can even use docker images or use docker-compose using the variety of options
+                                    provided on <a href="https://github.com/confluentinc/cp-all-in-one">confluentinc/cp-all-in-one</a>
+                                    GitHub repository.
+                                </li>
+                            </ul>
+                            In order to install Apache Kafka
+
+                            <h5>Step 1: download</h5>
+                            Download a version from <a href="https://kafka.apache.org/downloads">Apache Kafka</a> page
+                            and un-tar it.
+                            For example, for version 2.11
+                            <pre><code>
+                                tar -xf kafka_2.11-2.0.0.tgz .
+                                cd kafka_2.11-2.0.0
+                            </code></pre>
+
+                            <h5>Step 2: Start Zookeeper</h5>
+                            We know that Kafka depends on Zookeeper. If you already have a Zookeeper instance up and
+                            running, you can skip this step. Make sure you provide the running Zookeeper quorum in
+                            <strong>config/zookeeper.properties</strong> file.
+                            <pre><code>
+                                ./bin/zookeeper-server-start.sh config/zookeeper.properties
+                            </code></pre>
+
+                            <h5>Step 3: Start Kafka</h5>
+                            <pre><code>
+                                ./bin/kafka-server-start.sh config/server.properties
+                            </code></pre>
+
+                            To facilitate running commands, add the <code>bin</code> directory to your <code>$PATH</code>.
+                            <pre><code>
+                                export PATH=$PATH:$KAFKA_HOME/bin
+                            </code></pre>
+                        </div></div>
+                        <div class="row"><div class="col-sm">
+                        <p></p>
+                            <h4>Kafka Topics</h4>
+
+                            <iframe
+                                    width="960" height="569" src="https://www.youtube.com/embed/jaPDDpyyhRk"
+                                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen title="Kafka topics video tutorial"></iframe>
+                        </div></div>
+                        <div class="row"><div class="col-sm">
+
+
+                            <h4>Kafka consumer and producer</h4>
+                            <p>
+                            Source code on <a href="https://github.com/irajhedayati/mcit/tree/master/kafka-client" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">GitHub</a>
+                            </p>
+                            <iframe
+                                    width="960" height="569" src="https://www.youtube.com/embed/OPTMje7wKmU"
+                                    frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen title="Kafka consumer and producer tutorial"></iframe>
+                        </div></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"></div>
+            </div>
+        </article>
+    </div>
+</section>
+
+}
+}

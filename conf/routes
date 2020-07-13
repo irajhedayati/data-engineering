@@ -3,8 +3,8 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
-# An example controller showing a sample home page
 GET     /                                   controllers.HomeController.index
+GET     /kafka                              controllers.HomeController.kafka
 GET     /ws                                 controllers.WebServiceController.index
 GET     /avro                               controllers.AvroController.index
 GET     /json                               controllers.JsonController.index

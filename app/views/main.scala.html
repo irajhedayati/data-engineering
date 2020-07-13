@@ -1,10 +1,5 @@
 @(title: String)(bannerTitle: String)(bannerContent: Html)(content: Html)(implicit req: RequestHeader)
 
-@**************************
-* Industrious by TEMPLATED
-* templated.co @templatedco
-* Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
-**************************@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
@@ -25,6 +20,8 @@
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <link rel="stylesheet" href='@routes.Assets.versioned("assets/css/main.css")' />
+
+    <link href='@routes.Assets.versioned("stylesheets/bootstrap.min.css")' rel="stylesheet">
 
     <!-- Load JQuery before anything else -->
     <script src='@routes.Assets.versioned("assets/js/jquery.min.js")'></script>
@@ -132,5 +129,8 @@
 <script src='@routes.Assets.versioned("assets/js/util.js")'></script>
 <script src='@routes.Assets.versioned("assets/js/main.js")'></script>
 <script src='@routes.Assets.versioned("assets/js/myutils.js")'></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src='@routes.Assets.versioned("javascripts/bootstrap.min.js")'></script>
 </body>
 </html>

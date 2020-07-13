@@ -9,4 +9,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   def index(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.index(""))
   }
+
+  def kafka(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.kafka())
+  }
 }
