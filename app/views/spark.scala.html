@@ -1,0 +1,32 @@
+@()(implicit req: RequestHeader)
+
+@main("Spark")("Spark"){
+<p>Spark is a unified distributed data processing platform</p>
+}{
+@defining(play.core.PlayVersion.current) { version =>
+<section id="content">
+    <div class="wrapper doc">
+        <article>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="spark-intro-tab" data-toggle="tab" href="#spark-intro" role="tab" aria-controls="spark-intro" aria-selected="true">
+                        Spark Introduction
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="spark-intro" role="tabpanel" aria-labelledby="spark-intro-tab">
+                    <div class="container"><div class="row"><div class="col-sm">
+                        <iframe
+                                src="https://docs.google.com/presentation/d/e/2PACX-1vRM_OQ-BDieg_uWBmE0F8AgrV5Ufhdnbacl7D_nhuJ1qzXl9MR7QNkExQ_s-ljek0XFS9KU9uc4Mu-b/embed?start=false&loop=false&delayms=3000"
+                                frameborder="0" width="960" height="569" allowfullscreen="true"
+                                mozallowfullscreen="true" webkitallowfullscreen="true" title="An introduction to Spark"></iframe>
+                    </div></div></div>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+
+}
+}
