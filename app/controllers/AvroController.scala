@@ -18,7 +18,7 @@ class AvroController @Inject()(cc: ControllerComponents) extends AbstractControl
     if (jsonDocument.isInstanceOf[JsArray] && jsonDocument.as[JsArray].value.size > 1000)
       BadRequest("The array size shouldn't exceed a 1000 records")
     val output: String = AvroSchema(Json.toJson(jsonDocument), "TestObject").toString()
-    Ok(Json.parse(output))
+    Ok(output)
   }
 
   def idlFromAvro(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
