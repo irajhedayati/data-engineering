@@ -13,6 +13,16 @@
                         Spark Introduction
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="spark-core-app-tab" data-toggle="tab" href="#spark-core-app" role="tab" aria-controls="spark-core-app" aria-selected="true">
+                        Spark Core
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="spark-sql-tab" data-toggle="tab" href="#spark-sql" role="tab" aria-controls="spark-sql" aria-selected="true">
+                        Spark SQL
+                    </a>
+                </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="spark-intro" role="tabpanel" aria-labelledby="spark-intro-tab">
@@ -21,6 +31,184 @@
                                 src="https://docs.google.com/presentation/d/e/2PACX-1vRM_OQ-BDieg_uWBmE0F8AgrV5Ufhdnbacl7D_nhuJ1qzXl9MR7QNkExQ_s-ljek0XFS9KU9uc4Mu-b/embed?start=false&loop=false&delayms=3000"
                                 frameborder="0" width="960" height="569" allowfullscreen="true"
                                 mozallowfullscreen="true" webkitallowfullscreen="true" title="An introduction to Spark"></iframe>
+                    </div></div></div>
+                </div>
+                <div class="tab-pane fade" id="spark-core-app" role="tabpanel" aria-labelledby="spark-core-app-tab">
+                    <div class="container">
+                        <div class="row"><div class="col-sm">
+                            <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vRqWGyXVBLxt-cLpkWwRgtO0WSg3C4p_HWvTiZW80uNBXyPD2g_kPb7ghnNjD_Pw4kOUCLhppdWsvl_/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="960" height="569" allowfullscreen="true"
+                                    mozallowfullscreen="true" webkitallowfullscreen="true" title="Spark Core Application">
+                            </iframe>
+                        </div></div>
+                        <div class="row"><div class="col-sm">
+                            <h3>Tutorial</h3>
+                            <p>
+                                Here is a quick tutorial on how to start your first Spark application:
+                            </p>
+                            <p>
+                                <iframe
+                                    width="960" height="569" src="https://www.youtube.com/embed/tioyZRXKZdc" frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen title="Spark Core Application Tutorial">
+                                </iframe>
+                            </p>
+                        </div></div>
+                        <div class="row"><div class="col-sm">
+                            <h3>Tutorial on partitions</h3>
+                            <p>
+                                Here is a quick tutorial on how partitioning affects Spark jobs:
+                            </p>
+                            <p>
+                                <iframe
+                                    width="960" height="569" src="https://www.youtube.com/embed/oFutWpGlsvI" frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen title="Spark Partitions Tutorial">
+                                </iframe>
+                            </p>
+                        </div></div>
+                        <div class="row"><div class="col-sm">
+                            <h3>Repartitioning vs Coalesce</h3>
+
+                            <p>In a nutshell, when even distribution of data is desired, we should use "repartition"
+                                and when better performance is needed, we should use "coalesce".
+                            </p>
+                        </div></div>
+                        <div class="row"><div class="col-sm">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">repartition</th>
+                                    <th scope="col">coalesce</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row">Shuffle</th>
+                                    <td>YES</td>
+                                    <td>NO</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Even distribution</th>
+                                    <td>YES</td>
+                                    <td>NO</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div><div class="col-sm"></div>
+                        <div class="row"><div class="col-sm">
+                            <h4>A quick tutorial</h4>
+
+                            <pre><code>
+                                // A map from partition number to the number of elements to sample
+                                // i.e. we're going to take 44 from the first partition and 68 from the second and etc.
+                                val sampling = Map(
+                                    0 -> 44, 1 -> 68, 2 -> 87, 3 -> 10,
+                                    4 -> 13, 5 -> 104, 6 -> 77, 7 -> 85
+                                )
+                                val x0 = sc.parallelize(1 to 1000)
+                                // Each partition has 125 elements each
+                                x0.foreachPartition(x => println(s"====> ${x.toList.size}"))
+                                // Run the sampling
+                                val x1 = x0.mapPartitionsWithIndex((idx, data) => data.take(sampling(idx)))
+                                // print the initial distribution of data
+                                x1.foreachPartition(x => println(s"====> ${x.toList.size}"))
+                                // repartition and print the distribution of data
+                                x1.repartition(4).foreachPartition(x => println(s"====> ${x.toList.size}"))
+                                // coalesce and print the distribution of data
+                                x1.coalesce(4).foreachPartition(x => println(s"====> ${x.toList.size}"))
+                            </code></pre>
+
+                            <p>Here is the distribution of data after sampling.</p>
+
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Partition</th>
+                                    <th scope="col">0</th>
+                                    <th scope="col">1</th>
+                                    <th scope="col">2</th>
+                                    <th scope="col">3</th>
+                                    <th scope="col">4</th>
+                                    <th scope="col">5</th>
+                                    <th scope="col">6</th>
+                                    <th scope="col">7</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row"># of elements</th>
+                                    <td>10</td>
+                                    <td>44</td>
+                                    <td>13</td>
+                                    <td>68</td>
+                                    <td>77</td>
+                                    <td>87</td>
+                                    <td>104</td>
+                                    <td>85</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <p>Here is the distribution of data after repartition. It has even distribution of data</p>
+
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Partition</th>
+                                    <th scope="col">0</th>
+                                    <th scope="col">1</th>
+                                    <th scope="col">2</th>
+                                    <th scope="col">3</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row"># of elements</th>
+                                    <td>123</td>
+                                    <td>120</td>
+                                    <td>122</td>
+                                    <td>123</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+
+                            <p>Here is the distribution of data after coalesce. It doesn't have even distribution and
+                                the neighbor partitions are just merged
+                            </p>
+
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Partition</th>
+                                    <th scope="col">0 <br />(0 and 1 of original)</th>
+                                    <th scope="col">1 <br />(2 and 3 of original)</th>
+                                    <th scope="col">2 <br />(4 and 5 of original)</th>
+                                    <th scope="col">3 <br />(6 and 7 of original)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <th scope="row"># of elements</th>
+                                    <td>112</td>
+                                    <td>97</td>
+                                    <td>117</td>
+                                    <td>162</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div></div>
+                    </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="spark-sql" role="tabpanel" aria-labelledby="spark-sql-tab">
+                    <div class="container"><div class="row"><div class="col-sm">
+                        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQq3iibkdZJjDV9g5oG3wfHXml7LunQlxnMnsmkM93w-pf7YgtuFpwwcnQYK01YUKajmY_D2vDaZuqW/embed?start=false&loop=false&delayms=3000"
+                                frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true"
+                                webkitallowfullscreen="true" title="Spark SQL application"></iframe>
                     </div></div></div>
                 </div>
             </div>
