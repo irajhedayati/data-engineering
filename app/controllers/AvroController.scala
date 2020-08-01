@@ -1,7 +1,7 @@
 package controllers
 
 import javax.inject.{Inject, Singleton}
-import org.apache.avro.{AvroTypeException, Protocol, Schema}
+import org.apache.avro.{AvroTypeException, Protocol, Schema, SchemaParseException}
 import play.api.libs.json.{JsArray, JsObject, JsValue, Json}
 import play.api.mvc._
 import utils.{AvroProtocolToIdl, AvroSchema}
@@ -33,6 +33,7 @@ class AvroController @Inject()(cc: ControllerComponents) extends AbstractControl
         Ok(parser.parse(jsonDocumentAsString).toIdl("AvroSchemaTool"))
       } catch {
         case e: AvroTypeException => BadRequest(e.getMessage)
+        case e: SchemaParseException => BadRequest(e.getMessage)
       }
     }
   }
