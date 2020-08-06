@@ -1,0 +1,91 @@
+@()(implicit req: RequestHeader)
+
+@main("AWS")("Cloud computing with AWS"){
+<p>Amazon Web Services (AWS) is the world’s most comprehensive and broadly adopted cloud platform, offering over 175 fully featured services from data centers globally. </p>
+}{
+@defining(play.core.PlayVersion.current) { version =>
+<section id="content">
+    <div class="wrapper doc">
+        <article>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="aws-intro-tab" data-toggle="tab" href="#aws-intro" role="tab" aria-controls="aws-intro" aria-selected="true">
+                        Introduction
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="aws-vpc-tab" data-toggle="tab" href="#aws-vpc" role="tab" aria-controls="aws-vpc" aria-selected="true">
+                        Infrastructure
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="aws-intro" role="tabpanel" aria-labelledby="aws-intro-tab">
+                    <div class="container">
+                        <div class="row"><div class="col-sm">
+                            <blockquote class="blockquote">
+                                <p class="mb-0">AWS infrastructure: https://www.infrastructure.aws</p>
+                            </blockquote>
+                        </div></div>
+                        <div class="row"><div class="col-sm">
+                            <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vTekiS2wKxH3A4NY4F3sDwq4m16PnYiqOwHS7MtMW8mds-Q502968ttnMd0hQXKXYuKUhocvZdIvSHc/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="960" height="569" allowfullscreen="true"
+                                    mozallowfullscreen="true" webkitallowfullscreen="true" title="An introduction to Cloud Computing"></iframe>
+                        </div></div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="aws-vpc" role="tabpanel" aria-labelledby="aws-vpc-tab">
+                    <div class="container">
+                        <div class="row"><div class="col-sm">
+                            <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vRB-g_0byX0IHunGrFIkMUOrwEiIXdbyZRm5TpVZijB1bCF_BI9BGpE-_zuWkPGUTkPpeDBaYo4luzh/embed?start=false&loop=false&delayms=3000" src="https://docs.google.com/presentation/d/e/2PACX-1vTekiS2wKxH3A4NY4F3sDwq4m16PnYiqOwHS7MtMW8mds-Q502968ttnMd0hQXKXYuKUhocvZdIvSHc/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="960" height="569" allowfullscreen="true"
+                                    mozallowfullscreen="true" webkitallowfullscreen="true" title="Deploy infrastructure"></iframe>
+                        </div></div>
+                        <div class="row"><div class="col-sm">
+                            <h4>Connect to a private subnet</h4>
+                            <p>
+                                Here we have an architecture of a two-tier application in which there is a public
+                                subnet with an instance running your web server which also has a public IP and a private
+                                subnet with an instance running your DB server and is not reachable from outside.
+                                <img src='@routes.Assets.versioned("images/private-public-subnets.png")'
+                                     width="650" height="412" alt="Private and Pubic subnets" />
+                            </p>
+                            <p>
+                                To connect to the instances in the private subnets, we use a special instance called
+                                <mark>bastion host</mark>. To more about them, refer to
+                                <a href="https://aws.amazon.com/quickstart/architecture/linux-bastion/">AWS documentation</a>.
+                            </p>
+                            <p>
+                                Here we take a simpler approach and we use the WS instance which is publicly acceccible
+                                as a "bastion host" to connect to the DB instance.
+                                In order to connect to the DB instance in the private subnet,
+                            </p>
+                            <ol>
+                                <li>Copy the private key associated to the DB instance to WS instance</li>
+                                <li>Connect to the WS instance</li>
+                                <li>From the WS instance, connect to the DB instance</li>
+                            </ol>
+                            <p>Assume that</p>
+                            <ul>
+                                <li>both machines are running Ubuntu instances</li>
+                                <li>the private key associated to WS instance is called <code>ws-private-key.pem</code></li>
+                                <li>the private key associated to DB instance is called <code>db-private-key.pem</code></li>
+                            </ul>
+                            <pre><code>
+                                localuser&#64;localmachine:~$ scp -i /path/to/ws-private-key.pem /path/to/db-private-key.pem ubuntu&#64;ws-ip:/home/ubuntu/
+                                localuser&#64;localmachine:~$ ssh -i /path/to/ws-private-key.pem ubuntu&#64;ws-ip
+                                ubuntu&#64;ws-ip:~$ ssh -i /home/ubuntu/db-private-key.pem ubuntu&#64;db-ip
+                                ubuntu&#64;db-ip:~$
+                            </code></pre>
+                        </div></div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>
+
+}
+}

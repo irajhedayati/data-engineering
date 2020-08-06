@@ -17,4 +17,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   def spark(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.spark())
   }
+
+  def aws(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.aws())
+  }
 }
