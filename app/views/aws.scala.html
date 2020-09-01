@@ -28,6 +28,11 @@
                         EMR
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="aws-kinesis-tab" data-toggle="tab" href="#aws-kinesis" role="tab" aria-controls="aws-kinesis" aria-selected="true">
+                        Kinesis
+                    </a>
+                </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="aws-intro" role="tabpanel" aria-labelledby="aws-intro-tab">
@@ -40,7 +45,7 @@
                         <div class="row"><div class="col-sm">
                             <iframe
                                     src="https://docs.google.com/presentation/d/e/2PACX-1vTekiS2wKxH3A4NY4F3sDwq4m16PnYiqOwHS7MtMW8mds-Q502968ttnMd0hQXKXYuKUhocvZdIvSHc/embed?start=false&loop=false&delayms=3000"
-                                    frameborder="0" width="960" height="569" allowfullscreen="true"
+                                    frameborder="0" width="960" height="569" allow="fullscreen"
                                     mozallowfullscreen="true" webkitallowfullscreen="true" title="An introduction to Cloud Computing"></iframe>
                         </div></div>
                         <div class="row"><div class="col-sm">
@@ -84,13 +89,13 @@
                         <div class="row"><div class="col-sm">
                             <iframe
                                     src="https://docs.google.com/presentation/d/e/2PACX-1vQFLrjYJyXy9gP5__-8waIXWNO2LQuxtH1Y9bVJG8T8RUKix_X8CPc0ifostkkg1EUEPUhcMg--R8Nm/embed?start=false&loop=false&delayms=3000"
-                                    frameborder="0" width="960" height="569" allowfullscreen="true"
+                                    frameborder="0" width="960" height="569" allow="fullscreen"
                                     mozallowfullscreen="true" webkitallowfullscreen="true" title="Deploy infrastructure"></iframe>
                         </div></div>
                         <div class="row"><div class="col-sm">
                             <iframe
-                                    src="https://docs.google.com/presentation/d/e/2PACX-1vRB-g_0byX0IHunGrFIkMUOrwEiIXdbyZRm5TpVZijB1bCF_BI9BGpE-_zuWkPGUTkPpeDBaYo4luzh/embed?start=false&loop=false&delayms=3000" src="https://docs.google.com/presentation/d/e/2PACX-1vTekiS2wKxH3A4NY4F3sDwq4m16PnYiqOwHS7MtMW8mds-Q502968ttnMd0hQXKXYuKUhocvZdIvSHc/embed?start=false&loop=false&delayms=3000"
-                                    frameborder="0" width="960" height="569" allowfullscreen="true"
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vRB-g_0byX0IHunGrFIkMUOrwEiIXdbyZRm5TpVZijB1bCF_BI9BGpE-_zuWkPGUTkPpeDBaYo4luzh/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="960" height="569" allow="fullscreen"
                                     mozallowfullscreen="true" webkitallowfullscreen="true" title="Deploy infrastructure"></iframe>
                         </div></div>
                         <div class="row"><div class="col-sm">
@@ -108,7 +113,7 @@
                                 <a href="https://aws.amazon.com/quickstart/architecture/linux-bastion/">AWS documentation</a>.
                             </p>
                             <p>
-                                Here we take a simpler approach and we use the WS instance which is publicly acceccible
+                                Here we take a simpler approach and we use the WS instance which is publicly accessible
                                 as a "bastion host" to connect to the DB instance.
                                 In order to connect to the DB instance in the private subnet,
                             </p>
@@ -124,8 +129,8 @@
                                 <li>the private key associated to DB instance is called <code>db-private-key.pem</code></li>
                             </ul>
                             <pre><code>
-                                localuser&#64;localmachine:~$ scp -i /path/to/ws-private-key.pem /path/to/db-private-key.pem ubuntu&#64;ws-ip:/home/ubuntu/
-                                localuser&#64;localmachine:~$ ssh -i /path/to/ws-private-key.pem ubuntu&#64;ws-ip
+                                local-user&#64;local-machine:~$ scp -i /path/to/ws-private-key.pem /path/to/db-private-key.pem ubuntu&#64;ws-ip:/home/ubuntu/
+                                local-user&#64;local-machine:~$ ssh -i /path/to/ws-private-key.pem ubuntu&#64;ws-ip
                                 ubuntu&#64;ws-ip:~$ ssh -i /home/ubuntu/db-private-key.pem ubuntu&#64;db-ip
                                 ubuntu&#64;db-ip:~$
                             </code></pre>
@@ -137,7 +142,7 @@
                         <div class="row"><div class="col-sm">
                             <iframe
                                     src="https://docs.google.com/presentation/d/e/2PACX-1vTWsrLCxgzOEA2TPadPeRXcpXfgMSTL6f8f8aBh3FLlL2E0ap0Z4jxMtFOnjbu10rv0rLpYbHWJeqVn/embed?start=false&loop=false&delayms=3000"
-                                    frameborder="0" width="960" height="569" allowfullscreen="true"
+                                    frameborder="0" width="960" height="569" allow="fullscreen"
                                     mozallowfullscreen="true" webkitallowfullscreen="true" title="Deploy infrastructure"></iframe>
                         </div></div>
                     </div>
@@ -147,8 +152,17 @@
                         <div class="row"><div class="col-sm">
                             <iframe
                                     src="https://docs.google.com/presentation/d/e/2PACX-1vQSJe5wdf1i-rRTGmaUEJ_zRlJZfCHwHMY7QABwqnttf5iCtJ3Vpa815pm9t3sfKXIgB0Wue7dy-iO3/embed?start=false&loop=false&delayms=3000"
-                                    frameborder="0" width="960" height="569" allowfullscreen="true"
+                                    frameborder="0" width="960" height="569" allow="fullscreen"
                                     mozallowfullscreen="true" webkitallowfullscreen="true" title="EMR"></iframe>
+                        </div></div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="aws-kinesis" role="tabpanel" aria-labelledby="aws-kinesis-tab">
+                    <div class="container">
+                        <div class="row"><div class="col-sm">
+                            <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQC6BRrgmd-2N-LJD5TenuzHW7nwtmBRSCXxy1ostPlnhpAW0f8JBXgjLULQzaTKf6mrUd5mJ8a_69u/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="960" height="569" allow="fullscreen"
+                                    mozallowfullscreen="true" webkitallowfullscreen="true" title="Kinesis"></iframe>
                         </div></div>
                     </div>
                 </div>
