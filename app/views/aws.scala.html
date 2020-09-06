@@ -164,6 +164,58 @@
                                     frameborder="0" width="960" height="569" allow="fullscreen"
                                     mozallowfullscreen="true" webkitallowfullscreen="true" title="Kinesis"></iframe>
                         </div></div>
+                        <div class="row"><div class="col-sm">
+                            <h3>A tutorial on AWS Kinesis Firehose delivery stream</h3>
+                            <p>
+                                In this tutorial, we're trying to implement a data ingestion stream using an EC2
+                                instance as the source producing messages using AWS Kinesis agent and a S3 bucket as
+                                the destination.
+                            </p>
+                            <p>
+                                The architecture of the implementation is drawn in the following diagram:
+                                <img src='@routes.Assets.versioned("images/aws-firehose-tutorial.png")'
+                                     width="650" height="650" alt="Kinesis Firehose tutorial diagram" />
+                            </p>
+                            <iframe
+                                    src="https://www.youtube.com/embed/pxd1SZXFiZ0"
+                                    frameborder="0" width="960" height="569"
+                                    allow="fullscreen;accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    title="Kinesis Firehose tutorial"></iframe>
+                            <p>
+                                Here are links to the material used in this tutorial:
+                            </p>
+                            <ul>
+                                <li><a href="https://docs.aws.amazon.com/firehose/latest/dev/writing-with-agents.html">AWS documentation</a>
+                                    on how to install Kinesis agent. Make sure that you replace amzn2 with amzn1
+                                </li>
+                                <li><a href="https://docs.aws.amazon.com/general/latest/gr/ak.html">Kinesis endpoints</a> </li>
+                            </ul>
+                            <p>
+                                And here is the configuration put in <code>/etc/aws-kinesis/agent.json</code>
+                            </p>
+                            <pre><code>
+                                {
+                                    "firehose.endpoint": "https://kinesis.us-east-2.amazonaws.com",
+                                    "flows": [
+                                        {
+                                            "filePattern": "/tmp/stop_times.csv",
+                                            "deliveryStream": "kinesis-demo-fh-stream"
+                                        }
+                                    ]
+                                }
+                            </code></pre>
+                            <p>
+                                and here is the commands to prepare data for Kinesis agent
+                            </p>
+                            <pre><code>
+                                curl -o gtfs_stm.zip http://www.stm.info/sites/default/files/gtfs/gtfs_stm.zip
+                                unzip gtfs_stm.zip
+                                head -n 10 stop_times.txt
+                                sed '1d' stop_times.txt > stop_times_without_header.csv
+                                touch /tmp/stop_times.csv
+                                head -n 10 stop_times_without_header.csv >> /tmp/stop_times.csv
+                            </code></pre>
+                        </div></div>
                     </div>
                 </div>
             </div>
