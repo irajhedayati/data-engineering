@@ -3,8 +3,9 @@ package utils
 import java.io.ByteArrayInputStream
 
 import org.apache.avro.Schema.Type._
+import org.apache.avro.Schema.Field
 import org.apache.avro.compiler.idl.Idl
-import org.apache.avro.{Schema, SchemaBuilder}
+import org.apache.avro.{Protocol, Schema, SchemaBuilder}
 import play.api.libs.json._
 
 import scala.jdk.CollectionConverters._
@@ -20,31 +21,20 @@ object AvroSchema {
   /**
    * Create an Avro schema from a JSON object. It only accepts an object or an array of objects.
    * In any cases, the output is the Avro schema of a record.
-   * The "namespace" would be empty. In order to apply it, use [[utils.AvroSchema#apply(json.JsValue, String)]] method.
-   * It the input is an array of objects, then generated schema will try to match with all the objects.
-   * Here are the rules to apply:
+   * If the input is an array of objects, then generated schema will try to match with all the objects.
    *
-   * @param json the input JSON
-   * @param name the name of the record
+   * @param json      the input JSON
+   * @param name      the name of the record
+   * @param namespace the namespace of the record
    * @return the Avro schema of the record
    * @throws IllegalArgumentException if the JSON is not an object or an array of objects
    */
-  def apply(json: JsValue, name: String): Schema = json match {
-    case jsValue: JsObject => createRecord(jsValue, name)
-    case jsValue: JsArray if jsValue.value.head.isInstanceOf[JsObject] =>
+  def apply(json: JsValue, name: String, namespace: Option[String]): Schema = json match {
+    case jsValue: JsObject => createRecord(jsValue, name, namespace)
+    case jsValue: JsArray if jsValue.value.headOption.fold(false)(_.isInstanceOf[JsObject]) =>
       jsValue.value
-        .foldLeft(createDummyRecordSchema(name)) { (schema, aRecord) =>
-          mergeRecordSchema(schema, createRecord(aRecord.as[JsObject], name))
-        }
-    case _ => throw new IllegalArgumentException("The input message should be a JSON object or a JSON array")
-  }
-
-  def apply(json: JsValue, name: String, nameSpace: String): Schema = json match {
-    case jsValue: JsObject => createRecord(jsValue, name, Some(nameSpace))
-    case jsValue: JsArray if jsValue.value.head.isInstanceOf[JsObject] =>
-      jsValue.value
-        .foldLeft(createDummyRecordSchema(name, Some(nameSpace))) { (schema, aRecord) =>
-          mergeRecordSchema(schema, createRecord(aRecord.as[JsObject], name, Some(nameSpace)))
+        .foldLeft(createDummyRecordSchema(name, namespace)) { (schema, aRecord) =>
+          mergeRecordSchema(schema, createRecord(aRecord.as[JsObject], name, namespace))
         }
     case _ => throw new IllegalArgumentException("The input message should be a JSON object or a JSON array")
   }
@@ -64,7 +54,23 @@ object AvroSchema {
     }
   }
 
-  def createRecord(json: JsObject, name: String, nameSpace: Option[String] = None): Schema = {
+  /**
+   * Tries to create the schema for the input JSON object as a RECORD.
+   * First, it will sanitize the field names to be compatible with Avro
+   * standard.
+   * Then, creates the schema for each field value and accumulates them in one
+   * and returns it.
+   *
+   * @param json      the input JSON object
+   * @param name      the name of the object. It will makes sue that the first
+   *                  letter is capital
+   * @param nameSpace an optional namespace to add to the record. If
+   *                  not provided, it will use empty string
+   * @return the schema corresponding to the input JSON or an error if the
+   *         input JSON is not an object ot it fails to infer the schema of
+   *         any field
+   */
+  def createRecord(json: JsObject, name: String, nameSpace: Option[String]): Schema = {
     val builder = SchemaBuilder.record(s"${name.head.toUpper}${name.tail}").namespace(nameSpace.getOrElse("")).fields()
     json.fields
       .filter(_._1.nonEmpty)
@@ -159,24 +165,33 @@ object AvroSchema {
   }
 
   def unionOfUnionAndNonUnion(union: Schema, nonUnion: Schema): Schema = {
-    val nonUnionAfterMerge = union.getTypes.asScala.filter(_.isRecord).filter(_.getFullName.equals(nonUnion.getFullName)).toList match {
-      case Nil => nonUnion
-      case matched :: Nil => mergeRecordSchema(matched, nonUnion)
-    }
-    val types = union.getTypes.asScala.filterNot(t => t.isRecord && t.getFullName.equals(nonUnion.getFullName)) :+ nonUnionAfterMerge
+    /*
+    We only support simple cases where union is only for nullable options.
+    This is a bit of hack but if needed can be improved in future to support
+    edge cases as well.
+     */
+    val temp = union.getTypes.asScala.filter(_.isRecord).filter(_.getFullName.equals(nonUnion.getFullName)).toList
+    val nonUnionAfterMerge = if (temp.isEmpty) nonUnion else mergeRecordSchema(temp.head, nonUnion)
+    val types = union.getTypes.asScala
+      .filterNot(t => t.isRecord && t.getFullName.equals(nonUnion.getFullName)) :+ nonUnionAfterMerge
     Schema.createUnion(types.distinct.asJava)
   }
 
+  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   def unionOfNonUnionAndUnion(nonUnion: Schema, union: Schema): Schema = {
-    val nonUnionAfterMerge = union.getTypes.asScala.filter(_.isRecord).filter(_.getFullName.equals(nonUnion.getFullName)).toList match {
-      case Nil => nonUnion
-      case matched :: Nil => mergeRecordSchema(matched, nonUnion)
-    }
-    val types = Seq(nonUnionAfterMerge) ++ union.getTypes.asScala.filterNot(t => t.isRecord && t.getFullName.equals(nonUnion.getFullName))
+    /*
+    We only support simple cases where union is only for nullable options.
+    This is a bit of hack but if needed can be improved in future to support
+    edge cases as well.
+     */
+    val temp = union.getTypes.asScala.filter(_.isRecord).filter(_.getFullName.equals(nonUnion.getFullName)).toList
+    val nonUnionAfterMerge = if (temp.isEmpty) nonUnion else mergeRecordSchema(temp.head, nonUnion)
+    val types = Seq(nonUnionAfterMerge) ++ union.getTypes.asScala
+      .filterNot(t => t.isRecord && t.getFullName.equals(nonUnion.getFullName))
     Schema.createUnion(types.asJava)
   }
 
-  def haveSameSchema(left: Schema.Field, right: Schema.Field): Boolean =
+  def haveSameSchema(left: Field, right: Field): Boolean =
     left.schema().getTypesWithoutNull.equals(right.schema().getTypesWithoutNull)
 
   def recordMatcher(schema: Schema)(fullName: String): Boolean = schema.isRecord && schema.getFullName.equals(fullName)
@@ -184,36 +199,55 @@ object AvroSchema {
   /*  Schema implicits */
   implicit class SchemaImprovement(schema: Schema) {
     def getTypesWithoutNull: Schema = schema match {
-      case s if s.isNullable && s.isUnion => // It could be just NULL type
-        s.getTypes.asScala.filterNot(_.getType.equals(NULL)).toList match {
+      case _ if schema.isNullable && schema.isUnion => // It could be just NULL type
+        schema.getTypes.asScala.toList.filter(_.getType != NULL) match {
           case singleType :: Nil => singleType
           case multipleTypes => Schema.createUnion(multipleTypes.asJava)
         }
       case _ => schema
     }
 
-    def mergeWith(otherSchema: Schema): Schema = (schema, otherSchema) match {
+    /**
+     * In case of a nullable schema, it returns the type if it's not null.
+     * A nullable schema in Avro is the `UNION` of `NULL` and the actual type. In this method,
+     * we assume that there is no more than one type (besides `NULL`) in the union.
+     */
+    final def getTypeWithoutNull: Schema = schema match {
+      case _ if schema.isNullable && schema.isUnion =>
+        schema.getTypes.asScala.toList.filter(_.getType != NULL) match {
+          case actualType :: Nil => actualType
+          case _ => throw new IllegalArgumentException("Found a UNION schema that is not nullable")
+        }
+      case _ => schema
+    }
+
+    final def mergeWith(otherSchema: Schema): Schema = (schema, otherSchema) match {
       // Same
       case (_, _) if schema.equals(otherSchema) => schema
       // Record with Record
       case (_, _) if schema.isRecord && otherSchema.isRecord => mergeRecordSchema(schema, otherSchema)
       // Record with a union of having same record
-      case (_, _) if schema.isRecord && otherSchema.isUnion &&
-        otherSchema.getTypes.asScala.exists(recordMatcher(_)(schema.getFullName)) =>
+      case (_, _)
+        if schema.isRecord && otherSchema.isUnion &&
+          otherSchema.getTypes.asScala.exists(recordMatcher(_)(schema.getFullName)) =>
         val matchingRecord = otherSchema.getTypes.asScala.find(recordMatcher(_)(schema.getFullName)).get
-        val unionWithOutMatchingRecord = Schema.createUnion(otherSchema.getTypes.asScala.filter(!recordMatcher(_)(schema.getFullName)).asJava)
+        val unionWithOutMatchingRecord =
+          Schema.createUnion(otherSchema.getTypes.asScala.filter(!recordMatcher(_)(schema.getFullName)).asJava)
         unionOfNonUnionAndUnion(schema.mergeWith(matchingRecord), unionWithOutMatchingRecord)
       // Record with a union of having same record
-      case (_, _) if otherSchema.isRecord && schema.isUnion &&
-        schema.getTypes.asScala.exists(recordMatcher(_)(otherSchema.getFullName)) =>
+      case (_, _)
+        if otherSchema.isRecord && schema.isUnion &&
+          schema.getTypes.asScala.exists(recordMatcher(_)(otherSchema.getFullName)) =>
         val matchingRecord = schema.getTypes.asScala.find(recordMatcher(_)(otherSchema.getFullName)).get
-        val unionWithOutMatchingRecord = Schema.createUnion(schema.getTypes.asScala.filter(!recordMatcher(_)(otherSchema.getFullName)).asJava)
+        val unionWithOutMatchingRecord =
+          Schema.createUnion(schema.getTypes.asScala.filter(!recordMatcher(_)(otherSchema.getFullName)).asJava)
         unionOfNonUnionAndUnion(otherSchema.mergeWith(matchingRecord), unionWithOutMatchingRecord)
       // nullable with nullable
       case (_, _) if schema.isUnion && schema.isNullable && otherSchema.isUnion && otherSchema.isNullable =>
         schema.getTypesWithoutNull.mergeWith(otherSchema.getTypesWithoutNull).makeNullable
       // null with nullable
-      case (_, _) if !schema.isUnion && schema.isNullable && otherSchema.isUnion && otherSchema.isNullable => otherSchema
+      case (_, _) if !schema.isUnion && schema.isNullable && otherSchema.isUnion && otherSchema.isNullable =>
+        otherSchema
       // nullable with null
       case (_, _) if schema.isUnion && schema.isNullable && !otherSchema.isUnion && otherSchema.isNullable => schema
       // Array with nonArray and not nullable and not union
@@ -241,13 +275,15 @@ object AvroSchema {
         SchemaBuilder.array().items(schema.getElementType.mergeWith(otherSchema.getElementType).makeNullable)
     }
 
-    def makeNullable: Schema =
+    /** If schema is not nullable, it will make it nullable with a default value of 'null' */
+    final def makeNullable: Schema =
       if (schema.isNullable) schema
       else if (schema.isUnion) unionOfNonUnionAndUnion(SchemaBuilder.builder().nullType(), schema)
       else SchemaBuilder.builder().unionOf().nullType().and().`type`(schema).endUnion()
 
     def isRecord: Boolean = schema.getType.equals(RECORD)
-    def isArray: Boolean = schema.getType.equals(Schema.Type.ARRAY)
+
+    def isArray: Boolean = schema.getType.equals(ARRAY)
 
     def toIdl(protocol: String): String = {
       if (!schema.isRecord) throw new IllegalArgumentException("The input schema is not a record")
@@ -256,7 +292,9 @@ object AvroSchema {
 
   }
 
-  def idlToSchema(in: String): String = {
-    new Idl(new ByteArrayInputStream(in.getBytes)).CompilationUnit().toString(true)
-  }
+  def idlToSchema(in: String): String = idlToProtocol(in).toString(true)
+
+  def idlToProtocol(in: String): Protocol =
+    new Idl(new ByteArrayInputStream(in.getBytes)).CompilationUnit()
+
 }
