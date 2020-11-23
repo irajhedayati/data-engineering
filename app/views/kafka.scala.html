@@ -9,37 +9,37 @@
         <article>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+                    <a class="nav-link active" id="kafka-1-tab" data-toggle="tab" href="#kafka-1" role="tab" aria-controls="kafka-1" aria-selected="true">
                         Kafka 1
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+                    <a class="nav-link" id="kafka-2-tab" data-toggle="tab" href="#kafka-2" role="tab" aria-controls="kafka-2" aria-selected="false">
                         Kafka 2
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
+                    <a class="nav-link" id="schema-registry-tab" data-toggle="tab" href="#schema-registry" role="tab" aria-controls="schema-registry" aria-selected="false">
                         Schema Registry
                     </a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-pane fade show active" id="kafka-1" role="tabpanel" aria-labelledby="kafka-1-tab">
                     <div class="container"><div class="row"><div class="col-sm">
                         <iframe
                                 src="https://docs.google.com/presentation/d/e/2PACX-1vS3TVL_BGr8IbNtjvWQ5bz8g6Qg6irmeyL4pyCiSYlW2o_3amjnwZesDG_CkT0ENMCsZ1o6kXFBCdgu/embed?start=false&loop=false&delayms=3000"
-                                frameborder="0" width="960" height="569" allowfullscreen="true"
+                                frameborder="0" width="960" height="569" allow="fullscreen"
                                 mozallowfullscreen="true" webkitallowfullscreen="true" title="Kafka - session 1">
                         </iframe>
                     </div></div></div>
                 </div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="tab-pane fade" id="kafka-2" role="tabpanel" aria-labelledby="kafka-2-tab">
                     <div class="container">
                         <div class="row"><div class="col-sm">
                             <iframe
                                     src="https://docs.google.com/presentation/d/e/2PACX-1vTeSD-NVRZnyIJN3Dv4LFoOVDQW_Y6Yx9lIEZqLVae9LTSRkoXsAYQdGRjp53SJptn6mR6qL40LgdQs/embed?start=false&loop=false&delayms=3000"
-                                    frameborder="0" width="960" height="569" allowfullscreen="true"
+                                    frameborder="0" width="960" height="569" allow="fullscreen"
                                     mozallowfullscreen="true" webkitallowfullscreen="true" title="Kafka - session 2">
                             </iframe>
                         </div></div>
@@ -87,20 +87,28 @@
                             <pre><code>
                                 export PATH=$PATH:$KAFKA_HOME/bin
                             </code></pre>
+                            <p></p>
                         </div></div>
                         <div class="row"><div class="col-sm">
-                        <p></p>
-                            <h4>Kafka Topics</h4>
-
+                            <p></p>
+                            <h4>Kafka Command Line (basics)</h4>
+                            <p>To start working with Kafka command line tools, here are a set of commands.</p>
+                            <p>
+                                <script src="https://gist.github.com/irajhedayati/52686f745893e7439ca06653c2daa758.js"></script>
+                            </p>
+                        </div> </div>
+                        <div class="row"><div class="col-sm">
+                            <p></p>
+                            <h4>Kafka Topics Tutorial</h4>
                             <iframe
                                     width="960" height="569" src="https://www.youtube.com/embed/jaPDDpyyhRk"
                                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen title="Kafka topics video tutorial"></iframe>
+                            <p></p>
                         </div></div>
                         <div class="row"><div class="col-sm">
-
-
-                            <h4>Kafka consumer and producer</h4>
+                            <p></p>
+                            <h4>Kafka consumer and producer Tutorial</h4>
                             <p>
                             Source code on <a href="https://github.com/irajhedayati/mcit/tree/master/kafka-client" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">GitHub</a>
                             </p>
@@ -108,10 +116,10 @@
                                     width="960" height="569" src="https://www.youtube.com/embed/OPTMje7wKmU"
                                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen title="Kafka consumer and producer tutorial"></iframe>
+                            <p></p>
                         </div></div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab"></div>
             </div>
         </article>
     </div>
