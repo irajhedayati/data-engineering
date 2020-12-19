@@ -42,3 +42,11 @@ services:
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+  
+  client:
+    image: hedayati/toolset:latest
+    hostname: client
+    container_name: client
+    depends_on:
+      - schema-registry
+    command: ["/bin/bash", "-ec", "while :; do echo '.'; sleep 5 ; done"]
