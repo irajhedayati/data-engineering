@@ -21,4 +21,8 @@ class HomeController @Inject()(cc: ControllerComponents) extends AbstractControl
   def aws(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
     Ok(views.html.aws())
   }
+
+  def hadoop(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    Ok(views.html.hadoop())
+  }
 }

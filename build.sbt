@@ -16,16 +16,23 @@ lazy val rpmAppSettings = Seq(
   rpmBrpJavaRepackJars := true
 )
 
+lazy val dockerSettings = Seq(
+  maintainer in Docker := "Iraj Hedayati <iraj.hedayati@gmail.com>",
+  dockerUpdateLatest := true,
+  dockerRepository := Some("index.docker.io/hedayati"),
+  dockerEntrypoint ++= Seq("-Dhttp.port=80", "-Dplay.http.secret.key=$(head -c 32 /dev/urandom | base64)")
+)
+
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
-  .enablePlugins(JavaAppPackaging, RpmPlugin)
-  .settings(rpmAppSettings)
-libraryDependencies += "ca.dataedu" %% "savro" % "0.1.0"
-libraryDependencies += guice
-libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test
-libraryDependencies += ("org.apache.avro" % "avro" % "1.9.0")
-  .exclude("com.fasterxml.jackson.core", "jackson-core")
-libraryDependencies += ("org.apache.avro" % "avro-tools" % "1.9.0")
-  .exclude("com.fasterxml.jackson.core", "jackson-core")
-libraryDependencies += ("org.apache.avro" % "avro-compiler" % "1.9.0")
-  .exclude("com.fasterxml.jackson.core", "jackson-core")
+  .enablePlugins(JavaAppPackaging, DockerPlugin)
+  .settings(dockerSettings)
+
+libraryDependencies ++= Seq(
+  "ca.dataedu" %% "savro" % "0.1.0",
+  guice,
+  "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test,
+  ("org.apache.avro" % "avro"          % "1.9.0").exclude("com.fasterxml.jackson.core", "jackson-core"),
+  ("org.apache.avro" % "avro-tools"    % "1.9.0").exclude("com.fasterxml.jackson.core", "jackson-core"),
+  ("org.apache.avro" % "avro-compiler" % "1.9.0").exclude("com.fasterxml.jackson.core", "jackson-core")
+)
