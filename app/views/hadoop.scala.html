@@ -30,13 +30,65 @@
                     </div></div></div>
                 </div>
                 <div class="tab-pane fade" id="hdfs" role="tabpanel" aria-labelledby="hdfs-tab">
-                    <div class="container"><div class="row"><div class="col-sm">
-                        <iframe
-                                src="https://docs.google.com/presentation/d/e/2PACX-1vQX92imQICP2NKE2Fi7hHV38ul7Bz6OaX5hQNGUcYBY6CuMUUj0icBXL2uRDtHfF_11XkwaV-C2BKY0/embed?start=false&loop=false&delayms=3000"
-                                frameborder="0" width="960" height="569" allow="fullscreen"
-                                mozallowfullscreen="true" webkitallowfullscreen="true" title="HDFS">
-                        </iframe>
-                    </div></div></div>
+                    <div class="container">
+                        <div class="row"><div class="col-sm">
+                            <iframe
+                                    src="https://docs.google.com/presentation/d/e/2PACX-1vQX92imQICP2NKE2Fi7hHV38ul7Bz6OaX5hQNGUcYBY6CuMUUj0icBXL2uRDtHfF_11XkwaV-C2BKY0/embed?start=false&loop=false&delayms=3000"
+                                    frameborder="0" width="960" height="569" allow="fullscreen"
+                                    mozallowfullscreen="true" webkitallowfullscreen="true" title="HDFS">
+                            </iframe>
+                        </div></div>
+                        <div class="row"><div class="col-sm">
+                            <h3>Environment Variable setup for HDFS client</h3>
+                            <p>
+                                Let's assume that you have downloaded Apache Hadoop 2.7.7 and unpacked it under
+                                <code>/home/user/opt/hadoop-2.7.7</code>.
+                            </p>
+                            <p>
+                                In order to set the environment variables in a permanent way (so that every time you
+                                login, they are defined), we can use shell profiles. Each shell may use different file
+                                but in this tutorial we assume Linux CentOS. Open <code>~/.bashrc</code> file using
+                                an editor (you can use command line editors such as <code>nano</code> or <code>vi</code>
+                                or editors in GUI such as <code>gedit</code>).
+                            </p>
+                            <p>
+                                The first environment variable is <code>PATH</code> which helps you to run Hadoop
+                                commands without providing the absolute path. Add the following line to the file:
+                            </p>
+                            <pre><code>export PATH=$PATH:/home/user/opt/hadoop-2.7.7/bin</code></pre>
+                            <p>
+                                The second environment variable is <code>JAVA_HOME</code> that points to the installation
+                                directory of your JDK/JRE. Add the following line to the file
+                            </p>
+                            <pre><code>export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")</code></pre>
+                            <p>If you are a Mac user, use</p>
+                            <pre><code>export JAVA_HOME=$(/usr/libexec/java_home -v1.8)</code></pre>
+                            <p>
+                                The next environment variable is the one that indicates where are the configuration
+                                files of Hadoop and it is <code>HADOOP_CONF_DIR</code>.
+                                Let's assume that you have download the configuration files from the namenode and put
+                                them under <code>/home/user/opt/hadoop-2.7.7/etc/my-cluster</code>
+                                Add the following lines to the file
+                            </p>
+                            <pre><code>
+                                export HADOOP_HOME=/home/user/opt/hadoop-2.7.7
+                                export HADOOP_CONF_DIR=$HADOOP_HOME/etc/my-cluster
+                            </code></pre>
+                            <p>
+                                Note that the <code>HADOOP_HOME</code> is not necessary but just a good practice.
+                            </p>
+                            <p>
+                                Save the file and run <code>source ~/.bashrc</code>. This is to setup your environment
+                                variables for this session. From now on, whenever you login using user <code>user</code>,
+                                all these environment variables are set.
+                            </p>
+                            <p>
+                                If everything is set properly, the following command should return the content of the
+                                root directory of your Hadoop cluster.
+                            </p>
+                            <pre><code>hadoop fs -ls /</code></pre>
+                        </div></div>
+                    </div>
                 </div>
             </div>
         </article>
