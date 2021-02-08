@@ -29,7 +29,7 @@ lazy val root = (project in file("."))
   .settings(dockerSettings)
 
 libraryDependencies ++= Seq(
-  "ca.dataedu" %% "savro" % "0.1.0",
+  "ca.dataedu" %% "savro" % "0.3.1",
   guice,
   "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.3" % Test,
   ("org.apache.avro" % "avro"          % "1.9.0").exclude("com.fasterxml.jackson.core", "jackson-core"),
