@@ -9,13 +9,15 @@ var inputTitles = {
     json_to_avro:"JSON document",
     avro_to_idl:"Avro schema",
     idl_to_avro:"Avro IDL",
-    avro_to_hive:"Avro schema"
+    avro_to_hive:"Avro schema",
+    flat_avro:"Avro schema"
 }
 var outputTitles = {
     json_to_avro:"Avro schema",
     avro_to_idl:"Avro IDL",
     idl_to_avro:"Avro schema",
-    avro_to_hive:"HiveQL DDL"
+    avro_to_hive:"HiveQL DDL",
+    flat_avro:"Flatten Avro schema"
 }
 var descriptions = {
     json_to_avro: `<h4>Infer Avro schema from JSON documents</h4>
@@ -35,25 +37,31 @@ var descriptions = {
                 will be generate on the right side.<br></p>`,
     avro_to_hive: `<h4>Convert Avro schema to HiveSQL CREATE TABLE</h4>
                 <p>Type in the Avro schema in the left panel and click "Generate". The equivalent CREATE TABLE
-                compatible with HiveQL will be generated on the right side<br></p>`
+                compatible with HiveQL will be generated on the right side<br></p>`,
+    flat_avro: `<h4>Convert Avro schema to its flatten version</h4>
+               <p>This tool generates the flatten version of an Avro schema. First type in the Avro schema in the left
+               box and click on "Generate". The flat version will be generated on the right side.<br></p>`
 }
 var inputCodeFormats = {
     json_to_avro: "ace/mode/json",
     avro_to_idl: "ace/mode/json",
     idl_to_avro: "ace/mode/c_cpp",
-    avro_to_hive: "ace/mode/json"
+    avro_to_hive: "ace/mode/json",
+    flat_avro: "ace/mode/json"
 }
 var outputCodeFormats = {
     json_to_avro: "ace/mode/json",
     avro_to_idl: "ace/mode/c_cpp",
     idl_to_avro: "ace/mode/json",
-    avro_to_hive: "ace/mode/sql"
+    avro_to_hive: "ace/mode/sql",
+    flat_avro: "ace/mode/json"
 }
 var outputFileName = {
     json_to_avro: "avro.avsc",
     avro_to_idl: "avro.avdl",
     idl_to_avro: "avro.avsc",
-    avro_to_hive: "avro.sql"
+    avro_to_hive: "avro.sql",
+    flat_avro: "avro.avsc"
 }
 function getFileName() {
     return outputFileName[$('#tool').val()];
@@ -135,6 +143,19 @@ $( "#generate" ).click(function() {
             },
             error: function(xhr, status, error) {
                 alert('Error in converting values. Check the input.:\n' + xhr.responseText);
+            },
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    } else if ($('#tool').val() == 'flat_avro') {
+        jsRoutes.controllers.AvroController.flattenAvro().ajax({
+            data: inputEditor.getValue(),
+            success: function(data, textStatus, request) {
+                outputEditor.setValue(data);
+            },
+            error: function(xhr, status, error) {
+                alert('Error in converting values. Check the input.:\n' + error);
             },
             headers: {
                 'Content-Type': 'application/json'

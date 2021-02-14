@@ -1,6 +1,7 @@
 package controllers
 
 import ca.dataedu.savro.{ AvroProtocol, AvroSchema, HiveSchema }
+import ca.dataedu.savro.AvroImplicits._
 import org.apache.avro.{ AvroTypeException, Protocol, Schema, SchemaParseException }
 import play.api.libs.json.{ JsArray, JsObject }
 import play.api.mvc._
@@ -52,11 +53,22 @@ class AvroController @Inject()(cc: ControllerComponents) extends AbstractControl
     request.body.asJson match {
       case Some(value) =>
         HiveSchema(new Schema.Parser().parse(value.toString())) match {
-          case Left(value)  => BadRequest(value.toString())
-          case Right(value) => Ok(value)
+          case Left(error) => BadRequest(error.toString())
+          case Right(ddl)  => Ok(ddl)
         }
       case None => BadRequest("Unable to parse the input Avro schema. Check the format.")
     }
-
   }
+
+  def flattenAvro(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    request.body.asJson match {
+      case Some(value) =>
+        new Schema.Parser().parse(value.toString()).flat match {
+          case Left(error)    => BadRequest(s"Unable to flatten the input because: ${error.toString()}")
+          case Right(flatten) => Ok(flatten.toString(true))
+        }
+      case None => BadRequest("Unable to parse the input Avro schema. Check the format.")
+    }
+  }
+
 }

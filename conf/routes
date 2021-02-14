@@ -24,5 +24,6 @@ POST    /avro/api/v1/json-doc-to-avro       controllers.AvroController.avroFromJ
 POST    /avro/api/v1/avro-to-idl            controllers.AvroController.idlFromAvro
 POST    /avro/api/v1/idl-to-avro            controllers.AvroController.avroFromIdl
 POST    /avro/api/v1/avro-to-hive           controllers.AvroController.hiveDdlFromAvro
+POST    /avro/api/v1/flat-avro              controllers.AvroController.flattenAvro
 
 GET     /ajax-call                          controllers.MovieController.ajaxCall
