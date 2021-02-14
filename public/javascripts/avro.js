@@ -8,12 +8,14 @@ outputEditor.session.setMode("ace/mode/json");
 var inputTitles = {
     json_to_avro:"JSON document",
     avro_to_idl:"Avro schema",
-    idl_to_avro:"Avro IDL"
+    idl_to_avro:"Avro IDL",
+    avro_to_hive:"Avro schema"
 }
 var outputTitles = {
     json_to_avro:"Avro schema",
     avro_to_idl:"Avro IDL",
-    idl_to_avro:"Avro schema"
+    idl_to_avro:"Avro schema",
+    avro_to_hive:"HiveQL DDL"
 }
 var descriptions = {
     json_to_avro: `<h4>Infer Avro schema from JSON documents</h4>
@@ -29,23 +31,29 @@ var descriptions = {
                 <strong>The name space and protocol is given a default value and namespace is set to "null"</strong>
                 </p>`,
     idl_to_avro: `<h4>Convert Avro IDL to Avro schema</h4>
-                <p>Type in the Avro IDL in the left panel and click "Generate". The equivalent Avro schema protocol w
-                ill be generate on the right side.<br></p>`
+                <p>Type in the Avro IDL in the left panel and click "Generate". The equivalent Avro schema protocol
+                will be generate on the right side.<br></p>`,
+    avro_to_hive: `<h4>Convert Avro schema to HiveSQL CREATE TABLE</h4>
+                <p>Type in the Avro schema in the left panel and click "Generate". The equivalent CREATE TABLE
+                compatible with HiveQL will be generated on the right side<br></p>`
 }
 var inputCodeFormats = {
     json_to_avro: "ace/mode/json",
     avro_to_idl: "ace/mode/json",
-    idl_to_avro: "ace/mode/c_cpp"
+    idl_to_avro: "ace/mode/c_cpp",
+    avro_to_hive: "ace/mode/json"
 }
 var outputCodeFormats = {
     json_to_avro: "ace/mode/json",
     avro_to_idl: "ace/mode/c_cpp",
-    idl_to_avro: "ace/mode/json"
+    idl_to_avro: "ace/mode/json",
+    avro_to_hive: "ace/mode/sql"
 }
 var outputFileName = {
     json_to_avro: "avro.avsc",
     avro_to_idl: "avro.avdl",
-    idl_to_avro: "avro.avsc"
+    idl_to_avro: "avro.avsc",
+    avro_to_hive: "avro.sql"
 }
 function getFileName() {
     return outputFileName[$('#tool').val()];
@@ -117,6 +125,19 @@ $( "#generate" ).click(function() {
             },
             headers: {
                 'Content-Type': 'text/plain'
+            }
+        });
+    } else if ($('#tool').val() == 'avro_to_hive') {
+        jsRoutes.controllers.AvroController.hiveDdlFromAvro().ajax({
+            data: inputEditor.getValue(),
+            success: function(data, textStatus, request) {
+                outputEditor.setValue(data);
+            },
+            error: function(xhr, status, error) {
+                alert('Error in converting values. Check the input.:\n' + xhr.responseText);
+            },
+            headers: {
+                'Content-Type': 'application/json'
             }
         });
     }

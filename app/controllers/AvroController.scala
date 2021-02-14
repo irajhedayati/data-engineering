@@ -1,10 +1,11 @@
 package controllers
 
-import ca.dataedu.savro.{ AvroProtocol, AvroSchema }
-import javax.inject.{ Inject, Singleton }
+import ca.dataedu.savro.{ AvroProtocol, AvroSchema, HiveSchema }
 import org.apache.avro.{ AvroTypeException, Protocol, Schema, SchemaParseException }
-import play.api.libs.json.{ JsArray, JsObject, JsValue }
+import play.api.libs.json.{ JsArray, JsObject }
 import play.api.mvc._
+
+import javax.inject.{ Inject, Singleton }
 
 @Singleton
 class AvroController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
@@ -24,15 +25,14 @@ class AvroController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def idlFromAvro(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    val jsonDocument: JsValue = request.body.asJson.get
-    val jsonDocumentAsString: String = jsonDocument.toString()
-    val parser = new Schema.Parser()
+    val jsonDocument = request.body.asJson.get
+    val jsonDocumentAsString = jsonDocument.toString()
     import ca.dataedu.savro.AvroImplicits._
     if (jsonDocument.as[JsObject].keys.contains("protocol")) {
       Ok(AvroProtocol.toIdl(Protocol.parse(jsonDocumentAsString)))
     } else {
       try {
-        parser.parse(jsonDocumentAsString).toIdl("AvroSchemaTool") match {
+        new Schema.Parser().parse(jsonDocumentAsString).toIdl("AvroSchemaTool") match {
           case Left(error)  => BadRequest(error.toString())
           case Right(value) => Ok(value)
         }
@@ -44,7 +44,19 @@ class AvroController @Inject()(cc: ControllerComponents) extends AbstractControl
   }
 
   def avroFromIdl(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
-    val idl: String = request.body.asText.get
+    val idl = request.body.asText.get
     Ok(AvroProtocol(idl).toString(true))
+  }
+
+  def hiveDdlFromAvro(): Action[AnyContent] = Action { implicit request: Request[AnyContent] =>
+    request.body.asJson match {
+      case Some(value) =>
+        HiveSchema(new Schema.Parser().parse(value.toString())) match {
+          case Left(value)  => BadRequest(value.toString())
+          case Right(value) => Ok(value)
+        }
+      case None => BadRequest("Unable to parse the input Avro schema. Check the format.")
+    }
+
   }
 }

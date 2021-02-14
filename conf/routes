@@ -23,5 +23,6 @@ GET     /assets/*file                       controllers.Assets.versioned(path="/
 POST    /avro/api/v1/json-doc-to-avro       controllers.AvroController.avroFromJsonDocument
 POST    /avro/api/v1/avro-to-idl            controllers.AvroController.idlFromAvro
 POST    /avro/api/v1/idl-to-avro            controllers.AvroController.avroFromIdl
+POST    /avro/api/v1/avro-to-hive           controllers.AvroController.hiveDdlFromAvro
 
 GET     /ajax-call                          controllers.MovieController.ajaxCall
