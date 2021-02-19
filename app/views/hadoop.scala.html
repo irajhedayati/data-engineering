@@ -23,6 +23,11 @@
                         YARN
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="mr-tab" data-toggle="tab" href="#mr" role="tab" aria-controls="mr" aria-selected="false">
+                        MapReduce
+                    </a>
+                </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="hadoop" role="tabpanel" aria-labelledby="hadoop-tab">
@@ -44,6 +49,14 @@
                             </iframe>
                         </div></div>
                         <div class="row"><div class="col-sm">
+                            <h3>HDFS Architecture</h3>
+                            <p><img class="mr-3" src='@routes.Assets.versioned("images/HDFS-Architecture.png")'
+                                    width="800" height="412" alt="HDFS Architecture"></p>
+
+                            <h3>Namenode High Availability</h3>
+                            <p><img class="mr-3" src='@routes.Assets.versioned("images/NN-HA.png")'
+                                    width="650" height="412" alt="Namenode High Availability"></p>
+
                             <h3>Environment Variable setup for HDFS client</h3>
                             <p>
                                 Let's assume that you have downloaded Apache Hadoop 2.7.7 and unpacked it under
@@ -92,6 +105,17 @@
                                 root directory of your Hadoop cluster.
                             </p>
                             <pre><code>hadoop fs -ls /</code></pre>
+
+                            <h3>Impersonate Hadoop user</h3>
+                            <p>
+                                Hadoop commands and library uses current user that is logged into the client as the
+                                effective user (if you are using a Linux machine, just run <code>whoami</code> command
+                                to see that).
+                                If this user is different from the user that has permission to the HDFS directories and
+                                files, you might need to impersonate the user with permission. To achieve this, you can
+                                use <code>HADOOP_USER_NAME</code> environment variable.
+                            </p>
+                            <pre><code>export HADOOP_USER_NAME=user_with_permission</code></pre>
                         </div></div>
                     </div>
                 </div>
@@ -103,6 +127,22 @@
                                 mozallowfullscreen="true" webkitallowfullscreen="true" title="YARN">
                         </iframe>
                     </div></div></div>
+                </div>
+                <div class="tab-pane fade" id="mr" role="tabpanel" aria-labelledby="mr-tab">
+                    <div class="container">
+                        <div class="row"><div class="col-sm">
+                        <iframe
+                                src="https://docs.google.com/presentation/d/e/2PACX-1vTqx4tP9Qf8HFJa4T4IH9f8MuLb4SWSoTNLJytaJdvphgRdmHXHSlYmkPH-G_w80Sj_UgCiLsMCMJ2Y/embed?start=false&loop=false&delayms=3000"
+                                frameborder="0" width="960" height="569" allow="fullscreen"
+                                mozallowfullscreen="true" webkitallowfullscreen="true" title="MaReduce">
+                        </iframe>
+                    </div></div>
+                    <div class="row"><div class="col-sm">
+                        <h3>MapReduce</h3>
+                        <p><img class="mr-3" src='@routes.Assets.versioned("images/mr.png")'
+                                width="900" height="412" alt="MaReduce"></p>
+                    </div></div>
+                    </div>
                 </div>
             </div>
         </article>
