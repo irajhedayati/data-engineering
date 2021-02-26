@@ -28,6 +28,11 @@
                         MapReduce
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="zk-tab" data-toggle="tab" href="#zk" role="tab" aria-controls="zk" aria-selected="false">
+                        Zookeeper
+                    </a>
+                </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="hadoop" role="tabpanel" aria-labelledby="hadoop-tab">
@@ -143,6 +148,57 @@
                                 width="900" height="412" alt="MaReduce"></p>
                     </div></div>
                     </div>
+                </div>
+                <div class="tab-pane fade" id="zk" role="tabpanel" aria-labelledby="zk-tab">
+                    <div class="container"><div class="row"><div class="col-sm">
+                        <h4>Introduction to Zookeeper</h4>
+                        <p>
+                            The code related to this section can be found on <a href="https://github.com/irajhedayati/mcit/tree/master/zk">GitHub</a>.
+                        </p>
+                        <iframe
+                                src="https://docs.google.com/presentation/d/e/2PACX-1vQ4c_y7IjxY6iCXgSCFSLdmXLx1VAWZjr1S7NBiSVsypje0cVmaNx_cJyZHjNbzQRaoh0smwM62WLXb/embed?start=false&loop=false&delayms=3000"
+                                frameborder="0" width="960" height="569" allow="fullscreen"
+                                mozallowfullscreen="true" webkitallowfullscreen="true" title="Zookeeper Introduction">
+                        </iframe>
+                        <h4>Installing Apache Zookeeper</h4>
+                        <p>
+                            Apache Zookeeper distribution includes both server and CLI binaries. This guide covers only
+                            Linux environment. For Mac and Windows, there are a couple of tweaks to do.
+                        </p>
+                        <h5>Download Apache Zookeeper</h5>
+                        <p>
+                            Go to <a href="https://zookeeper.apache.org/releases.html">Apache Zookeeper Release</a> page
+                            and follow the steps to download the revision that you need. You will get a TAR file.
+                        </p>
+                        <pre><code>
+                            mkdir -p ~/opt
+                            mv ~/Downloads/zookeeper-*.tar.gz ~/opt/
+                            cd ~/opt
+                            tar -xf zookeeper-*.tar.gz
+                            mv ./zookeeper-*/ ./zookeeper
+                        </code></pre>
+                        <p>Then open <code>~/.bashrc</code> file and add the following lines.</p>
+                        <pre><code>
+                            export ZOOKEEPER_HOME=~/opt/zookeeper
+                            export PATH=$PATH:$ZOOKEEPER_HOME/bin
+                        </code></pre>
+                        <p>Then finish it by running <code>source ~/.bashrc</code></p>
+                        <h5>Run Zookeeper Server locally</h5>
+                        <p>
+                            Open <code>$ZOOKEEPER_HOME/conf/zoo.cfg</code> file (if doesn't exist, create one) and add
+                            the following lines
+                        </p>
+                        <pre><code>
+                            tickTime=2000
+                            dataDir=$ZOOKEEPER_HOME/data
+                            clientPort=2181
+                        </code></pre>
+                        <p>Run the server <code>zkServer.sh start</code></p>
+                        <h5>Run Zookeeper CLI</h5>
+                        <p>
+                            In order to run the Zookeeper CLI, just execute <code>zkCli.sh -server localhost:2181</code>.
+                        </p>
+                    </div></div></div>
                 </div>
             </div>
         </article>
