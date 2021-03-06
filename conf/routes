@@ -5,6 +5,7 @@
 
 GET     /                                   controllers.HomeController.index
 GET     /hadoop                             controllers.HomeController.hadoop
+GET     /hive                               controllers.HomeController.hive
 GET     /kafka                              controllers.HomeController.kafka
 GET     /spark                              controllers.HomeController.spark
 GET     /aws                                controllers.HomeController.aws

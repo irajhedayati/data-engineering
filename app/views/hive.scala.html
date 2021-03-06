@@ -1,0 +1,99 @@
+@()(implicit req: RequestHeader)
+
+@main("Hive")("Apache Hive"){
+<p>The Apache Hive data warehouse software facilitates reading, writing, and managing large datasets residing in
+    distributed storage using SQL.</p>
+}{
+@defining(play.core.PlayVersion.current) { version =>
+<section id="content">
+    <div class="wrapper doc">
+        <article>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="intro-tab" data-toggle="tab" href="#intro" role="tab" aria-controls="intro" aria-selected="true">
+                        Introduction
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="hiveql-1-tab" data-toggle="tab" href="#hiveql-1" role="tab" aria-controls="hiveql-1" aria-selected="true">
+                        HiveQL - Basics
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="hiveql-encoding-tab" data-toggle="tab" href="#hiveql-encoding" role="tab" aria-controls="hiveql-encoding" aria-selected="true">
+                        Encoding
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="programming-tab" data-toggle="tab" href="#programming" role="tab" aria-controls="programming" aria-selected="true">
+                        Programming
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="hiveql-2-tab" data-toggle="tab" href="#hiveql-2" role="tab" aria-controls="hiveql-2" aria-selected="true">
+                        HiveQL Advanced
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="intro" role="tabpanel" aria-labelledby="intro-tab">
+                    <div class="container"><div class="row"><div class="col-sm">
+                        <iframe
+                                src="https://docs.google.com/presentation/d/e/2PACX-1vSdrD0gPuLBfMr7_kRLD24kks0j-URmBMCSwXcwPPeK9AdeNMWsmYXQusyAlT25oz7NeYbOl3vQ-qHZ/embed?start=false&loop=false&delayms=3000"
+                                frameborder="0" width="960" height="569" allow="fullscreen"
+                                mozallowfullscreen="true" webkitallowfullscreen="true" title="Hive Introduction">
+                        </iframe>
+                    </div></div></div>
+                </div>
+                <div class="tab-pane fade" id="hiveql-1" role="tabpanel" aria-labelledby="hiveql-1-tab">
+                    <div class="container"><div class="row"><div class="col-sm">
+                        <iframe
+                                src="https://docs.google.com/presentation/d/e/2PACX-1vRaU4jpTzkU4I0ESu3A9nHSdDiGuzbgrG-TbURhfmHtD_hZfVqN8_AdCrzAluzeGTFjV_rWwznobt8i/embed?start=false&loop=false&delayms=3000"
+                                frameborder="0" width="960" height="569" allow="fullscreen"
+                                mozallowfullscreen="true" webkitallowfullscreen="true" title="HiveQL Basics">
+                        </iframe>
+
+                        <h4>Tutorial</h4>
+
+                        <script src="https://gist.github.com/irajhedayati/e637b68f3794332a7508ac3fa56c821c.js"></script>
+                    </div></div></div>
+                </div>
+                <div class="tab-pane fade" id="hiveql-encoding" role="tabpanel" aria-labelledby="hiveql-encoding-tab">
+                    <div class="container"><div class="row"><div class="col-sm">
+                        <iframe
+                                src="https://docs.google.com/presentation/d/e/2PACX-1vTOMs2YQrWp2uX3uzIeiAqwYig92LhsyNwujDQt7cTXxxV8O5etk6m6F2yElHdzpnNX6BXiWonNcqfm/embed?start=false&loop=false&delayms=3000"
+                                frameborder="0" width="960" height="569" allow="fullscreen"
+                                mozallowfullscreen="true" webkitallowfullscreen="true" title="HiveQL Encoding">
+                        </iframe>
+
+                        <h4>Tutorial</h4>
+
+                        <script src="https://gist.github.com/irajhedayati/d82772d59e48bb783832329465afdb97.js"></script>
+                    </div></div></div>
+                </div>
+                <div class="tab-pane fade" id="programming" role="tabpanel" aria-labelledby="programming-tab">
+                    <div class="container"><div class="row"><div class="col-sm">
+                        <iframe
+                                src="https://docs.google.com/presentation/d/e/2PACX-1vQ1WR1mBgZ93XQJIdnZ_5i3xmkguC-avPiZhPVxNzRF7p4M33J1zN2SbclckVJyjSkSnI9CFe7SppEi/embed?start=false&loop=false&delayms=3000" f
+                                frameborder="0" width="960" height="569" allow="fullscreen"
+                                mozallowfullscreen="true" webkitallowfullscreen="true" title="Programming with Hive">
+                        </iframe>
+                    </div></div></div>
+                </div>
+                <div class="tab-pane fade" id="hiveql-2" role="tabpanel" aria-labelledby="hiveql-2-tab">
+                    <div class="container"><div class="row"><div class="col-sm">
+                        <iframe
+                                src="https://docs.google.com/presentation/d/e/2PACX-1vRGu2k9YrG1jl6HbSqZL79Ve39P3U6dpj9tyA90MZkbyct8X4dzyX6dZat7vNTZDxoQJMRcIMRsRdEf/embed?start=false&loop=false&delayms=3000"
+                                frameborder="0" width="960" height="569" allow="fullscreen"
+                                mozallowfullscreen="true" webkitallowfullscreen="true" title="HiveQL Advanced">
+                        </iframe>
+                    </div></div></div>
+                </div>
+
+            </div>
+        </article>
+    </div>
+</section>
+
+}
+}
