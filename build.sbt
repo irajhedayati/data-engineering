@@ -2,8 +2,6 @@ organization := "ca.dataedu"
 
 name := "data-engineering"
 
-version := "2.0"
-
 scalaVersion := "2.13.0"
 
 maintainer := "hedayati"
