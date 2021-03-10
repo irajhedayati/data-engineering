@@ -69,12 +69,28 @@
                         <h4>Tutorial</h4>
 
                         <script src="https://gist.github.com/irajhedayati/d82772d59e48bb783832329465afdb97.js"></script>
+
+                        <h4>How to make Hive to write compressed files</h4>
+                        <p>
+                            You need to set the following properties in your Hive session. Run the commands in your CLI
+                            or JDBC connection:
+                        </p>
+                        <pre><code>
+                            set hive.exec.compress.output=true;
+                            set mapreduce.output.fileoutputformat.compress.codec=org.apache.hadoop.io.compress.GzipCodec;
+                        </code></pre>
+
+                        <p>
+                            If you are using Hue, you can set settings in your editor:
+                            <img class="mr-3" src='@routes.Assets.versioned("images/hive-hue-settings.png")'
+                                 width="1024" height="360" alt="Setting Hive compression in Hue UI">
+                        </p>
                     </div></div></div>
                 </div>
                 <div class="tab-pane fade" id="programming" role="tabpanel" aria-labelledby="programming-tab">
                     <div class="container"><div class="row"><div class="col-sm">
                         <iframe
-                                src="https://docs.google.com/presentation/d/e/2PACX-1vQ1WR1mBgZ93XQJIdnZ_5i3xmkguC-avPiZhPVxNzRF7p4M33J1zN2SbclckVJyjSkSnI9CFe7SppEi/embed?start=false&loop=false&delayms=3000" f
+                                src="https://docs.google.com/presentation/d/e/2PACX-1vQ1WR1mBgZ93XQJIdnZ_5i3xmkguC-avPiZhPVxNzRF7p4M33J1zN2SbclckVJyjSkSnI9CFe7SppEi/embed?start=false&loop=false&delayms=3000"
                                 frameborder="0" width="960" height="569" allow="fullscreen"
                                 mozallowfullscreen="true" webkitallowfullscreen="true" title="Programming with Hive">
                         </iframe>
