@@ -66,6 +66,23 @@
                         <h4>Tutorial</h4>
 
                         <script src="https://gist.github.com/irajhedayati/e637b68f3794332a7508ac3fa56c821c.js"></script>
+
+                        <h4>Run Hive in local mode</h4>
+
+                        <p>
+                            By default, Hive uses the Hadoop configuration to decide how to run the jobs (normally it is
+                            YARN). If you are trying to run interactive queries on very small data, that might have been
+                            an overkill and will slow you down. In order to use the local mode, you need to set the
+                            following configuration:
+                        </p>
+                        <pre><code>
+                            SET mapreduce.framework.name=local;
+                            SET hive.exec.mode.local.auto=false;
+                        </code></pre>
+                        <p>
+                            For more information, refer to
+                            <a href="https://cwiki.apache.org/confluence/display/Hive/GettingStarted#GettingStarted-Hive,Map-ReduceandLocal-Mode">Apache Hive Wiki</a>
+                        </p>
                     </div></div></div>
                 </div>
                 <div class="tab-pane fade" id="hiveql-encoding" role="tabpanel" aria-labelledby="hiveql-encoding-tab">
