@@ -65,28 +65,28 @@
                             Download a version from <a href="https://kafka.apache.org/downloads">Apache Kafka</a> page
                             and un-tar it.
                             For example, for version 2.11
-                            <pre><code>
-                                tar -xf kafka_2.11-2.0.0.tgz .
-                                cd kafka_2.11-2.0.0
-                            </code></pre>
+<pre><code>
+tar -xf kafka_2.11-2.0.0.tgz .
+cd kafka_2.11-2.0.0
+</code></pre>
 
                             <h5>Step 2: Start Zookeeper</h5>
                             We know that Kafka depends on Zookeeper. If you already have a Zookeeper instance up and
                             running, you can skip this step. Make sure you provide the running Zookeeper quorum in
                             <strong>config/zookeeper.properties</strong> file.
-                            <pre><code>
-                                ./bin/zookeeper-server-start.sh config/zookeeper.properties
-                            </code></pre>
+<pre><code>
+./bin/zookeeper-server-start.sh config/zookeeper.properties
+</code></pre>
 
                             <h5>Step 3: Start Kafka</h5>
-                            <pre><code>
-                                ./bin/kafka-server-start.sh config/server.properties
-                            </code></pre>
+<pre><code>
+./bin/kafka-server-start.sh config/server.properties
+</code></pre>
 
                             To facilitate running commands, add the <code>bin</code> directory to your <code>$PATH</code>.
-                            <pre><code>
-                                export PATH=$PATH:$KAFKA_HOME/bin
-                            </code></pre>
+<pre><code>
+export PATH=$PATH:$KAFKA_HOME/bin
+</code></pre>
                             <p></p>
                         </div></div>
                         <div class="row"><div class="col-sm">
@@ -107,7 +107,6 @@
                             <p></p>
                         </div></div>
                         <div class="row"><div class="col-sm">
-                            <p></p>
                             <h4>Kafka consumer and producer Tutorial</h4>
                             <p>
                             Source code on <a href="https://github.com/irajhedayati/mcit/tree/master/kafka-client" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">GitHub</a>
@@ -117,6 +116,78 @@
                                     frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen title="Kafka consumer and producer tutorial"></iframe>
                             <p></p>
+                        </div></div>
+                        <div class="row"><div class="col-sm">
+                            <h4>Multi-broker setup and ISR</h4>
+                            <p>
+                                Let's start a Kafka cluster with multiple brokers. Use the following docker-compose file
+                                to run your cluster by running <code>docker-compose up</code> (assuming you have installed
+                                Docker and docker-compose).
+                            </p>
+                            <p>
+                                Note that as we are running three dockers on the same host and also the limitations on brokers and
+                                <a href="https://www.confluent.io/blog/kafka-listeners-explained/">listeners and advertised listeners</a>
+                                we are using different ports for each broker (i.e. 9092, 9093, and 9094). Keep in mind
+                                that in real deployments, these ports stay the same.
+                            <img class="mr-3" src='@routes.Assets.versioned("images/multi-broker-cluster.png")'
+                                 width="650" height="412" alt="Multi-broker Kafka setup in docker-compose"></p>
+                            <script src="https://gist.github.com/irajhedayati/90602da2e63c9121e32ca020507e7f28.js"></script>
+                            <p>
+                                To complete your tutorial, first create a topic. This time, we use replication factor 3
+                                as we have 3 brokers available.
+                            </p>
+<pre><code>
+    kafka-topics --bootstrap-server localhost:9092 --create --replication-factor 1 --partitions 3 --topic test2
+    kafka-topics --bootstrap-server localhost:9092 --describe --topic test2
+</code></pre>
+                            <img class="mr-3" src='@routes.Assets.versioned("images/isr1.png")'
+                                 width="1024" height="300" alt="Distribution of brokers and partitions">
+                            <p>Let's produce some messages</p>
+<pre><code>
+kafka-console-producer --broker-list localhost:9092 --topic test2
+>first message
+>second message
+>third message
+</code></pre>
+                            <p>And then consume</p>
+<pre><code>
+kafka-console-consumer --bootstrap-server localhost:9092 --topic test2 --from-beginning
+second message
+third message
+first message
+</code></pre>
+                            <p>There are 3 messages in this topic. Because we used the console producer, it doesn't
+                            use any key for the messages and by design uses the round-robin method. Hence, each partition
+                            has only one message. Let's see the message in partition 2</p>
+<pre><code>
+kafka-console-consumer --bootstrap-server localhost:9092 --topic test2 --from-beginning --partition 2
+first message
+</code></pre>
+                            <p>It is <code>first message</code>. As we saw earlier, <strong>broker1</strong> is the leader
+                            for this partition. Let's stop this broker using <code>docker stop broker1</code>.
+                            Now describe the topic again</p>
+<pre><code>
+kafka-topics --bootstrap-server localhost:9092 --describe --topic test2
+Topic:test2	PartitionCount:3	ReplicationFactor:3	Configs:
+	Topic: test2	Partition: 0	Leader: 2	Replicas: 2,3,1	Isr: 2,3
+	Topic: test2	Partition: 1	Leader: 3	Replicas: 3,1,2	Isr: 3,2
+	Topic: test2	Partition: 2	Leader: 3	Replicas: 1,2,3	Isr: 3,2
+</code></pre>
+                            <p>As you can see, </p>
+                            <ul>
+                                <li>The replica list is still <strong>1,2,3</strong> hoping that broker 1 recovers</li>
+                                <li>There was a leader election between broker 2 and 3 and broker 3 became the leader.</li>
+                                <li>In all the partitions, <strong>Isr</strong> is changed by removing broker 1</li>
+                            </ul>
+                            <p>If you try and consume the topic again, you will see that all the messages including
+                            <code>first message</code> are still available and it is the power of failure recovery and
+                            replication</p>
+<pre><code>
+kafka-console-consumer --bootstrap-server localhost:9092 --topic test2 --from-beginning
+first message
+second message
+third message
+</code></pre>
                         </div></div>
                     </div>
                 </div>
