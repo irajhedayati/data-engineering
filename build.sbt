@@ -18,7 +18,7 @@ lazy val dockerSettings = Seq(
   maintainer in Docker := "Iraj Hedayati <iraj.hedayati@gmail.com>",
   dockerUpdateLatest := true,
   dockerRepository := Some("index.docker.io/hedayati"),
-  dockerEntrypoint ++= Seq("-Dhttp.port=80", "-Dplay.http.secret.key=$(head -c 32 /dev/urandom | base64)")
+  dockerEntrypoint ++= Seq("-Dhttp.port=80", "-Dplay.http.secret.key=8jPv+LKQZpiqG+x8r/sFXKjaftDWjYT7qF+Ua36/1AA=")
 )
 
 lazy val root = (project in file("."))
