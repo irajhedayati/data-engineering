@@ -2,7 +2,7 @@ organization := "ca.dataedu"
 
 name := "data-engineering"
 
-scalaVersion := "2.13.0"
+scalaVersion := "2.13.12"
 
 maintainer := "hedayati"
 
@@ -17,6 +17,7 @@ lazy val rpmAppSettings = Seq(
 lazy val dockerSettings = Seq(
   maintainer in Docker := "Iraj Hedayati <iraj.hedayati@gmail.com>",
   dockerUpdateLatest := true,
+  dockerBaseImage := "adoptopenjdk/openjdk11",
   dockerRepository := Some("index.docker.io/hedayati"),
   dockerEntrypoint ++= Seq("-Dhttp.port=80", "-Dplay.http.secret.key=8jPv+LKQZpiqG+x8r/sFXKjaftDWjYT7qF+Ua36/1AA=")
 )
@@ -25,6 +26,9 @@ lazy val root = (project in file("."))
   .enablePlugins(PlayScala)
   .enablePlugins(JavaAppPackaging, DockerPlugin)
   .settings(dockerSettings)
+  .settings(
+    javacOptions ++= Seq("-source", "11", "-target", "11")
+  )
 
 libraryDependencies ++= Seq(
   "ca.dataedu" %% "savro" % "0.7.0",
