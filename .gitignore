@@ -8,3 +8,6 @@
 app/service/
 project/project/
 /.idea/
+
+.DS_Store
+.bsp/

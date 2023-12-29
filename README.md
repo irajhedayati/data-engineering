@@ -16,3 +16,16 @@ and improve it constantly.
 If you have any suggestion, found any problem or feature request
 that is useful to have, feel free to open an issue or get in touch
 with me by email or through LinkedIn. It is not hard to find me.
+
+## Frontend
+
+```bash
+# Add bootstrap
+npm config set legacy-peer-deps=true --location=project
+npm install --save bootstrap
+npm install --save @popperjs/core
+
+# Use Ace editor
+npm install --save vue3-ace-editor
+npm install --save-dev file-loader
+```
