@@ -23,6 +23,7 @@ with me by email or through LinkedIn. It is not hard to find me.
 # Add bootstrap
 npm config set legacy-peer-deps=true --location=project
 npm install --save bootstrap
+npm install --save bootstrap-icons
 npm install --save @popperjs/core
 
 # Use Ace editor

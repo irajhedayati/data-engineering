@@ -1,25 +1,23 @@
 <template>
-  <div class="dropdown">
-    <button
-      class="btn btn-secondary dropdown-toggle"
-      type="button"
-      id="dropdownMenuButton1"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-    >
-      Check Bootstrap
-    </button>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-      <li><a class="dropdown-item" href="#">Action</a></li>
-      <li><a class="dropdown-item" href="#">Another action</a></li>
-      <li><a class="dropdown-item" href="#">Something else here</a></li>
-    </ul>
-  </div>
+  <Banner title='Data Engineering Tools'
+          caption='A site to share contents, tutorials and online tools that I use in my day-to-day tasks as a data engineer.'
+  />
 </template>
 
 <script>
+import Banner from '@/components/Banner.vue'
+
 export default {
   name: 'HomeView',
-  components: {}
+  data () {
+    return {
+      bannerImage: `${require('@/assets/images/banner.jpg')}`,
+      title: 'Data Engineering Tools',
+      caption: 'A site to share contents, tutorials and online tools that I use in my day-to-day tasks as a data engineer.'
+    }
+  },
+  components: {
+    Banner
+  }
 }
 </script>

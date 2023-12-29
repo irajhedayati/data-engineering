@@ -1,24 +1,27 @@
 <template>
-<div class="container overflow-hidden">
-  <div class="row py-1">
-    <div class="col-2">
-      <button type="button" class="btn btn-primary" @click="saveTextAsFile">Download</button>
+  <Banner title='JSON Editor'
+          caption='A tool to edit and view JSON online.'
+  />
+  <div class="container overflow-hidden">
+    <div class="row py-1">
+      <div class="col-2">
+        <button type="button" class="btn btn-primary" @click="saveTextAsFile">Download</button>
+      </div>
     </div>
-  </div>
-  <div class="row py-1" style="height: 500px;">
-    <div class="col-12">
-      <v-ace-editor
-        v-model:value="content"
-        lang="json"
-        theme="chrome"
-        style="height: 500px;"
-        options="{
+    <div class="row py-1" style="height: 500px;">
+      <div class="col-12">
+        <v-ace-editor
+          v-model:value="content"
+          lang="json"
+          theme="chrome"
+          style="height: 500px;"
+          options="{
             'useWorker': true
         }"
-      />
+        />
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -28,6 +31,7 @@ import 'ace-builds/src-noconflict/mode-json'
 import 'ace-builds/src-noconflict/theme-chrome'
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import workerJsonUrl from 'file-loader?esModule=false!ace-builds/src-noconflict/worker-json.js'
+import Banner from '@/components/Banner.vue'
 
 ace.config.set(
   'basePath',
@@ -41,6 +45,7 @@ export default {
     }
   },
   components: {
+    Banner,
     VAceEditor
   },
   methods: {
