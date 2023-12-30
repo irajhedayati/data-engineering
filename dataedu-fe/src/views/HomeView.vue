@@ -39,7 +39,7 @@
                 <h5 class="card-title">Hadoop and Zookeeper</h5>
                 <p class="card-text">The Apache Hadoop software library is a framework that allows for the distributed
                   processing of large data sets across clusters of computers using simple programming models.</p>
-                <router-link aria-current="page" class="btn btn-primary" to="/">Content</router-link>
+                <router-link aria-current="page" class="btn btn-primary" to="/tutorials/hadoop">Content</router-link>
               </div>
             </div>
           </div>

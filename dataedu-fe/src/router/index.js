@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import JsonEditorView from '@/views/JsonEditorView.vue'
 import TutorialIntroductionView from '@/views/TutorialIntroductionView.vue'
+import TutorialHadoopAndZKView from '@/views/TutorialHadoopAndZKView.vue'
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: '/tutorials/introduction',
     name: 'TutorialIntroductionView',
     component: TutorialIntroductionView
+  },
+  {
+    path: '/tutorials/hadoop',
+    name: 'TutorialHadoopAndZKView',
+    component: TutorialHadoopAndZKView
   }
 ]
 

@@ -6,7 +6,7 @@
   <section id="content">
     <div class="wrapper doc">
       <IrajTabs>
-        <IrajTab :selected="true" :name="'Data Science'">
+        <IrajTab :selected="true" name="Data Science">
           <div class="container">
             <div class="row">
               <div class="col-sm">
@@ -28,7 +28,7 @@
             </div>
           </div>
         </IrajTab>
-        <IrajTab :name="'Data Engineering'">
+        <IrajTab name="Data Engineering">
           <div class="container">
             <div class="row">
               <div class="col-sm">
@@ -41,7 +41,7 @@
             </div>
           </div>
         </IrajTab>
-        <IrajTab :name="'Business Intelligence'">
+        <IrajTab name="Business Intelligence">
           <div class="container">
             <div class="row">
               <div class="col-sm">
