@@ -49,7 +49,7 @@
                 <h5 class="card-title">Hive</h5>
                 <p class="card-text">The Apache Hive data warehouse software facilitates reading, writing, and managing
                   large datasets residing in distributed storage using SQL.</p>
-                <router-link aria-current="page" class="btn btn-primary" to="/">Content</router-link>
+                <router-link aria-current="page" class="btn btn-primary" to="/tutorials/hive">Content</router-link>
               </div>
             </div>
           </div>

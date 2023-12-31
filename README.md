@@ -29,4 +29,14 @@ npm install --save @popperjs/core
 # Use Ace editor
 npm install --save vue3-ace-editor
 npm install --save-dev file-loader
+
+# embed GitHub using script
+npm install --save postscribe
+npm i --save-dev vue-gist-embed
+```
+
+How to generate Git gist components:
+
+```bash
+python ./scripts/gist_generator.py d82772d59e48bb783832329465afdb97 EncodingGist
 ```
