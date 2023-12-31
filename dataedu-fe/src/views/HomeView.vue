@@ -71,7 +71,7 @@
               <div class="card-body">
                 <h5 class="card-title">Spark</h5>
                 <p class="card-text">Spark is a unified distributed data processing platform.</p>
-                <router-link aria-current="page" class="btn btn-primary" to="/">Content</router-link>
+                <router-link aria-current="page" class="btn btn-primary" to="/tutorials/spark">Content</router-link>
               </div>
             </div>
           </div>

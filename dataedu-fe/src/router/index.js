@@ -5,6 +5,7 @@ import TutorialIntroductionView from '@/views/TutorialIntroductionView.vue'
 import TutorialHadoopAndZKView from '@/views/TutorialHadoopAndZKView.vue'
 import TutorialHiveView from '@/views/TutorialHiveView.vue'
 import TutorialKafkaView from '@/views/TutorialKafkaView.vue'
+import TutorialSparkView from '@/views/TutorialSparkView.vue'
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
     path: '/tutorials/kafka',
     name: 'TutorialKafkaView.vue',
     component: TutorialKafkaView
+  },
+  {
+    path: '/tutorials/spark',
+    name: 'TutorialSparkView.vue',
+    component: TutorialSparkView
   }
 ]
 
