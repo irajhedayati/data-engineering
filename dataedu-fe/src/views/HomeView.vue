@@ -81,7 +81,7 @@
                 <h5 class="card-title">AWS</h5>
                 <p class="card-text">AWS is the world’s most comprehensive and broadly adopted cloud
                   platform, offering over 175 fully featured services from data centers globally.</p>
-                <router-link aria-current="page" class="btn btn-primary" to="/">Content</router-link>
+                <router-link aria-current="page" class="btn btn-primary" to="/tutorials/aws">Content</router-link>
               </div>
             </div>
           </div>
