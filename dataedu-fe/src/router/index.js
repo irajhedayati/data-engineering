@@ -4,6 +4,7 @@ import JsonEditorView from '@/views/JsonEditorView.vue'
 import TutorialIntroductionView from '@/views/TutorialIntroductionView.vue'
 import TutorialHadoopAndZKView from '@/views/TutorialHadoopAndZKView.vue'
 import TutorialHiveView from '@/views/TutorialHiveView.vue'
+import TutorialKafkaView from '@/views/TutorialKafkaView.vue'
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/tutorials/hive',
     name: 'TutorialHiveView.vue',
     component: TutorialHiveView
+  },
+  {
+    path: '/tutorials/kafka',
+    name: 'TutorialKafkaView.vue',
+    component: TutorialKafkaView
   }
 ]
 

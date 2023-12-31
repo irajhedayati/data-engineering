@@ -62,7 +62,7 @@
                 <p class="card-text">A messaging system based on pub/sub architecture perfectly designed for streaming
                   and
                   message passing.</p>
-                <router-link aria-current="page" class="btn btn-primary" to="/">Content</router-link>
+                <router-link aria-current="page" class="btn btn-primary" to="/tutorials/kafka">Content</router-link>
               </div>
             </div>
           </div>
