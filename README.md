@@ -32,7 +32,10 @@ npm install --save-dev file-loader
 
 # embed GitHub using script
 npm install --save postscribe
-npm i --save-dev vue-gist-embed
+npm install --save-dev vue-gist-embed
+
+# API call
+npm install --save axios
 ```
 
 How to generate Git gist components:

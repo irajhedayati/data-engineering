@@ -1,11 +1,11 @@
 <template>
-  <Banner title='JSON Editor'
-          caption='A tool to edit and view JSON online.'
+  <Banner caption='A tool to edit and view JSON online.'
+          title='JSON Editor'
   />
   <div class="container overflow-hidden">
     <div class="row py-1">
       <div class="col-2">
-        <button type="button" class="btn btn-primary" @click="saveTextAsFile">Download</button>
+        <button class="btn btn-primary" type="button" @click="saveTextAsFile">Download</button>
       </div>
     </div>
     <div class="row py-1" style="height: 500px;">
@@ -13,11 +13,8 @@
         <v-ace-editor
           v-model:value="content"
           lang="json"
-          theme="chrome"
           style="height: 500px;"
-          options="{
-            'useWorker': true
-        }"
+          theme="chrome"
         />
       </div>
     </div>
@@ -33,9 +30,6 @@ import 'ace-builds/src-noconflict/theme-chrome'
 import workerJsonUrl from 'file-loader?esModule=false!ace-builds/src-noconflict/worker-json.js'
 import Banner from '@/components/Banner.vue'
 
-ace.config.set(
-  'basePath',
-  'https://cdn.jsdelivr.net/npm/ace-builds@' + require('ace-builds').version + '/src-noconflict/')
 ace.config.setModuleUrl('ace/mode/json_worker', workerJsonUrl)
 
 export default {

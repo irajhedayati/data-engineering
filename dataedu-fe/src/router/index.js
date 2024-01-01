@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import AvroView from '@/views/AvroView.vue'
 import HomeView from '@/views/HomeView.vue'
 import JsonEditorView from '@/views/JsonEditorView.vue'
 import TutorialIntroductionView from '@/views/TutorialIntroductionView.vue'
@@ -48,6 +49,11 @@ const routes = [
     path: '/tutorials/aws',
     name: 'TutorialAWSView.vue',
     component: TutorialAWSView
+  },
+  {
+    path: '/avro',
+    name: 'AvroView.vue',
+    component: AvroView
   }
 ]
 
