@@ -80,6 +80,8 @@ ace.config.set(
 ace.config.setModuleUrl('ace/mode/json_worker', workerJsonUrl)
 // ace.config.setModuleUrl('ace/mode/c_cpp_worker', workerCppUrl)
 
+const client = axios.create({ baseURL: process.env.VUE_APP_API_URL })
+
 export default {
   data () {
     return {
@@ -138,24 +140,24 @@ export default {
   components: { Banner, VAceEditor },
   methods: {
     jsonToAvro () {
-      axios
-        .post('http://localhost:8080/avro/api/v1/json-doc-to-avro', this.input, {
+      client
+        .post('/avro/api/v1/json-doc-to-avro', this.input, {
           headers: { 'Content-Type': 'application/json' }
         })
         .then(response => (this.output = JSON.stringify(response.data, null, 2)))
         .catch(error => alert(error.message))
     },
     avroToIdl () {
-      axios
-        .post('http://localhost:8080/avro/api/v1/avro-to-idl', this.input, {
+      client
+        .post('/avro/api/v1/avro-to-idl', this.input, {
           headers: { 'Content-Type': 'application/json' }
         })
         .then(response => (this.output = response.data))
         .catch(error => alert(error.message))
     },
     idlToAvro () {
-      axios
-        .post('http://localhost:8080/avro/api/v1/idl-to-avro', this.input, {
+      client
+        .post('/avro/api/v1/idl-to-avro', this.input, {
           headers: {
             'Content-Type': 'text/plain'
           }
@@ -164,8 +166,8 @@ export default {
         .catch(error => alert(error.message))
     },
     avroToHive () {
-      axios
-        .post('http://localhost:8080/avro/api/v1/avro-to-hive', this.input, {
+      client
+        .post('/avro/api/v1/avro-to-hive', this.input, {
           headers: {
             'Content-Type': 'application/json'
           }
@@ -174,8 +176,8 @@ export default {
         .catch(error => alert(error.message))
     },
     flatAvro () {
-      axios
-        .post('http://localhost:8080/avro/api/v1/flat-avro', this.input, {
+      client
+        .post('/avro/api/v1/flat-avro', this.input, {
           headers: {
             'Content-Type': 'application/json'
           }
