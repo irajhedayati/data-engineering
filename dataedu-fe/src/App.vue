@@ -2,7 +2,8 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">DataEdu</a>
-      <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler"
+      <button aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation"
+              class="navbar-toggler"
               data-bs-target="#navbarNavDropdown" data-bs-toggle="collapse" type="button">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -18,6 +19,10 @@
           </li>
           <li class="nav-item">
             <router-link active-class="nav-link active" aria-current="page" class="nav-link" to="/avro">Avro
+            </router-link>
+          </li>
+          <li class="nav-item">
+            <router-link active-class="nav-link active" aria-current="page" class="nav-link" to="/tools">Tools
             </router-link>
           </li>
         </ul>
@@ -55,6 +60,14 @@
             href="mailto:iraj.hedayati@gmail.com"
             role="button"
           ><i class="bi bi-envelope"></i></a>
+          <!-- Medium -->
+          <a
+            class="btn btn-link btn-floating btn-lg text-body m-1"
+            data-mdb-ripple-color="dark"
+            data-mdb-ripple-init
+            href="https://medium.com/@iraj.hedayati"
+            role="button"
+          ><i class="bi bi-medium"></i></a>
         </section>
         <!-- Section: Social media -->
       </div>
