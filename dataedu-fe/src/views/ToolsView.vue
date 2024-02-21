@@ -40,6 +40,11 @@
           <h1>Naming conversion from one casing to another</h1>
         </div>
         <div class="row mb-4"><casing-conversion /></div>
+        <hr />
+        <div class="row mb-4">
+          <h1>UUID</h1>
+        </div>
+        <div class="row mb-4"><uuid-generator /></div>
       </div>
     </div>
   </section>
@@ -48,6 +53,7 @@
 <script>
 import Banner from '@/components/Banner.vue'
 import CasingConversion from '@/components/CasingConversion.vue'
+import UuidGenerator from '@/components/UuidGenerator.vue'
 
 export default {
   data () {
@@ -62,6 +68,6 @@ export default {
       return Math.ceil(this.rate * this.unit * this.messageSizeKB / 1024)
     }
   },
-  components: { CasingConversion, Banner }
+  components: { UuidGenerator, CasingConversion, Banner }
 }
 </script>
