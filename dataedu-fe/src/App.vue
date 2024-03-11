@@ -30,7 +30,7 @@
     </div>
   </nav>
 
-  <router-view/>
+  <router-view :key="$route.fullPath" />
 
   <div class="container">
     <footer class="text-center bg-body-tertiary">
