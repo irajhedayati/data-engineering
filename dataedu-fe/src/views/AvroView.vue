@@ -70,13 +70,12 @@ import 'ace-builds/src-noconflict/mode-sql'
 import 'ace-builds/src-noconflict/theme-chrome'
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import workerJsonUrl from 'file-loader?esModule=false!ace-builds/src-noconflict/worker-json.js'
-// import workerCppUrl from 'file-loader?esModule=false!ace-builds/src-noconflict/worker-c_cpp.js'
 import Banner from '@/components/Banner.vue'
 import axios from 'axios'
 
 ace.config.set(
   'basePath',
-  'https://cdn.jsdelivr.net/npm/ace-builds@' + require('ace-builds').version + '/src-noconflict/')
+  `https://cdn.jsdelivr.net/npm/ace-builds@${require('ace-builds').version}/src-noconflict/`)
 ace.config.setModuleUrl('ace/mode/json_worker', workerJsonUrl)
 // ace.config.setModuleUrl('ace/mode/c_cpp_worker', workerCppUrl)
 

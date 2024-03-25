@@ -30,7 +30,7 @@
     </div>
   </nav>
 
-  <router-view :key="$route.fullPath" />
+  <router-view :key="$route.fullPath"/>
 
   <div class="container">
     <footer class="text-center bg-body-tertiary">
@@ -74,6 +74,10 @@
       <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
         <p class="lead">Iraj Hedayati</p>
         <p class="text-muted">A data engineer, a student and a teacher.</p>
+        <p class="text-muted">Icon: Tehran by Befoolish from <a
+          href="https://thenounproject.com/browse/icons/term/tehran/"
+          target="_blank" title="Tehran Icons">Noun Project</a> (CC BY
+          3.0)</p>
       </div>
     </footer>
   </div>

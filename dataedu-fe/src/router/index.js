@@ -15,17 +15,16 @@ const routes = [
   { path: '/json', name: 'JsonEditor', component: JsonEditorView },
   { path: '/tutorials/introduction', name: 'TutorialIntroductionView', component: TutorialIntroductionView },
   { path: '/tutorials/hadoop', name: 'TutorialHadoopAndZKView', component: TutorialHadoopAndZKView },
-  { path: '/tutorials/hive', name: 'TutorialHiveView.vue', component: TutorialHiveView },
-  { path: '/tutorials/kafka', name: 'TutorialKafkaView.vue', component: TutorialKafkaView },
-  { path: '/tutorials/spark', name: 'TutorialSparkView.vue', component: TutorialSparkView },
-  { path: '/tutorials/aws', name: 'TutorialAWSView.vue', component: TutorialAWSView },
-  { path: '/avro', name: 'AvroView.vue', component: AvroView },
-  { path: '/tools', name: 'ToolsView.vue', component: ToolsView }
+  { path: '/tutorials/hive', name: 'TutorialHiveView', component: TutorialHiveView },
+  { path: '/tutorials/kafka', name: 'TutorialKafkaView', component: TutorialKafkaView },
+  { path: '/tutorials/spark', name: 'TutorialSparkView', component: TutorialSparkView },
+  { path: '/tutorials/aws', name: 'TutorialAWSView', component: TutorialAWSView },
+  { path: '/avro', name: 'AvroView', component: AvroView },
+  { path: '/tools', name: 'ToolsView', component: ToolsView }
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
+  history: createWebHistory(process.env.BASE_URL), routes
 })
 
 export default router
