@@ -7,15 +7,22 @@ on:
     branches: [ "master" ]
 
 jobs:
-
-  build:
-
+  push_to_registry:
+    name: push docker image to hub
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: |
-        cd dataedu-fe
-        docker build . --file Dockerfile -t hedayati/data-engineering-fe:latest
-        docker push hedayati/data-engineering-fe:latest
+      - name: check repository
+        uses: actions/checkout@v4
+
+      - name: login to docker registry
+        uses: docker/login-action@v3
+        with:
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}
+
+      - name: build and push docker image to registry
+        uses: docker/build-push-action@v5
+        with:
+          context: dataedu-fe/
+          push: true
+          tags: hedayati/data-engineering-fe:latest
