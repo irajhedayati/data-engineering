@@ -17,5 +17,5 @@ jobs:
     - name: Build the Docker image
       run: |
         cd dataedu-fe
-        docker build . --file Dockerfile --t hedayati/data-engineering-fe:latest
+        docker build . --file Dockerfile -t hedayati/data-engineering-fe:latest
         docker push hedayati/data-engineering-fe:latest
