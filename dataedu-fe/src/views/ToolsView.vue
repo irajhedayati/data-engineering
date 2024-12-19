@@ -45,6 +45,11 @@
           <h1>UUID</h1>
         </div>
         <div class="row mb-4"><uuid-generator /></div>
+        <hr />
+        <div class="row mb-4">
+          <h1>Time Format</h1>
+        </div>
+        <div class="row mb-4"><time-format /></div>
       </div>
     </div>
   </section>
@@ -54,6 +59,7 @@
 import Banner from '@/components/Banner.vue'
 import CasingConversion from '@/components/CasingConversion.vue'
 import UuidGenerator from '@/components/UuidGenerator.vue'
+import TimeFormat from '@/components/TimeFormat.vue'
 
 export default {
   data () {
@@ -68,6 +74,6 @@ export default {
       return Math.ceil(this.rate * this.unit * this.messageSizeKB / 1024)
     }
   },
-  components: { UuidGenerator, CasingConversion, Banner }
+  components: { TimeFormat, UuidGenerator, CasingConversion, Banner }
 }
 </script>
