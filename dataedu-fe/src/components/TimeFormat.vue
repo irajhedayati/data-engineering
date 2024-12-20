@@ -1,10 +1,57 @@
 <template>
+  <div class="row mb3"><h2>Epoch</h2></div>
+  <div class="row mb3">
+    <div class="col-4">
+      <div class="input-group mb-3">
+        <span id="basic-addon1" class="input-group-text">Current epoch (ms)</span>
+        <input v-model="currentTime" aria-label="input" class="form-control text-end" type="text">
+        <button id="button-addon2" v-clipboard="currentTime" class="btn btn-outline-secondary" type="button">
+          <i class="bi bi-copy"></i>
+        </button>
+      </div>
+      <div class="input-group mb-3">
+        <span id="basic-addon1" class="input-group-text">Current epoch (s)</span>
+        <input v-model="currentTimeS" aria-label="input" class="form-control text-end" type="text">
+        <button id="button-addon2" v-clipboard="currentTimeS" class="btn btn-outline-secondary" type="button">
+          <i class="bi bi-copy"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col-5">
+      <div class="input-group mb-3">
+        <span id="basic-addon1" class="input-group-text">ISO 8601 UTC</span>
+        <input v-model="currentIso" aria-label="input" class="form-control" type="text">
+        <button id="button-addon2" v-clipboard="currentIso" class="btn btn-outline-secondary" type="button">
+          <i class="bi bi-copy"></i>
+        </button>
+      </div>
+      <div class="input-group mb-3">
+        <span id="basic-addon1" class="input-group-text">Locale ({{ locale }})</span>
+        <input v-model="currentLocal" aria-label="input" class="form-control" type="text">
+        <button id="button-addon2" v-clipboard="currentLocal" class="btn btn-outline-secondary" type="button">
+          <i class="bi bi-copy"></i>
+        </button>
+      </div>
+      <div class="input-group mb-3">
+        <span id="basic-addon1" class="input-group-text">RFC 7231 UTC</span>
+        <input v-model="currentRFC" aria-label="input" class="form-control" type="text">
+        <button id="button-addon2" v-clipboard="currentRFC" class="btn btn-outline-secondary" type="button">
+          <i class="bi bi-copy"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row mb3"><h2>Date</h2></div>
   <div class="row mb3">
     <div class="col-6">
       <div class="row mb3">
         <div class="input-group mb-3">
           <span id="basic-addon1" class="input-group-text">Input</span>
-          <input v-model="input" aria-label="input" class="form-control" type="text">
+          <input v-model="input"
+                 aria-label="input"
+                 class="form-control"
+                 type="text"
+                 placeholder="Date time value to parse">
           <button id="button-addon2" class="btn btn-outline-secondary" type="button" @click="convert">
             <i class="bi bi-arrow-bar-right"></i>
           </button>
@@ -13,7 +60,12 @@
       <div class="row mb3">
         <div class="input-group mb-3">
           <span id="basic-addon1" class="input-group-text">Format</span>
-          <input :value="format.join('')" aria-label="uuid-v4" class="form-control" disabled type="text">
+          <input :value="format.join('')"
+                 aria-label="uuid-v4"
+                 class="form-control"
+                 disabled
+                 type="text"
+                 placeholder="Use the right side to build format">
           <button id="button-addon2" class="btn btn-outline-secondary" type="button" @click="handleFormatClear">
             <i class="bi bi-eraser"></i>
           </button>
@@ -151,10 +203,26 @@ export default {
       hourIsChecked: false,
       minuteIsChecked: false,
       secondIsChecked: false,
-      epochSeconds: 0
+      epochSeconds: 0,
+      currentTime: Date.now(),
+      currentTimeS: Math.floor(Date.now() / 1000),
+      currentIso: new Date().toISOString(),
+      currentLocal: new Date().toLocaleString(),
+      currentRFC: new Date().toUTCString(),
+      locale: this.getLang()
     }
   },
+  created () {
+    setInterval(this.getNow, 5000)
+  },
   methods: {
+    getNow () {
+      this.currentTime = Date.now()
+      this.currentTimeS = Math.floor(this.currentTime / 1000)
+      this.currentIso = new Date().toISOString()
+      this.currentLocal = new Date().toLocaleString()
+      this.currentRFC = new Date().toUTCString()
+    },
     handleFormatClear () {
       this.format = []
       this.yearIsChecked = false
@@ -184,6 +252,9 @@ export default {
     },
     convert () {
       this.epochSeconds = moment(this.input, this.format.join('')).unix()
+    },
+    getLang () {
+      return (navigator.languages !== undefined) ? navigator.languages[0] : navigator.language
     }
   }
 }

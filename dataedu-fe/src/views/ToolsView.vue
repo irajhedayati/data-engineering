@@ -47,7 +47,7 @@
         <div class="row mb-4"><uuid-generator /></div>
         <hr />
         <div class="row mb-4">
-          <h1>Time Format</h1>
+          <h1>Time</h1>
         </div>
         <div class="row mb-4"><time-format /></div>
       </div>
