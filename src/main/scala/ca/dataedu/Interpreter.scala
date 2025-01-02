@@ -18,8 +18,8 @@ class Interpreter(implicit ec: ExecutionContext) {
     Future {
       parse(jsonDocument).left
         .map(_.message)
-        .flatMap(
-          in => Either.cond(!in.asArray.exists(_.size > 1000), in, "The array size shouldn't exceed a 1000 records")
+        .flatMap(in =>
+          Either.cond(!in.asArray.exists(_.size > 1000), in, "The array size shouldn't exceed a 1000 records")
         )
         .flatMap(AvroSchema(_, "TestObject", Some("ca.dataedu")))
         .map(_.toString(true))
