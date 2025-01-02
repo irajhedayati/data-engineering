@@ -31,11 +31,11 @@ lazy val root = (project in file("."))
       "io.circe"                      %% "circe-parser"            % CirceVersion,
       "com.softwaremill.sttp.client3" %% "core"                    % SttpVersion,
       "com.softwaremill.sttp.client3" %% "circe"                   % SttpVersion,
-      "com.beachape"                  %% "enumeratum-circe"        % EnumeratumCirceVersion,
       "com.softwaremill.sttp.tapir"   %% "tapir-core"              % TapirVersion,
       "com.softwaremill.sttp.tapir"   %% "tapir-json-circe"        % TapirVersion,
       "com.softwaremill.sttp.tapir"   %% "tapir-swagger-ui-bundle" % TapirVersion,
-      "com.softwaremill.sttp.tapir"   %% "tapir-akka-http-server"  % TapirVersion
+      "com.softwaremill.sttp.tapir"   %% "tapir-akka-http-server"  % TapirVersion,
+      "com.google.cloud.functions" %"functions-framework-api" % "1.1.0"
     )
   )
   .enablePlugins(JavaAppPackaging, DockerPlugin)

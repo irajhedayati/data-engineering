@@ -79,7 +79,7 @@ ace.config.set(
 ace.config.setModuleUrl('ace/mode/json_worker', workerJsonUrl)
 // ace.config.setModuleUrl('ace/mode/c_cpp_worker', workerCppUrl)
 
-const client = axios.create({ baseURL: process.env.VUE_APP_API_URL })
+const client = axios.create({ baseURL: process.env.VUE_APP_SCHEMA_API_URL })
 
 export default {
   data () {

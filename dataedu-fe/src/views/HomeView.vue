@@ -22,69 +22,14 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-sm">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Introduction</h5>
-                <p class="card-text">A brief introduction to Data Science, Data Engineering, and Business
-                  Intelligence.</p>
-                <router-link aria-current="page" class="btn btn-primary" to="/tutorials/introduction">Content
-                </router-link>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Hadoop and Zookeeper</h5>
-                <p class="card-text">The Apache Hadoop software library is a framework that allows for the distributed
-                  processing of large data sets across clusters of computers using simple programming models.</p>
-                <router-link aria-current="page" class="btn btn-primary" to="/tutorials/hadoop">Content</router-link>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Hive</h5>
-                <p class="card-text">The Apache Hive data warehouse software facilitates reading, writing, and managing
-                  large datasets residing in distributed storage using SQL.</p>
-                <router-link aria-current="page" class="btn btn-primary" to="/tutorials/hive">Content</router-link>
-              </div>
-            </div>
-          </div>
+          <tutorial-cell title="Introduction" link="/tutorials/introduction" description="A brief introduction to Data Science, Data Engineering, and Business Intelligence."/>
+          <tutorial-cell title="Hadoop and Zookeeper" link="/tutorials/hadoop" description="The Apache Hadoop software library is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming models."/>
+          <tutorial-cell title="Hive" link="/tutorials/hive" description="The Apache Hive data warehouse software facilitates reading, writing, and managing large datasets residing in distributed storage using SQL."/>
         </div>
         <div class="row">
-          <div class="col-sm">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Kafka and Schema Registry</h5>
-                <p class="card-text">A messaging system based on pub/sub architecture perfectly designed for streaming
-                  and
-                  message passing.</p>
-                <router-link aria-current="page" class="btn btn-primary" to="/tutorials/kafka">Content</router-link>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Spark</h5>
-                <p class="card-text">Spark is a unified distributed data processing platform.</p>
-                <router-link aria-current="page" class="btn btn-primary" to="/tutorials/spark">Content</router-link>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">AWS</h5>
-                <p class="card-text">AWS is the world’s most comprehensive and broadly adopted cloud
-                  platform, offering over 175 fully featured services from data centers globally.</p>
-                <router-link aria-current="page" class="btn btn-primary" to="/tutorials/aws">Content</router-link>
-              </div>
-            </div>
-          </div>
+          <tutorial-cell title="Kafka and Schema Registry" link="/tutorials/kafka" description="A messaging system based on pub/sub architecture perfectly designed for streaming and message passing."/>
+          <tutorial-cell title="Spark" link="/tutorials/spark" description="Spark is a unified distributed data processing platform."/>
+          <tutorial-cell title="AWS" link="/tutorials/aws" description="AWS is the world’s most comprehensive and broadly adopted cloud platform, offering over 175 fully featured services from data centers globally."/>
         </div>
       </div>
     </div>
@@ -93,14 +38,13 @@
 
 <script>
 import Banner from '@/components/Banner.vue'
+import TutorialCell from '@/components/TutorialCell.vue'
 
 export default {
   name: 'HomeView',
   data () {
     return {}
   },
-  components: {
-    Banner
-  }
+  components: { Banner, TutorialCell }
 }
 </script>

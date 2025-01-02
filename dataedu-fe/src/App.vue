@@ -37,37 +37,33 @@
       <div class="container pt-4">
         <section class="mb-4">
           <!-- Linkedin -->
-          <a
+          <button
             class="btn btn-link btn-floating btn-lg text-body m-1"
             data-mdb-ripple-color="dark"
             data-mdb-ripple-init
             href="https://www.linkedin.com/in/irajhedayati/"
-            role="button"
-          ><i class="bi bi-linkedin"></i></a>
+          ><i class="bi bi-linkedin"></i></button>
           <!-- Github -->
-          <a
+          <button
             class="btn btn-link btn-floating btn-lg text-body m-1"
             data-mdb-ripple-color="dark"
             data-mdb-ripple-init
             href="https://github.com/irajhedayati/"
-            role="button"
-          ><i class="bi bi-github"></i></a>
+          ><i class="bi bi-github"></i></button>
           <!-- EMail -->
-          <a
+          <button
             class="btn btn-link btn-floating btn-lg text-body m-1"
             data-mdb-ripple-color="dark"
             data-mdb-ripple-init
             href="mailto:iraj.hedayati@gmail.com"
-            role="button"
-          ><i class="bi bi-envelope"></i></a>
+          ><i class="bi bi-envelope"></i></button>
           <!-- Medium -->
-          <a
+          <button
             class="btn btn-link btn-floating btn-lg text-body m-1"
             data-mdb-ripple-color="dark"
             data-mdb-ripple-init
             href="https://medium.com/@iraj.hedayati"
-            role="button"
-          ><i class="bi bi-medium"></i></a>
+          ><i class="bi bi-medium"></i></button>
         </section>
         <!-- Section: Social media -->
       </div>

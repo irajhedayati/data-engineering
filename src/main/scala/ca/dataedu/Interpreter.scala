@@ -9,6 +9,7 @@ import sttp.tapir.server.akkahttp.{ AkkaHttpServerInterpreter, AkkaHttpServerOpt
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Try
 
+//noinspection DuplicatedCode
 class Interpreter(implicit ec: ExecutionContext) {
 
   private val customServerOptions: AkkaHttpServerOptions = AkkaHttpServerOptions.customiseInterceptors.options
