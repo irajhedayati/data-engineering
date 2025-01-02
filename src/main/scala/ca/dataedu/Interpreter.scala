@@ -3,7 +3,7 @@ package ca.dataedu
 import akka.http.scaladsl.server.Route
 import ca.dataedu.savro.{ AvroProtocol, AvroSchema, HiveSchema }
 import io.circe.parser._
-import org.apache.avro.{ AvroTypeException, Protocol, Schema, SchemaParseException }
+import org.apache.avro.{ AvroTypeException, Protocol, Schema, SchemaFormatter, SchemaParseException }
 import sttp.tapir.server.akkahttp.{ AkkaHttpServerInterpreter, AkkaHttpServerOptions }
 
 import scala.concurrent.{ ExecutionContext, Future }
@@ -22,7 +22,7 @@ class Interpreter(implicit ec: ExecutionContext) {
           Either.cond(!in.asArray.exists(_.size > 1000), in, "The array size shouldn't exceed a 1000 records")
         )
         .flatMap(AvroSchema(_, "TestObject", Some("ca.dataedu")))
-        .map(_.toString(true))
+        .map(SchemaFormatter.format("json/pretty", _))
         .left
         .map(_.toString)
     }
@@ -64,7 +64,7 @@ class Interpreter(implicit ec: ExecutionContext) {
       new Schema.Parser()
         .parse(avroSchema)
         .flat
-        .map(_.toString(true))
+        .map(SchemaFormatter.format("json/pretty", _))
         .left
         .map(error => s"Unable to flatten the input because: ${error.toString()}")
     }
