@@ -20,7 +20,8 @@
     "uuid": "^9.0.1",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
-    "vue3-ace-editor": "^2.2.4"
+    "vue3-ace-editor": "^2.2.4",
+    "xksuid": "^0.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
