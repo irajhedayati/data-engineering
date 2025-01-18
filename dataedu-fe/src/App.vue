@@ -41,28 +41,28 @@
             class="btn btn-link btn-floating btn-lg text-body m-1"
             data-mdb-ripple-color="dark"
             data-mdb-ripple-init
-            href="https://www.linkedin.com/in/irajhedayati/"
+            onclick="window.open('https://www.linkedin.com/in/irajhedayati/', '_blank')"
           ><i class="bi bi-linkedin"></i></button>
           <!-- Github -->
           <button
             class="btn btn-link btn-floating btn-lg text-body m-1"
             data-mdb-ripple-color="dark"
             data-mdb-ripple-init
-            href="https://github.com/irajhedayati/"
+            onclick="window.open('https://github.com/irajhedayati/', '_blank')"
           ><i class="bi bi-github"></i></button>
           <!-- EMail -->
           <button
             class="btn btn-link btn-floating btn-lg text-body m-1"
             data-mdb-ripple-color="dark"
             data-mdb-ripple-init
-            href="mailto:iraj.hedayati@gmail.com"
+            onclick="location.href='mailto:iraj.hedayati@gmail.com'"
           ><i class="bi bi-envelope"></i></button>
           <!-- Medium -->
           <button
             class="btn btn-link btn-floating btn-lg text-body m-1"
             data-mdb-ripple-color="dark"
             data-mdb-ripple-init
-            href="https://medium.com/@iraj.hedayati"
+            onclick="window.open('https://medium.com/@iraj.hedayati', '_blank')"
           ><i class="bi bi-medium"></i></button>
         </section>
         <!-- Section: Social media -->
