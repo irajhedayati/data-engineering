@@ -41,9 +41,9 @@ export default {
   },
   computed: {
     inputCasing () {
-      if (this.input.match('^([A-Z][a-z0-9]+)+$')) {
+      if (this.input.match('^([A-Z][a-z0-9]+|[A-Z]+)+$')) {
         return 'UpperCaseCamelCase'
-      } else if (this.input.match('^([a-z0-9]+)([A-Z][a-z0-9]+)*$')) {
+      } else if (this.input.match('^([a-z0-9]+)([A-Z][a-z0-9]+|[A-Z]+)*$')) {
         return 'lowerCaseCamelCase'
       } else if (this.input.match('^([a-z0-9\\-]+)$')) {
         return 'kebab-case'

@@ -37,6 +37,14 @@
         </div>
         <hr />
         <div class="row mb-4">
+          <h1>Spark</h1>
+          <h2>Calculate Spark executor memory</h2>
+          <spark-executor-memory />
+          <h2>Dataproc Serverless</h2>
+          <dataproc-serverless />
+        </div>
+        <hr>
+        <div class="row mb-4">
           <h1>Naming conversion from one casing to another</h1>
         </div>
         <div class="row mb-4"><casing-conversion /></div>
@@ -60,6 +68,8 @@ import Banner from '@/components/Banner.vue'
 import CasingConversion from '@/components/CasingConversion.vue'
 import UuidGenerator from '@/components/UuidGenerator.vue'
 import TimeFormat from '@/components/TimeFormat.vue'
+import SparkExecutorMemory from '@/components/SparkExecutorMemory.vue'
+import DataprocServerless from '@/components/DataprocServerless.vue'
 
 export default {
   data () {
@@ -74,6 +84,6 @@ export default {
       return Math.ceil(this.rate * this.unit * this.messageSizeKB / 1024)
     }
   },
-  components: { TimeFormat, UuidGenerator, CasingConversion, Banner }
+  components: { DataprocServerless, SparkExecutorMemory, TimeFormat, UuidGenerator, CasingConversion, Banner }
 }
 </script>
