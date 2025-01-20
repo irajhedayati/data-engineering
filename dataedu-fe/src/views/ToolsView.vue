@@ -56,8 +56,13 @@
         <hr />
         <div class="row mb-4">
           <h1>Time</h1>
+          <time-format />
         </div>
-        <div class="row mb-4"><time-format /></div>
+        <hr />
+        <div class="row mb-4">
+          <h1>WinSCP Password Decoder</h1>
+          <win-scp-decoder />
+        </div>
       </div>
     </div>
   </section>
@@ -70,6 +75,7 @@ import UuidGenerator from '@/components/UuidGenerator.vue'
 import TimeFormat from '@/components/TimeFormat.vue'
 import SparkExecutorMemory from '@/components/SparkExecutorMemory.vue'
 import DataprocServerless from '@/components/DataprocServerless.vue'
+import WinScpDecoder from '@/components/WinSCPDecoder.vue'
 
 export default {
   data () {
@@ -84,6 +90,6 @@ export default {
       return Math.ceil(this.rate * this.unit * this.messageSizeKB / 1024)
     }
   },
-  components: { DataprocServerless, SparkExecutorMemory, TimeFormat, UuidGenerator, CasingConversion, Banner }
+  components: { WinScpDecoder, DataprocServerless, SparkExecutorMemory, TimeFormat, UuidGenerator, CasingConversion, Banner }
 }
 </script>
