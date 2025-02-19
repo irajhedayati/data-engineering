@@ -26,6 +26,15 @@
                   title="Descriptive Statistics" width="960"></iframe>
               </div>
             </div>
+            <div class="row">
+              <div class="col-sm">
+                <iframe
+                  allow="fullscreen"
+                  height="569"
+                  src="https://docs.google.com/presentation/d/e/2PACX-1vSnle48QT8t0z69Bgl9JtBmcvCB8zz3CrBU_fElGNrBMTphRIwVrPiXRPguHRPIaevfImLxofcn25Rt/embed?start=false&loop=false&delayms=3000"
+                  title="Descriptive Statistics" width="960"></iframe>
+              </div>
+            </div>
           </div>
         </IrajTab>
         <IrajTab name="Data Engineering">
