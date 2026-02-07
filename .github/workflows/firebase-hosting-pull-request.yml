@@ -11,7 +11,7 @@ jobs:
   build_and_preview:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Build FE
         working-directory: ./dataedu-fe
         run: npm ci && npm run build
@@ -19,5 +19,6 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DATAEDU_WEB }}
+          channelId: staging
           projectId: dataedu-web
           entryPoint: ./dataedu-fe
