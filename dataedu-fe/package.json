@@ -11,7 +11,7 @@
     "@popperjs/core": "^2.11.8",
     "@soerenmartius/vue3-clipboard": "^0.1.2",
     "ace-builds": "^1.43.4",
-    "axios": "^1.13.2",
+    "axios": "^1.13.4",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "core-js": "^3.47.0",
