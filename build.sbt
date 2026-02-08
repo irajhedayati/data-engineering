@@ -3,7 +3,7 @@ val CirceVersion = "0.14.10"
 val EnumeratumCirceVersion = "1.7.5"
 val LogbackVersion = "1.5.28"
 val ScalaLoggingVersion = "3.9.6"
-val SttpVersion = "3.10.2"
+val SttpVersion = "3.10.3"
 val TapirVersion = "1.11.11"
 
 lazy val root = (project in file("."))
