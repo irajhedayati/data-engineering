@@ -35,7 +35,7 @@ lazy val root = (project in file("."))
       "com.softwaremill.sttp.tapir"   %% "tapir-json-circe"        % TapirVersion,
       "com.softwaremill.sttp.tapir"   %% "tapir-swagger-ui-bundle" % TapirVersion,
       "com.softwaremill.sttp.tapir"   %% "tapir-akka-http-server"  % TapirVersion,
-      "com.google.cloud.functions"     % "functions-framework-api" % "1.1.0"
+      "com.google.cloud.functions"     % "functions-framework-api" % "1.1.4"
     )
   )
   .enablePlugins(JavaAppPackaging, DockerPlugin)
