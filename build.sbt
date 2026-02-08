@@ -10,7 +10,7 @@ lazy val root = (project in file("."))
   .settings(
     organization := "ca.dataedu",
     name := "data-engineering",
-    scalaVersion := "2.13.15",
+    scalaVersion := "2.13.18",
     maintainer := "hedayati",
     scalaBinaryVersion := "2.13",
     javacOptions ++= Seq("-source", "11", "-target", "11"),
@@ -35,7 +35,7 @@ lazy val root = (project in file("."))
       "com.softwaremill.sttp.tapir"   %% "tapir-json-circe"        % TapirVersion,
       "com.softwaremill.sttp.tapir"   %% "tapir-swagger-ui-bundle" % TapirVersion,
       "com.softwaremill.sttp.tapir"   %% "tapir-akka-http-server"  % TapirVersion,
-      "com.google.cloud.functions" %"functions-framework-api" % "1.1.0"
+      "com.google.cloud.functions"     % "functions-framework-api" % "1.1.0"
     )
   )
   .enablePlugins(JavaAppPackaging, DockerPlugin)
