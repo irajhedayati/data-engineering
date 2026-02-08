@@ -20,7 +20,7 @@ lazy val root = (project in file("."))
   )
   .settings(
     libraryDependencies ++= Seq(
-      "ca.dataedu"      %% "savro"            % "0.11.0",
+      "ca.dataedu"      %% "savro"            % "0.12.1",
       ("org.apache.avro" % "avro"             % AvroVersion).exclude("com.fasterxml.jackson.core", "jackson-core"),
       ("org.apache.avro" % "avro-tools"       % AvroVersion).exclude("com.fasterxml.jackson.core", "jackson-core"),
       ("org.apache.avro" % "avro-compiler"    % AvroVersion).exclude("com.fasterxml.jackson.core", "jackson-core"),
