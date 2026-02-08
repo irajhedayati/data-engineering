@@ -3,7 +3,7 @@ val CirceVersion = "0.14.10"
 val EnumeratumCirceVersion = "1.7.5"
 val LogbackVersion = "1.5.15"
 val ScalaLoggingVersion = "3.9.5"
-val SttpVersion = "3.10.2"
+val SttpVersion = "3.10.3"
 val TapirVersion = "1.11.11"
 
 lazy val root = (project in file("."))
@@ -35,7 +35,7 @@ lazy val root = (project in file("."))
       "com.softwaremill.sttp.tapir"   %% "tapir-json-circe"        % TapirVersion,
       "com.softwaremill.sttp.tapir"   %% "tapir-swagger-ui-bundle" % TapirVersion,
       "com.softwaremill.sttp.tapir"   %% "tapir-akka-http-server"  % TapirVersion,
-      "com.google.cloud.functions" %"functions-framework-api" % "1.1.0"
+      "com.google.cloud.functions"     % "functions-framework-api" % "1.1.0"
     )
   )
   .enablePlugins(JavaAppPackaging, DockerPlugin)
