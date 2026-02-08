@@ -1,6 +1,6 @@
 val AvroVersion = "1.12.1"
 val CirceVersion = "0.14.10"
-val EnumeratumCirceVersion = "1.7.5"
+val EnumeratumCirceVersion = "1.9.4"
 val LogbackVersion = "1.5.28"
 val ScalaLoggingVersion = "3.9.6"
 val SttpVersion = "3.10.3"
