@@ -1,16 +1,16 @@
-val AvroVersion = "1.12.0"
+val AvroVersion = "1.12.1"
 val CirceVersion = "0.14.10"
-val EnumeratumCirceVersion = "1.7.5"
-val LogbackVersion = "1.5.15"
-val ScalaLoggingVersion = "3.9.5"
-val SttpVersion = "3.10.2"
-val TapirVersion = "1.11.11"
+val EnumeratumCirceVersion = "1.9.4"
+val LogbackVersion = "1.5.28"
+val ScalaLoggingVersion = "3.9.6"
+val SttpVersion = "3.10.3"
+val TapirVersion = "1.11.19"
 
 lazy val root = (project in file("."))
   .settings(
     organization := "ca.dataedu",
     name := "data-engineering",
-    scalaVersion := "2.13.15",
+    scalaVersion := "2.13.18",
     maintainer := "hedayati",
     scalaBinaryVersion := "2.13",
     javacOptions ++= Seq("-source", "11", "-target", "11"),
@@ -35,7 +35,7 @@ lazy val root = (project in file("."))
       "com.softwaremill.sttp.tapir"   %% "tapir-json-circe"        % TapirVersion,
       "com.softwaremill.sttp.tapir"   %% "tapir-swagger-ui-bundle" % TapirVersion,
       "com.softwaremill.sttp.tapir"   %% "tapir-akka-http-server"  % TapirVersion,
-      "com.google.cloud.functions"     % "functions-framework-api" % "1.1.0"
+      "com.google.cloud.functions"     % "functions-framework-api" % "1.1.4"
     )
   )
   .enablePlugins(JavaAppPackaging, DockerPlugin)
