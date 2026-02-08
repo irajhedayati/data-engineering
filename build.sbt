@@ -10,7 +10,7 @@ lazy val root = (project in file("."))
   .settings(
     organization := "ca.dataedu",
     name := "data-engineering",
-    scalaVersion := "2.13.15",
+    scalaVersion := "2.13.18",
     maintainer := "hedayati",
     scalaBinaryVersion := "2.13",
     javacOptions ++= Seq("-source", "11", "-target", "11"),
