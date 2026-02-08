@@ -1,4 +1,4 @@
-val AvroVersion = "1.12.0"
+val AvroVersion = "1.12.1"
 val CirceVersion = "0.14.10"
 val EnumeratumCirceVersion = "1.7.5"
 val LogbackVersion = "1.5.28"
