@@ -68,7 +68,7 @@ import 'ace-builds/src-noconflict/mode-json'
 import 'ace-builds/src-noconflict/mode-c_cpp'
 import 'ace-builds/src-noconflict/mode-sql'
 import 'ace-builds/src-noconflict/theme-chrome'
-// eslint-disable-next-line import/no-webpack-loader-syntax
+// noinspection JSFileReferences
 import workerJsonUrl from 'file-loader?esModule=false!ace-builds/src-noconflict/worker-json.js'
 import Banner from '@/components/Banner.vue'
 import axios from 'axios'
