@@ -26,7 +26,7 @@ import { VAceEditor } from 'vue3-ace-editor'
 import ace from 'ace-builds'
 import 'ace-builds/src-noconflict/mode-json'
 import 'ace-builds/src-noconflict/theme-chrome'
-// eslint-disable-next-line import/no-webpack-loader-syntax
+// noinspection JSFileReferences
 import workerJsonUrl from 'file-loader?esModule=false!ace-builds/src-noconflict/worker-json.js'
 import Banner from '@/components/Banner.vue'
 
