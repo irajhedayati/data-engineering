@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "vue-cli-service serve --skip-plugins eslint",
+    "build": "eslint .; vue-cli-service build --skip-plugins eslint",
     "lint": "eslint .",
     "fix-lint": "eslint --fix ."
   },
@@ -16,6 +16,7 @@
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "core-js": "^3.47.0",
+    "file-loader": "^6.2.0",
     "firebase": "^12.9.0",
     "moment": "^2.30.1",
     "uuid": "^13.0.0",
