@@ -33,7 +33,7 @@
     "@vue/cli-service": "^5.0.9",
     "@vue/eslint-config-standard": "^8.0.1",
     "eslint": "^9.39.2",
-    "eslint-plugin-vue": "^10.7.0",
+    "eslint-plugin-vue": "^10.8.0",
     "globals": "^17.3.0",
     "vue-eslint-parser": "^10.4.0"
   }
