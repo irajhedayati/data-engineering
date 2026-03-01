@@ -1,4 +1,5 @@
-val AvroVersion = "1.12.1"
+// SBT is unable to download 'org.apache.avro#trevni-core;1.12.1'
+val AvroVersion = "1.12.0"
 val CirceVersion = "0.14.10"
 val EnumeratumCirceVersion = "1.9.5"
 val LogbackVersion = "1.5.31"

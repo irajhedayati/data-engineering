@@ -11,3 +11,4 @@ project/project/
 
 .DS_Store
 .bsp/
+.tool-versions
