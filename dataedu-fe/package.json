@@ -17,7 +17,7 @@
     "bootstrap-icons": "^1.13.1",
     "core-js": "^3.48.0",
     "file-loader": "^6.2.0",
-    "firebase": "^12.9.0",
+    "firebase": "^12.10.0",
     "moment": "^2.30.1",
     "uuid": "^13.0.0",
     "vue": "^3.5.29",
