@@ -1,5 +1,7 @@
 // SBT is unable to download 'org.apache.avro#trevni-core;1.12.1'
 val AvroVersion = "1.12.0"
+// enumeratum-circe depends on circe 0.14.10
+// https://github.com/lloydmeta/enumeratum/blob/master/project/Versions.scala#L18
 val CirceVersion = "0.14.10"
 val EnumeratumCirceVersion = "1.9.8"
 val LogbackVersion = "1.5.38"
