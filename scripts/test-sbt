@@ -3,4 +3,8 @@
 echo "+----------------------------+"
 echo "| Executing tests using sbt  |"
 echo "+----------------------------+"
-sbt ++$TRAVIS_SCALA_VERSION test
+if [[ -n "${TRAVIS_SCALA_VERSION:-}" ]]; then
+  sbt "++$TRAVIS_SCALA_VERSION ; test"
+else
+  sbt test
+fi
