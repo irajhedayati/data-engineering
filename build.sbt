@@ -16,8 +16,7 @@ lazy val root = (project in file("."))
     scalaBinaryVersion := "2.13",
     javacOptions ++= Seq("-source", "11", "-target", "11"),
     scalacOptions ++= Seq("-deprecation"),
-    scalafmtOnCompile := true,
-    useCoursier := false
+    scalafmtOnCompile := true
   )
   .settings(
     libraryDependencies ++= Seq(
