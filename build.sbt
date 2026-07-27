@@ -4,7 +4,7 @@ val AvroVersion = "1.12.0"
 // https://github.com/lloydmeta/enumeratum/blob/master/project/Versions.scala#L18
 val CirceVersion = "0.14.10"
 val EnumeratumCirceVersion = "1.9.8"
-val LogbackVersion = "1.5.38"
+val LogbackVersion = "1.6.0"
 val ScalaLoggingVersion = "3.9.6"
 val SttpVersion = "3.11.0"
 val TapirVersion = "1.11.19"
@@ -37,7 +37,7 @@ lazy val root = (project in file("."))
       "com.softwaremill.sttp.tapir"   %% "tapir-json-circe"        % TapirVersion,
       "com.softwaremill.sttp.tapir"   %% "tapir-swagger-ui-bundle" % TapirVersion,
       "com.softwaremill.sttp.tapir"   %% "tapir-akka-http-server"  % TapirVersion,
-      "com.google.cloud.functions"     % "functions-framework-api" % "2.0.1"
+      "com.google.cloud.functions"     % "functions-framework-api" % "2.0.2"
     )
   )
   .enablePlugins(JavaAppPackaging, DockerPlugin)
