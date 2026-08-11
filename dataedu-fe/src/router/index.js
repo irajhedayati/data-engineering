@@ -10,6 +10,7 @@ import TutorialKafkaView from '@/views/TutorialKafkaView.vue'
 import TutorialSparkView from '@/views/TutorialSparkView.vue'
 import TutorialAWSView from '@/views/TutorialAWSView.vue'
 import ToolsView from '@/views/ToolsView.vue'
+import ResumePortfolioView from '@/views/ResumePortfolioView.vue'
 
 const routes = [
   { path: '/', name: 'Home', component: HomeView, meta: { title: 'My DE Space' } },
@@ -51,7 +52,8 @@ const routes = [
     meta: { title: 'My DE Space - Tutorials - Cloud and AWS' }
   },
   { path: '/avro', name: 'AvroView', component: AvroView, meta: { title: 'My DE Space - Avro Tools' } },
-  { path: '/tools', name: 'ToolsView', component: ToolsView, meta: { title: 'My DE Space - DE Tools' } }
+  { path: '/tools', name: 'ToolsView', component: ToolsView, meta: { title: 'My DE Space - DE Tools' } },
+  { path: '/resume', name: 'ResumePortfolioView', component: ResumePortfolioView, meta: { title: 'My DE Space - Resume & Portfolio' } }
 ]
 
 const router = createRouter({

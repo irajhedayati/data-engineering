@@ -25,6 +25,10 @@
             <router-link active-class="nav-link active" aria-current="page" class="nav-link" to="/tools">Tools
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link active-class="nav-link active" aria-current="page" class="nav-link" to="/resume">Resume
+            </router-link>
+          </li>
         </ul>
       </div>
     </div>
