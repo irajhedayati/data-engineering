@@ -15,7 +15,7 @@
     "axios": "^1.19.0",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
-    "core-js": "^3.49.0",
+    "core-js": "^3.50.0",
     "file-loader": "^6.2.0",
     "firebase": "^12.17.1",
     "moment": "^2.30.1",
