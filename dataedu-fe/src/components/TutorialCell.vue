@@ -1,24 +1,16 @@
 <script>
 export default {
   name: 'TutorialCell',
-  props: ['title', 'description', 'link']
+  props: ['title', 'description', 'link', 'icon']
 }
 </script>
-
 <template>
-<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12 mt-1 mb-1">
-  <div class="card h-100">
-    <div class="card-body">
-      <div class="row-cols-1 mb-3" style="height: 10%"><h5 class="card-title">{{ title }}</h5></div>
-      <div class="row-cols-1 mb-3" style="height: 55%"><p class="card-text">{{ description }}</p></div>
-      <div class="row-cols-lg-3 row-cols-md-3 row-cols-sm-12 row-cols-xs-12 mb-3">
-        <router-link aria-current="page" class="btn btn-primary" :to="link">Content</router-link>
-      </div>
-    </div>
+  <div class="col-lg-4 col-md-6">
+    <router-link class="tutorial-card" :to="link">
+      <span class="tutorial-icon"><i :class="icon || 'bi bi-journal-code'" aria-hidden="true"></i></span>
+      <h3>{{ title }}</h3>
+      <p>{{ description }}</p>
+      <span class="card-action">Explore tutorial <i class="bi bi-arrow-right" aria-hidden="true"></i></span>
+    </router-link>
   </div>
-</div>
 </template>
-
-<style scoped>
-
-</style>

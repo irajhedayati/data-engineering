@@ -7,7 +7,7 @@
         <div class="row align-items-end g-3 mb-4 tools-heading">
           <div class="col-lg-7">
             <h2 class="mb-2">Data Engineering Tools</h2>
-            <p class="text-muted mb-0">Kafka, Spark, naming, identifiers, time, and password helpers in one place.</p>
+            <p class="text-muted mb-0">Kafka, Spark, naming, hex decoding, identifiers, time, and password helpers in one place.</p>
           </div>
           <div class="col-lg-5">
             <label class="form-label visually-hidden" for="toolSearch">Search tools</label>
@@ -202,6 +202,27 @@
             </article>
 
             <article
+              v-if="isToolVisible('hex-to-text')"
+              id="hex-to-text"
+              class="tool-section"
+              tabindex="-1">
+              <div class="card">
+                <div class="card-header bg-white">
+                  <div class="d-flex align-items-start gap-3">
+                    <span class="section-icon"><i class="bi bi-code-square" aria-hidden="true"></i></span>
+                    <div>
+                      <h3 class="h4 mb-1">Hex to Text</h3>
+                      <p class="text-muted mb-0">Decode hexadecimal bytes into UTF-8 text.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <hex-to-text />
+                </div>
+              </div>
+            </article>
+
+            <article
               v-if="isToolVisible('uuid-generator')"
               id="uuid-generator"
               class="tool-section"
@@ -273,6 +294,7 @@
 <script>
 import Banner from '@/components/Banner.vue'
 import CasingConversion from '@/components/CasingConversion.vue'
+import HexToText from '@/components/HexToText.vue'
 import UuidGenerator from '@/components/UuidGenerator.vue'
 import TimeFormat from '@/components/TimeFormat.vue'
 import SparkExecutorMemory from '@/components/SparkExecutorMemory.vue'
@@ -329,6 +351,14 @@ export default {
           summary: 'Naming style conversion',
           keywords: ['case', 'casing', 'camel', 'kebab', 'snake'],
           icon: 'bi bi-fonts'
+        },
+        {
+          id: 'hex-to-text',
+          title: 'Hex to Text',
+          category: 'formatting',
+          summary: 'Decode hexadecimal text',
+          keywords: ['hex', 'hexadecimal', 'text', 'decode', 'utf-8', 'ascii', 'bytes'],
+          icon: 'bi bi-code-square'
         },
         {
           id: 'uuid-generator',
@@ -433,6 +463,7 @@ export default {
   },
   components: {
     Banner,
+    HexToText,
     WinScpDecoder,
     DataprocServerless,
     SparkExecutorMemory,
