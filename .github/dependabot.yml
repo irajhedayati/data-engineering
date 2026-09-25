@@ -13,8 +13,11 @@ updates:
     directory: /dataedu-fe
     schedule:
       interval: weekly
+    # Vue CLI 5's Babel preset requires Babel 7.
+    ignore:
+      - dependency-name: "@babel/core"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: docker-compose
     directory: /
     schedule:
       interval: weekly
-

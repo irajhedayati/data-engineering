@@ -2,5 +2,12 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "packageRules": [
+    {
+      "description": "Vue CLI 5 requires Babel 7",
+      "matchPackageNames": ["@babel/core"],
+      "allowedVersions": "<8"
+    }
   ]
 }
