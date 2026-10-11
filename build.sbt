@@ -2,7 +2,7 @@
 val AvroVersion = "1.12.2"
 // enumeratum-circe depends on circe 0.14.10
 // https://github.com/lloydmeta/enumeratum/blob/master/project/Versions.scala#L18
-val CirceVersion = "0.14.10"
+val CirceVersion = "0.14.17"
 val EnumeratumCirceVersion = "1.9.8"
 val LogbackVersion = "1.6.4"
 val ScalaLoggingVersion = "3.9.6"
