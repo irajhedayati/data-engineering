@@ -7,7 +7,7 @@
         <div class="row align-items-end g-3 mb-4 tools-heading">
           <div class="col-lg-7">
             <h2 class="mb-2">Data Engineering Tools</h2>
-            <p class="text-muted mb-0">Kafka, Spark, naming, hex decoding, identifiers, time, and password helpers in one place.</p>
+            <p class="text-muted mb-0">Kafka, Spark, naming, regex, hex decoding, identifiers, time, and password helpers in one place.</p>
           </div>
           <div class="col-lg-5">
             <label class="form-label visually-hidden" for="toolSearch">Search tools</label>
@@ -201,6 +201,21 @@
               </div>
             </article>
 
+            <article v-if="isToolVisible('regex-tester')" id="regex-tester" class="tool-section" tabindex="-1">
+              <div class="card">
+                <div class="card-header bg-white">
+                  <div class="d-flex align-items-start gap-3">
+                    <span class="section-icon"><i class="bi bi-regex" aria-hidden="true"></i></span>
+                    <div>
+                      <h3 class="h4 mb-1">Regex Tester</h3>
+                      <p class="text-muted mb-0">Test regular expressions with live match highlighting and capture groups.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body"><regex-tester /></div>
+              </div>
+            </article>
+
             <article
               v-if="isToolVisible('hex-to-text')"
               id="hex-to-text"
@@ -294,6 +309,7 @@
 <script>
 import Banner from '@/components/Banner.vue'
 import CasingConversion from '@/components/CasingConversion.vue'
+import RegexTester from '@/components/RegexTester.vue'
 import HexToText from '@/components/HexToText.vue'
 import UuidGenerator from '@/components/UuidGenerator.vue'
 import TimeFormat from '@/components/TimeFormat.vue'
@@ -351,6 +367,14 @@ export default {
           summary: 'Naming style conversion',
           keywords: ['case', 'casing', 'camel', 'kebab', 'snake'],
           icon: 'bi bi-fonts'
+        },
+        {
+          id: 'regex-tester',
+          title: 'Regex Tester',
+          category: 'formatting',
+          summary: 'Patterns, matches & capture groups',
+          keywords: ['regex', 'regexp', 'regular expression', 'pattern', 'match', 'capture', 'text'],
+          icon: 'bi bi-regex'
         },
         {
           id: 'hex-to-text',
@@ -464,6 +488,7 @@ export default {
   components: {
     Banner,
     HexToText,
+    RegexTester,
     WinScpDecoder,
     DataprocServerless,
     SparkExecutorMemory,
