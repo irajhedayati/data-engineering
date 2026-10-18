@@ -1,59 +1,79 @@
 <template>
   <section class="portfolio-shell">
-    <div class="portfolio-aurora portfolio-aurora-left"></div>
-    <div class="portfolio-aurora portfolio-aurora-right"></div>
-
-    <div class="container py-5 position-relative">
-      <div class="hero-card shadow-lg">
-        <div class="row g-4 align-items-center">
-          <div class="col-lg-8">
-            <div class="eyebrow">Resume and portfolio</div>
-            <h1 class="display-5 mb-3">Iraj Hedayati</h1>
-            <p class="lead hero-copy mb-4">
-              A seasoned data engineer, data architect, instructor, and hands-on builder. The throughline in the resume
-              is clear: design durable systems, mentor people, and ship practical data platforms that work at scale.
-            </p>
-
-            <div class="d-flex flex-wrap gap-2 mb-4">
-              <a class="btn btn-dark btn-lg" href="https://www.linkedin.com/in/irajhedayati/" rel="noreferrer" target="_blank">
-                <i class="bi bi-linkedin me-2"></i>LinkedIn
-              </a>
-              <a class="btn btn-outline-dark btn-lg" href="https://github.com/irajhedayati/" rel="noreferrer" target="_blank">
-                <i class="bi bi-github me-2"></i>GitHub
-              </a>
-              <a class="btn btn-outline-secondary btn-lg" href="https://medium.com/@iraj.hedayati" rel="noreferrer" target="_blank">
-                <i class="bi bi-medium me-2"></i>Writing
-              </a>
-            </div>
-
-            <div class="quick-facts">
-              <span v-for="fact in quickFacts" :key="fact.label" class="fact-pill">
-                <strong>{{ fact.value }}</strong>
-                <span>{{ fact.label }}</span>
-              </span>
-            </div>
-          </div>
-
-          <div class="col-lg-4">
-            <div class="profile-card">
-              <div class="profile-badge">Montreal area</div>
-              <div class="profile-meta">
-                <p class="text-uppercase text-muted small mb-1">Primary focus</p>
-                <h2 class="h4 mb-2">Data platform backend engineering</h2>
-                <p class="mb-0 text-muted">
-                  Streaming, orchestration, governance, cloud infrastructure, and the kind of architecture that still
-                  behaves when the system gets busy.
-                </p>
-              </div>
-              <hr />
-              <div class="stack-tags">
-                <span v-for="tag in focusTags" :key="tag" class="stack-tag">{{ tag }}</span>
-              </div>
-            </div>
+    <div class="container portfolio-container">
+      <header class="resume-intro">
+        <div class="intro-identity">
+          <img class="profile-photo" src="@/assets/images/portfolio/iraj-hedayati.jpg" alt="Iraj Hedayati" width="112" height="112" />
+          <div>
+            <p class="eyebrow">Engineer. Educator. Builder.</p>
+            <h1>Iraj Hedayati<span class="name-period">.</span></h1>
+            <p class="intro-location">Data engineer &amp; architect <span aria-hidden="true">/</span> Montreal, Canada</p>
           </div>
         </div>
-      </div>
+        <p class="intro-copy">I build practical tools and dependable data systems. Here’s a selection of what I’ve made, followed by the experience behind it.</p>
+        <div class="intro-bottom">
+          <nav class="resume-nav" aria-label="Resume sections">
+            <a href="#projects">Selected projects <i class="bi bi-arrow-down" aria-hidden="true"></i></a>
+            <a href="#experience">Experience</a>
+            <a href="#skills">Skills</a>
+          </nav>
+          <div class="intro-socials">
+            <a href="https://www.linkedin.com/in/irajhedayati/" target="_blank" rel="noopener noreferrer">LinkedIn <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
+            <a href="https://github.com/irajhedayati/" target="_blank" rel="noopener noreferrer">GitHub <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </header>
 
+      <section id="projects" class="projects-section" aria-labelledby="projects-title">
+        <div class="projects-heading">
+          <div><p class="section-kicker">Selected work / 01</p><h2 id="projects-title">Ideas, built into tools.</h2></div>
+          <p>From developer workflows<br class="desktop-break" /> to everyday collections.</p>
+        </div>
+        <article class="featured-project" aria-labelledby="kassandra-title">
+          <div class="featured-copy">
+            <div class="project-status"><span class="featured-label">Featured project</span><span>Open source</span></div>
+            <div class="project-symbol" aria-hidden="true"><i class="bi bi-database"></i></div>
+            <h3 id="kassandra-title">Kassandra</h3>
+            <p class="project-subtitle">A clearer view of Cassandra.</p>
+            <p class="project-description">A graphical client for Apache Cassandra. Explore schemas, browse and edit data, and write CQL in one focused workspace.</p>
+            <ul class="project-tags" aria-label="Kassandra technologies"><li>React</li><li>TypeScript</li><li>Node.js</li><li>Cassandra</li></ul>
+            <div class="project-actions">
+              <a class="project-primary" href="https://irajhedayati.github.io/kassandra/" target="_blank" rel="noopener noreferrer" aria-label="Explore Kassandra">Explore project <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
+              <a href="https://github.com/irajhedayati/kassandra" target="_blank" rel="noopener noreferrer" aria-label="View Kassandra source on GitHub"><i class="bi bi-github" aria-hidden="true"></i> Source code</a>
+            </div>
+          </div>
+          <figure class="project-preview">
+            <div class="preview-caption"><span><i class="bi bi-window" aria-hidden="true"></i> Inside Kassandra</span><span>Data browser</span></div>
+            <a href="https://irajhedayati.github.io/kassandra/" target="_blank" rel="noopener noreferrer" aria-label="Explore the Kassandra data browser">
+              <img src="@/assets/images/portfolio/kassandra.png" alt="Kassandra interface showing the schema explorer, column filters, and paginated Cassandra records" width="1687" height="688" />
+            </a>
+            <figcaption>Explore schemas. Work with data. Stay in flow.</figcaption>
+          </figure>
+        </article>
+        <div class="supporting-projects">
+          <article class="project-card" aria-labelledby="metal-title">
+            <div class="project-card-top"><span class="project-symbol metal-symbol" aria-hidden="true"><i class="bi bi-box-seam"></i></span><span class="project-type">Independent product · Closed source</span></div>
+            <h3 id="metal-title">Metal Earth Tracker</h3>
+            <p class="project-subtitle">A little order for a growing collection.</p>
+            <p class="project-description">Keep track of the models you own, the ones you’ve built, and what’s next. A dedicated home for a hobby, without the spreadsheet.</p>
+            <div class="collection-flow" aria-label="Track models from wishlist to owned to built"><span><i class="bi bi-bookmark" aria-hidden="true"></i> Wishlist</span><i class="bi bi-arrow-right" aria-hidden="true"></i><span><i class="bi bi-box" aria-hidden="true"></i> Owned</span><i class="bi bi-arrow-right" aria-hidden="true"></i><span><i class="bi bi-check2-circle" aria-hidden="true"></i> Built</span></div>
+            <div class="project-actions"><a class="project-primary" href="https://metalearthtracker.com" target="_blank" rel="noopener noreferrer" aria-label="Visit Metal Earth Tracker">Visit website <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a><span class="private-source"><i class="bi bi-lock" aria-hidden="true"></i> Private source</span></div>
+          </article>
+          <article class="project-card" aria-labelledby="savro-title">
+            <div class="project-card-top"><span class="project-symbol savro-symbol" aria-hidden="true"><i class="bi bi-braces"></i></span><span class="project-type">Open source · Scala library</span></div>
+            <h3 id="savro-title">SAvro</h3>
+            <p class="project-subtitle">Less friction. More Scala. Better Avro.</p>
+            <p class="project-description">A Scala toolkit for Apache Avro: infer schemas from JSON, convert between schemas and IDL, and turn case classes into Avro records.</p>
+            <div class="code-sample"><span>SCALA / APACHE AVRO</span><code><span class="code-keyword">import</span> ca.dataedu.savro._</code></div>
+            <div class="project-actions"><a class="project-primary" href="https://savro.dataedu.ca/" target="_blank" rel="noopener noreferrer" aria-label="Read SAvro documentation">Documentation <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a><a href="https://github.com/irajhedayati/savro" target="_blank" rel="noopener noreferrer" aria-label="View SAvro source on GitHub"><i class="bi bi-github" aria-hidden="true"></i> Source code</a></div>
+          </article>
+        </div>
+      </section>
+
+      <div class="resume-divider"><span>The experience behind the work</span><i class="bi bi-arrow-down" aria-hidden="true"></i></div>
+      <div class="quick-facts">
+        <span v-for="fact in quickFacts" :key="fact.label" class="fact-pill"><strong>{{ fact.value }}</strong><span>{{ fact.label }}</span></span>
+      </div>
       <div class="section-block">
         <div class="section-heading">
           <p class="section-kicker">Profile in a sentence</p>
@@ -70,7 +90,7 @@
         </div>
       </div>
 
-      <div class="section-block">
+      <div id="skills" class="section-block">
         <div class="section-heading">
           <p class="section-kicker">Core strengths</p>
           <h2>What stands out across the resume</h2>
@@ -86,7 +106,7 @@
         </div>
       </div>
 
-      <div class="section-block">
+      <div id="experience" class="section-block">
         <div class="section-heading">
           <p class="section-kicker">Career snapshot</p>
           <h2>Selected roles and impact</h2>
@@ -178,19 +198,6 @@ const quickFacts = [
   { value: '8 years', label: 'data engineering and big data' },
   { value: 'Montreal', label: 'based in Quebec' },
   { value: 'Instructor', label: 'Montreal College of IT since 2018' }
-]
-
-const focusTags = [
-  'Spark',
-  'Kafka',
-  'GCP',
-  'AWS',
-  'Kubernetes',
-  'Data governance',
-  'Scala',
-  'Java',
-  'Python',
-  'Mentorship'
 ]
 
 const profileTraits = [
@@ -379,123 +386,96 @@ const highlights = [
 </script>
 
 <style scoped>
-.portfolio-shell {
-  position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at top left, rgba(255, 177, 102, 0.18), transparent 35%),
-    radial-gradient(circle at top right, rgba(18, 99, 101, 0.18), transparent 32%),
-    linear-gradient(180deg, #fffaf3 0%, #f4f7f7 100%);
+.portfolio-shell { background: #fcfcfb; }
+.portfolio-container { padding-top: 2.5rem; padding-bottom: 2rem; }
+.resume-intro { padding-bottom: 2rem; border-bottom: 1px solid #e2e3dc; }
+.intro-identity { display: flex; align-items: center; gap: 1.5rem; }
+.profile-photo { width: 112px; height: 112px; object-fit: cover; border-radius: 50%; border: 5px solid #fff; box-shadow: 0 0 0 1px #e0e1d9; }
+.eyebrow, .section-kicker { text-transform: uppercase; letter-spacing: .14em; font-size: .7rem; font-weight: 700; color: #64695d; margin-bottom: .65rem; }
+.resume-intro h1 { font-size: clamp(2.3rem, 4.5vw, 3.7rem); letter-spacing: -.055em; margin-bottom: .45rem; }
+.name-period { color: #788367; }
+.intro-location { margin-bottom: 0; color: #62665d; font-size: .9rem; }
+.intro-location span { margin: 0 .5rem; color: #a0a497; }
+.intro-copy { max-width: 680px; font-size: 1.08rem; color: #60645b; margin: 1.5rem 0; }
+.intro-bottom, .resume-nav, .intro-socials { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; }
+.intro-bottom { justify-content: space-between; }
+.resume-nav a, .intro-socials a { color: #42473c; font-size: .85rem; text-decoration: none; padding: .5rem 0; }
+.resume-nav a:first-child { color: #24291e; font-weight: 700; }
+.resume-nav a:hover, .intro-socials a:hover, .project-actions a:hover { text-decoration: underline; }
+.resume-nav i, .intro-socials i { margin-left: .4rem; }
+.projects-section { padding-top: 2.6rem; }
+.projects-heading { display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem; margin-bottom: 1.5rem; }
+.projects-heading h2 { font-size: clamp(2rem, 3.3vw, 2.8rem); margin: 0; letter-spacing: -.05em; }
+.projects-heading > p { font-size: .87rem; color: #73776e; margin: 0; }
+.featured-project { display: grid; grid-template-columns: .9fr 1.1fr; border: 1px solid #dce0d3; border-radius: 20px; overflow: hidden; background: #f0f2e9; }
+.featured-copy { padding: 2.2rem; }
+.project-status { display: flex; align-items: center; flex-wrap: wrap; gap: .8rem; font-size: .7rem; color: #566044; margin-bottom: 1.8rem; }
+.featured-label { background: #38452b; color: #fff; padding: .3rem .65rem; border-radius: 5px; }
+.project-symbol { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: #e1e6d5; color: #3c4b2e; font-size: 1.4rem; margin-bottom: 1rem; }
+.featured-copy h3 { font-size: 2.5rem; margin-bottom: .6rem; }
+.project-subtitle { color: #414638; font-weight: 600; margin-bottom: .8rem; }
+.project-description { color: #64695d; font-size: .93rem; line-height: 1.75; margin-bottom: 1.3rem; }
+.project-tags { display: flex; flex-wrap: wrap; list-style: none; padding: 0; gap: .45rem; margin-bottom: 1.8rem; }
+.project-tags li { font-size: .68rem; border: 1px solid #d4dac8; border-radius: 5px; padding: .25rem .55rem; color: #4e5941; }
+.project-actions { display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: center; margin-top: auto; }
+.project-actions a { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 44px; color: #343d2b; font-size: .8rem; font-weight: 600; text-decoration: none; }
+.project-actions .project-primary { background: #293323; color: #fff; border-radius: 7px; padding: .65rem 1rem; }
+.project-actions .project-primary:hover { background: #414e37; }
+.project-preview { display: flex; min-width: 0; flex-direction: column; justify-content: center; background: #e6eadc; padding: 2rem 1.6rem; margin: 0; border-left: 1px solid #d9dfcd; }
+.preview-caption { display: flex; justify-content: space-between; gap: .5rem; font-size: .65rem; color: #59644d; margin-bottom: .8rem; }
+.preview-caption i { margin-right: .4rem; }
+.project-preview a { display: block; border-radius: 7px; box-shadow: 0 16px 32px #3440221c; }
+.project-preview img { display: block; width: 100%; height: auto; border: 1px solid #c6ceb9; border-radius: 7px; }
+.project-preview figcaption { font-size: .73rem; color: #59644d; margin-top: 1.3rem; text-align: center; }
+.supporting-projects { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; margin-top: 1.3rem; }
+.project-card { display: flex; flex-direction: column; border: 1px solid #e1e2dc; border-radius: 16px; padding: 1.8rem; background: #fff; min-width: 0; }
+.project-card-top { display: flex; align-items: center; justify-content: space-between; gap: .8rem; margin-bottom: 1.4rem; }
+.project-card-top .project-symbol { margin-bottom: 0; flex-shrink: 0; }
+.project-type { color: #70746a; font-size: .7rem; text-align: right; }
+.metal-symbol { background: #f5ecdc; color: #8b6130; }
+.savro-symbol { background: #eeedf6; color: #68608c; }
+.project-card h3 { font-size: 1.55rem; }
+.project-card .project-subtitle { font-size: .93rem; }
+.collection-flow { display: flex; align-items: center; justify-content: space-between; gap: .5rem; padding: 1.4rem .9rem; border-radius: 8px; background: #f7f5ef; color: #726247; margin: .2rem 0 1.8rem; font-size: .75rem; }
+.collection-flow span { display: flex; align-items: center; gap: .4rem; }
+.code-sample { display: flex; flex-direction: column; gap: .5rem; padding: 1rem 1.2rem; background: #f4f3f8; border-radius: 8px; margin: .2rem 0 1.8rem; }
+.code-sample > span { font-size: .6rem; color: #756d87; letter-spacing: .1em; }
+.code-sample code { color: #454050; font-size: .85rem; overflow-wrap: anywhere; }
+.code-keyword { color: #85639c; }
+.private-source { color: #797c73; font-size: .75rem; }
+.resume-divider { display: flex; justify-content: space-between; gap: 1rem; padding-top: 2.5rem; margin: 3.5rem 0 1.5rem; border-top: 1px solid #dedfd7; color: #606655; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; }
+.quick-facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.fact-pill { display: flex; flex-direction: column; padding: 1rem; background: #f2f3ed; border-radius: 8px; }
+.fact-pill strong { font-size: 1.1rem; color: #353d2b; }
+.fact-pill span { color: #6c7360; font-size: .8rem; }
+.trait-card, .skill-card, .spotlight-card, .highlight-card { border: 1px solid #e3e5dd; border-radius: 12px; background: white; }
+#projects, #skills, #experience { scroll-margin-top: 2rem; }
+@media (max-width: 991px) {
+  .featured-project { grid-template-columns: 1fr; }
+  .project-preview { border-left: 0; border-top: 1px solid #d9dfcd; }
+  .featured-copy { padding: 1.8rem; }
 }
-
-.portfolio-aurora {
-  position: absolute;
-  inset: auto;
-  width: 24rem;
-  height: 24rem;
-  filter: blur(80px);
-  opacity: 0.55;
-  pointer-events: none;
+@media (max-width: 600px) {
+  .portfolio-container { padding-top: 1.5rem; }
+  .intro-identity { gap: 1rem; }
+  .profile-photo { width: 76px; height: 76px; border-width: 3px; }
+  .resume-intro h1 { font-size: 2.1rem; }
+  .eyebrow { font-size: .58rem; }
+  .intro-location { font-size: .75rem; }
+  .intro-location span { margin: 0 .15rem; }
+  .intro-copy { font-size: 1rem; }
+  .intro-bottom { gap: .65rem; }
+  .resume-nav { gap: 1.2rem; }
+  .projects-heading { display: block; }
+  .projects-heading > p { margin-top: .75rem; }
+  .desktop-break { display: none; }
+  .supporting-projects { grid-template-columns: 1fr; }
+  .featured-copy, .project-card { padding: 1.4rem; }
+  .project-preview { padding: 1.3rem 1rem; }
+  .quick-facts { grid-template-columns: 1fr 1fr; gap: .6rem; }
 }
-
-.portfolio-aurora-left {
-  top: 4rem;
-  left: -8rem;
-  background: rgba(255, 163, 90, 0.25);
-}
-
-.portfolio-aurora-right {
-  right: -10rem;
-  top: 18rem;
-  background: rgba(63, 139, 136, 0.22);
-}
-
-.hero-card,
-.profile-card,
-.trait-card,
-.skill-card,
-.spotlight-card,
-.highlight-card {
-  border: 1px solid rgba(28, 39, 52, 0.08);
-  border-radius: 1.5rem;
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(10px);
-}
-
-.hero-card {
-  padding: 2rem;
-}
-
-.eyebrow,
-.section-kicker {
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.75rem;
-  color: #8a5b33;
-  font-weight: 700;
-}
-
-.hero-copy {
-  max-width: 58rem;
-  font-size: 1.1rem;
-  line-height: 1.75;
-}
-
-.quick-facts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.85rem;
-}
-
-.fact-pill {
-  display: inline-flex;
-  flex-direction: column;
-  min-width: 9.5rem;
-  padding: 0.85rem 1rem;
-  border-radius: 1rem;
-  background: rgba(27, 35, 43, 0.04);
-  border: 1px solid rgba(27, 35, 43, 0.08);
-}
-
-.fact-pill strong {
-  font-size: 1rem;
-  line-height: 1.1;
-}
-
-.fact-pill span {
-  color: #6c757d;
-  font-size: 0.85rem;
-}
-
-.profile-card {
-  padding: 1.5rem;
-}
-
-.profile-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.35rem 0.7rem;
-  border-radius: 999px;
-  background: #163137;
-  color: #fff;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  margin-bottom: 1rem;
-}
-
-.stack-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem;
-}
-
-.stack-tag {
-  padding: 0.4rem 0.7rem;
-  border-radius: 999px;
-  background: rgba(22, 49, 55, 0.08);
-  color: #163137;
-  font-size: 0.9rem;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
 }
 
 .section-block {
@@ -526,8 +506,8 @@ const highlights = [
   display: grid;
   place-items: center;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, rgba(255, 177, 102, 0.24), rgba(63, 139, 136, 0.18));
-  color: #163137;
+  background: #edf0e6;
+  color: #38452b;
   font-size: 1.1rem;
 }
 
@@ -536,7 +516,7 @@ const highlights = [
   height: 0.3rem;
   border-radius: 999px;
   margin-bottom: 1rem;
-  background: linear-gradient(90deg, #163137, #aa6f3d);
+  background: #7d886c;
 }
 
 .timeline {
@@ -568,7 +548,7 @@ const highlights = [
   height: 1rem;
   border-radius: 999px;
   border: 3px solid #f4f7f7;
-  background: #163137;
+  background: #38452b;
   box-shadow: 0 0 0 4px rgba(22, 49, 55, 0.08);
 }
 
@@ -583,12 +563,12 @@ const highlights = [
 .timeline-role {
   font-size: 1.15rem;
   font-weight: 700;
-  color: #163137;
+  color: #38452b;
 }
 
 .timeline-company {
   font-weight: 600;
-  color: #7a5b44;
+  color: #68745b;
 }
 
 .timeline-meta {
@@ -619,7 +599,7 @@ const highlights = [
 
 .education-year {
   white-space: nowrap;
-  color: #163137;
+  color: #38452b;
   font-weight: 700;
 }
 
@@ -649,20 +629,16 @@ const highlights = [
 
 .link-label {
   font-weight: 700;
-  color: #163137;
+  color: #38452b;
 }
 
 .highlight-title {
   font-weight: 700;
-  color: #163137;
+  color: #38452b;
   margin-bottom: 0.5rem;
 }
 
 @media (max-width: 768px) {
-  .hero-card {
-    padding: 1.2rem;
-  }
-
   .timeline {
     padding-left: 0;
   }
