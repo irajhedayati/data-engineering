@@ -1,7 +1,7 @@
 <template>
   <div class="row mb3"><h2>Epoch</h2></div>
   <div class="row mb3">
-    <div class="col-4">
+    <div class="col-lg-8">
       <div class="input-group mb-3">
         <span id="basic-addon1" class="input-group-text">Current epoch (ms)</span>
         <input v-model="currentTime" aria-label="input" class="form-control text-end" type="text">
@@ -17,7 +17,7 @@
         </button>
       </div>
     </div>
-    <div class="col-5">
+    <div class="col-lg-8">
       <div class="input-group mb-3">
         <span id="basic-addon1" class="input-group-text">ISO 8601 UTC</span>
         <input v-model="currentIso" aria-label="input" class="form-control" type="text">
@@ -86,18 +86,11 @@
       <hr />
       <div class="row mb3"><h3>Delimiter</h3></div>
       <div class="row mb3">
-        <div class="col-1">
-          <button id="del-hyphen" type="button" class="btn btn-outline-secondary" @click="() => this.format.push('-')">
-            -
-          </button></div>
-        <div class="col-1">
-          <button id="del-under" type="button" class="btn btn-outline-secondary" @click="() => this.format.push('_')">
-            _
-          </button></div>
-        <div class="col-1">
-          <button id="del-colon" type="button" class="btn btn-outline-secondary" @click="() => this.format.push(':')">
-            :
-          </button></div>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" id="del-hyphen" class="btn btn-outline-secondary" @click="() => this.format.push('-')">-</button>
+          <button type="button" id="del-under" class="btn btn-outline-secondary" @click="() => this.format.push('_')">_</button>
+          <button type="button" id="del-colon" class="btn btn-outline-secondary" @click="() => this.format.push(':')">:</button>
+        </div>
       </div>
       <hr />
       <div class="row mb3"><h3>Date components</h3></div>
